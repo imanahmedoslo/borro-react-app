@@ -13,7 +13,7 @@ export default function ActionAreaCard() {
 					component="img"
 					height="140"
 					image="src/assets/img.png"
-					alt="green iguana"
+					alt="Placeholder"
 				/>
 				<CardContent className={"CardMuiContent"}>
 					<Typography gutterBottom variant="h5" component="div">
