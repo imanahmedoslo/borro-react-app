@@ -3,7 +3,6 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 //import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -12,6 +11,8 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Stack from '@mui/material/Stack';
 import Logo from '../Logo';
+import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
+import { ForkRight, Home } from '@mui/icons-material';
 
 
 
@@ -29,9 +30,10 @@ export default function LogIn() {
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <>
+    
       <Container component="main" maxWidth="xs">
-        <CssBaseline />
+      
         <Box
           sx={{
             marginTop: 8,
@@ -65,27 +67,28 @@ export default function LogIn() {
               id="password"
               autoComplete="current-password"
             />
-            <Stack spacing={4} direction={'row'}>
+            <Stack spacing={{xs:1, sm: 2}} direction='row' alignItems="center">
+            <Link to={"/user"} style={{ flexGrow: 1 }}>
             <Button
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 4, mb: 2 }}
-            >
+              sx={{ mt: 4, mb: 2}}
+              >
               Sign In
             </Button>
-
+            </Link>
+            <Link to={"/register"} style={{ flexGrow: 1 }}>
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 4, mb: 2 }}
-            >
+              >
               Register
-              <Link href="#" variant="body2">
-                  {""}
-                </Link>
             </Button>
+            </Link>
+            
             </Stack>
 
             <Grid container>
@@ -102,6 +105,7 @@ export default function LogIn() {
         </Box>
        
       </Container>
-    </ThemeProvider>
+     
+    </>
   );
 }
