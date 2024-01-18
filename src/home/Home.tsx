@@ -6,8 +6,6 @@ import ActionAreaCard from "./Card.tsx";
 export function Home() {
 	return (
 		<>
-			<SearchAppBar />
-
 			<div className={"CardContainer"}>
 				<ActionAreaCard/>
 				<ActionAreaCard/>
