@@ -1,20 +1,107 @@
-//import * as React from 'react';
-import Box from '@mui/material/Box';
+
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+//import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Stack from '@mui/material/Stack';
+import Logo from '../Logo';
+
+
+
+// TODO remove, this demo shouldn't need to reset the theme.
+const defaultTheme = createTheme();
 
 export default function LogIn() {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    console.log({
+      email: data.get('email'),
+      password: data.get('password'),
+    });
+  };
+
   return (
-    <Box
-      component="form"
-      sx={{
-        '& > :not(style)': { m: 1, width: '25ch' },
-      }}
-      noValidate
-      autoComplete="off"
-    >
-      <TextField id="emailAddress" label="Emailadress" variant="outlined" />
-      <TextField id="passWord" label="Password" variant="outlined" />
-      
-    </Box>
+    <ThemeProvider theme={defaultTheme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+        <Logo height={70}width={70}/>
+          <Typography component="h1" variant="h5">
+            Log In
+          </Typography>
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 2 }}>
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+            />
+            <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+            <Stack spacing={4} direction={'row'}>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 4, mb: 2 }}
+            >
+              Sign In
+            </Button>
+
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 4, mb: 2 }}
+            >
+              Register
+              <Link href="#" variant="body2">
+                  {""}
+                </Link>
+            </Button>
+            </Stack>
+
+            <Grid container>
+              <Grid item xs>
+                
+              </Grid>
+              <Grid item>
+                
+              
+               
+              </Grid>
+            </Grid>
+          </Box>
+        </Box>
+       
+      </Container>
+    </ThemeProvider>
   );
 }
