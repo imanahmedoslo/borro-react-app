@@ -9,3 +9,4 @@ function Logo({height,width}:Size){
     <img src={logoPng} style={{height:`${height}px`, width:`${width}px`}}/>
     </>)
 } export default Logo;
+

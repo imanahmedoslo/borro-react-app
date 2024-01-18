@@ -38,7 +38,7 @@ export default function Register() {
             alignItems: 'center',
           }}
         >
-         <Logo height={50} width={50}/>
+         <Logo height={70} width={70}/>
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
