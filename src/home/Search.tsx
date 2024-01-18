@@ -8,6 +8,8 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
+import {DrawerMenu, DrawerMenuProps} from "./Drawer.tsx";
+import {useState} from "react";
 
 const Search = styled('div')(({theme}) => ({
 	position: 'relative',
@@ -52,25 +54,38 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
 }));
 
 export default function SearchAppBar() {
+	const [state, setState] = useState({
+		left: true,
+	});
+
+	const onClose = () => {
+		setState(state => ({...state, left: false}));
+	}
+
+	const openDrawer = () => {
+		setState(state => ({...state, left: true}));
+	}
+
+
 	return (
 		<Box sx={{flexGrow: 1}}>
+			<DrawerMenu open={state.left} onClose={onClose}/>
 			<AppBar position="static">
 				<Toolbar>
 					<IconButton
+						onClick={openDrawer}
 						size="large"
 						edge="start"
 						color="inherit"
 						aria-label="open drawer"
-						sx={{mr: 2}}
-					>
+						sx={{mr: 2}}>
 						<MenuIcon/>
 					</IconButton>
 					<Typography
 						variant="h6"
 						noWrap
 						component="div"
-						sx={{flexGrow: 1, display: {xs: 'none', sm: 'block'}}}
-					>
+						sx={{flexGrow: 1, display: {xs: 'none', sm: 'block'}}}>
 						borro
 					</Typography>
 					<Search>
@@ -79,8 +94,7 @@ export default function SearchAppBar() {
 						</SearchIconWrapper>
 						<StyledInputBase
 							placeholder="Search…"
-							inputProps={{'aria-label': 'search'}}
-						/>
+							inputProps={{'aria-label': 'search'}}/>
 					</Search>
 				</Toolbar>
 			</AppBar>

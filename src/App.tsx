@@ -9,6 +9,7 @@ import { Button } from '@mui/material';
 import {PlanetDetail} from "./examples/PlanetDetail.tsx";
 import {PlanetList} from "./examples/PlanetList.tsx";
 import SearchAppBar from "./home/Search.tsx";
+import {DrawerMenu} from "./home/Drawer.tsx";
 
 
 type ProtectedRouteProps = {
@@ -36,6 +37,7 @@ function App() {
 		<>
 			<BrowserRouter>
 				<div>
+
 					<SearchAppBar/>
 					<div>
 						<Link to={"/"} ><Button>Home</Button></Link>
