@@ -9,6 +9,7 @@ import { Button } from '@mui/material';
 import {PlanetDetail} from "./examples/PlanetDetail.tsx";
 import {PlanetList} from "./examples/PlanetList.tsx";
 import SearchAppBar from "./home/Search.tsx";
+import Register from './Register/Register.tsx';
 
 
 type ProtectedRouteProps = {
@@ -52,6 +53,7 @@ function App() {
 					<Route path={"/login"} element={<ProtectedRoute><LogIn/></ProtectedRoute>}></Route>
 					<Route path={"/planets"} element={<PlanetList/>}></Route>
 					<Route path={"/planets/:planetId"} element={<PlanetDetail/>}></Route>
+					<Route path={"register"} element={<Register/>}></Route>
 				</Routes>
 			</BrowserRouter>
 		</>
