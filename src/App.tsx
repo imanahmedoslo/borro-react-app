@@ -5,12 +5,12 @@ import LogIn from './logIn/logIn'
 
 function App() {
 
-  return (
-    <>
-      <Home/>
-     <LogIn/>
-    </>
-  )
+	return (
+		<>
+			<Home/>
+			<LogIn/>
+		</>
+	)
 }
 
 export default App
