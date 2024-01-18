@@ -11,19 +11,28 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useState } from 'react';
 import Logo from '../Logo';
-
+type CreateObject={
+  Email:string,
+  Password:string,
+}
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
+async function CreateUser(userInfo:CreateObject):Promise<number>{
+  const response= await fetch(`http://localhost:5066/api/Borro/user`, {method:'POST', headers:{'Content-Type':'application/json'} ,body:JSON.stringify(userInfo)});
+  const statusCode= await response.status
+return statusCode;
+}
+
 export default function Register() {
+ const [email,setEmail]=useState<string>("");
+ const [password, setPassword]=useState<string>("")
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const userInfo:CreateObject={Email:email,Password:password};
+    CreateUser(userInfo).then(statuscode=>console.log(statuscode));
   };
 
   return (
@@ -45,7 +54,7 @@ export default function Register() {
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <TextField
+                <TextField value={email} onChange={e=>setEmail(e.target.value)}
                   required
                   fullWidth
                   id="email"
@@ -55,7 +64,7 @@ export default function Register() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
+                <TextField value={password} onChange={e=>setPassword(e.target.value)}
                   required
                   fullWidth
                   name="password"
