@@ -4,13 +4,16 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import {CardActionArea} from '@mui/material';
+import { useEffect, useState } from 'react';
+
+
 
 
 
 export default function ActionAreaCard() {
 
 	return (
-		<Card sx={{maxWidth: 345}} className={"CardMui"}>
+		<Card sx={{maxWidth: 345, minWidth: 300}} className={"CardMui"}>
 			<CardActionArea>
 				<CardMedia
 					component="img"
@@ -20,10 +23,10 @@ export default function ActionAreaCard() {
 				/>
 				<CardContent className={"CardMuiContent"}>
 					<Typography gutterBottom variant="h5" component="div">
-						{post?.title}
+						Verktøy
 					</Typography>
 					<Typography variant="body2" color="text.secondary">
-						{post?.description}
+						Dette er en test bby
 					</Typography>
 				</CardContent>
 			</CardActionArea>
