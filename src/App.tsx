@@ -11,7 +11,7 @@ import {PlanetList} from "./examples/PlanetList.tsx";
 import SearchAppBar from "./home/Search.tsx";
 import Register from './Register/Register.tsx';
 import PostCreate from './PostPage/PostCreate.tsx';
-import { ViewPost, postProps } from './PostPage/ViewPost.tsx';
+import { ViewPost, postProps } from './Post/ViewPost.tsx';
 
 
 type ProtectedRouteProps = {
