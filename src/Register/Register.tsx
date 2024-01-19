@@ -5,12 +5,12 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Link,  useNavigate  } from 'react-router-dom';
 import { useState } from 'react';
 import Logo from '../Logo';
 type CreateObject={
@@ -20,6 +20,30 @@ type CreateObject={
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
+const handlePassword=(password:string,repeatedPassword:string):boolean=>{
+  if (password===repeatedPassword) {
+    return true;
+  }
+  else return false;
+ }
+ const ValidateEmail=(email:string)=>{
+  if (!email.includes("@")||!email.includes(".")) {
+   return false
+  }
+  else {
+    return true;
+  } 
+ }
+ function generateObject(isCorrectEmail:boolean,PasswordsAlign:boolean, email:string,password:string):CreateObject|null{
+  if(isCorrectEmail&&PasswordsAlign){
+    var userInfo:CreateObject={Email:email,Password:password}
+    return userInfo
+  }
+  else return null;
+ }
+
+ 
+
 async function CreateUser(userInfo:CreateObject):Promise<number>{
   const response= await fetch(`http://localhost:5066/api/Borro/user`, {method:'POST', headers:{'Content-Type':'application/json'} ,body:JSON.stringify(userInfo)});
   const statusCode= await response.status
@@ -27,12 +51,25 @@ return statusCode;
 }
 
 export default function Register() {
+  const navigate = useNavigate();
  const [email,setEmail]=useState<string>("");
  const [password, setPassword]=useState<string>("")
+ const [repeatedPassword,setRepeatedPassword]=useState<string>("");
+ const [emailFormat,setEmailFormat]=useState<boolean>(true)
+ const[passwordAligned,setPasswordAligned]=useState<boolean>(true)
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const userInfo:CreateObject={Email:email,Password:password};
-    CreateUser(userInfo).then(statuscode=>console.log(statuscode));
+    const isPasswordsEqual = handlePassword(password,repeatedPassword);
+    setPasswordAligned(isPasswordsEqual);
+    const EmailIsValid= ValidateEmail(email)
+    setEmailFormat(EmailIsValid);
+    const userInfo=generateObject(isPasswordsEqual,EmailIsValid,email,password)
+    if (userInfo!=null) {
+      CreateUser(userInfo).then(code=> code<300?navigate('/login'):navigate('/error'));
+      //this space here
+    }
+    else console.log("if test not accesed");
+
   };
 
   return (
@@ -49,12 +86,12 @@ export default function Register() {
         >
          <Logo height={70} width={70}/>
           <Typography component="h1" variant="h5">
-            Sign up
+            Registrer Bruker
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <TextField value={email} onChange={e=>setEmail(e.target.value)}
+                <TextField onChange={e=>setEmail(e.target.value)}
                   required
                   fullWidth
                   id="email"
@@ -75,6 +112,17 @@ export default function Register() {
                 />
               </Grid>
               <Grid item xs={12}>
+                <TextField value={repeatedPassword} onChange={e=>setRepeatedPassword(e.target.value)}
+                  required
+                  fullWidth
+                  name="RepeatPassword"
+                  label="RepeatPassword"
+                  type="password"
+                  id="RepeatPassword"
+                  autoComplete="rpeated-password"
+                />
+              </Grid>
+              <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
                   label="Vis passord"
@@ -89,13 +137,15 @@ export default function Register() {
             >
               Registrer
             </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="#" variant="body2">
-                  Har du allerede en konto? Log inn!
+            <Grid item xs={12} sm={6}>
+            {!passwordAligned&&<p style={{color:"red"}}> Passordene samsvarer ikke med hverandre!</p>}
+            {!emailFormat&&<p style={{color:"red"}}> Email er ikke riktig formatert!</p>}
+              </Grid>
+              <Grid item xs={12} sm={6}>
+              <Link to={"/login"} style={{ flexGrow: 1 }}>
+                 <p style={{color:"blue"}}> Har du allerede en bruker? Log in!</p>
                 </Link>
               </Grid>
-            </Grid>
           </Box>
         </Box>
       </Container>
