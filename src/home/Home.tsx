@@ -21,13 +21,25 @@ type postState = {
 
 export function Home() {
 	const [posts, setPosts] = React.useState<postProps[]>([]);
+	const [searchText, setSearchText] = React.useState('');
+	const [filteredPosts, setFilteredPosts] = React.useState<postProps[]>([]);
+
 
 	useEffect(() => {
 		getPosts().then((posts: postProps[]) => setPosts(posts));
 	}, []);
 
+	useEffect(() => {
+		setFilteredPosts(
+			posts.filter(post =>
+				post.title.toLowerCase().includes(searchText.toLowerCase())
+			)
+		);
+	}, [posts, searchText]);
+
 	return (
 		<>
+			<SearchAppBar setSearchText={setSearchText} />
 			<div style={{
 				display: 'flex',
 				flexWrap: 'wrap',
@@ -36,7 +48,7 @@ export function Home() {
 				maxWidth: '96%',
 				boxSizing: 'border-box',
 			}}>
-				{posts.map((post: postProps) =>
+				{filteredPosts.map((post: postProps) =>
 					<ActionAreaCard key={post.id}
 					                title={post.title}
 					                description={post.description}

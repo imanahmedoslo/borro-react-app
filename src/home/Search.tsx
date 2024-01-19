@@ -53,7 +53,7 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
 	},
 }));
 
-export default function SearchAppBar() {
+export default function SearchAppBar({setSearchText}: {setSearchText: (text: string) => void}) {
 	const [state, setState] = useState({
 		left: true,
 	});
@@ -88,13 +88,15 @@ export default function SearchAppBar() {
 						sx={{flexGrow: 1, display: {xs: 'none', sm: 'block'}}}>
 						borro
 					</Typography>
-					<Search>
+					<Search >
 						<SearchIconWrapper>
 							<SearchIcon/>
 						</SearchIconWrapper>
 						<StyledInputBase
 							placeholder="Search…"
-							inputProps={{'aria-label': 'search'}}/>
+							inputProps={{'aria-label': 'search'}}
+							onChange={event => setSearchText(event.target.value)} // update search text
+						/>
 					</Search>
 				</Toolbar>
 			</AppBar>

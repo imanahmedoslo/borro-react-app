@@ -40,7 +40,6 @@ function App() {
 		<>
 			<BrowserRouter>
 				<div>
-					<SearchAppBar/>
 					<div>
 						<Link to={"/"} ><Button>Home</Button></Link>
 					</div>
