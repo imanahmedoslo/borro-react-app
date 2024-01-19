@@ -1,9 +1,9 @@
 import './App.css'
 import {Home} from "./home/Home.tsx";
 //import Register from './assets/Register/Register'
-import LogIn from './logIn/logIn'
+import LogIn from './logIn/logIn.tsx'
 import {BrowserRouter, Navigate, Route, Routes, useNavigate} from "react-router-dom";
-import React from "react";
+import React, { useState } from "react";
 import {Link} from "react-router-dom";
 import { Button } from '@mui/material';
 import {PlanetDetail} from "./examples/PlanetDetail.tsx";
@@ -12,8 +12,18 @@ import SearchAppBar from "./home/Search.tsx";
 import Register from './Register/Register.tsx';
 import PostCreate from './Post/PostCreate.tsx';
 import { ViewPost, postProps } from './Post/ViewPost.tsx';
+<<<<<<< Updated upstream
 import Calender from './Post/PostCreateCalender.tsx';
+=======
+import { CreateUserType } from './Register/Register.tsx';
+import { AuthContext } from './A/contextPage.tsx';
+>>>>>>> Stashed changes
 
+
+type TokenAndId={
+	accessToken:string,
+	Id:number
+  }
 
 type ProtectedRouteProps = {
 	children?: JSX.Element;
@@ -34,10 +44,26 @@ function ProtectedRoute(props: ProtectedRouteProps) {
 	</>
 }
 
+
 function App() {
+const[tokenId,setTokenId]=useState<TokenAndId>({accessToken:"",Id:0})
+async function LoginFunctionality(userInfo:CreateUserType){
+const response= await fetch(`http://localhost:5066/api/Login`, {method:'POST', headers:{'Content-Type':'application/json'} ,body:JSON.stringify(userInfo)});
+if (!response.ok) {
+  throw new Error(`HTTP error! Status: ${response.status}`);
+}
+ const responseJson=  await response.json()
+const LoginResponse:TokenAndId={
+  accessToken:responseJson.accessToken,
+  Id:responseJson.id
+}
+setTokenId(LoginResponse)
+console.log(LoginResponse)
+}
 
 	return (
 		<>
+		 <AuthContext.Provider value={tokenId}>
 			<BrowserRouter>
 				<div>
 					<div>
@@ -55,7 +81,7 @@ function App() {
 				</div>
 				<Routes>
 					<Route path={"/"} element={<Home/>}></Route>
-					<Route path={"/login"} element={<ProtectedRoute><LogIn/></ProtectedRoute>}></Route>
+					<Route path={"/login"} element={<ProtectedRoute><LogIn LoginFunctionality={LoginFunctionality}/></ProtectedRoute>}></Route>
 					<Route path={"/register"} element={<Register/>}></Route>
 					<Route path={"/planets"} element={<PlanetList/>}></Route>
 					<Route path={"/planets/:planetId"} element={<PlanetDetail/>}></Route>
@@ -64,6 +90,7 @@ function App() {
 					<Route path={"/Calendar"}element={<Calender/>}></Route>
 				</Routes>
 			</BrowserRouter>
+			</AuthContext.Provider>
 		</>
 	)
 }

@@ -1,8 +1,9 @@
 import React, {useEffect} from "react";
 import SearchAppBar from "./Search.tsx";
 import ActionAreaCard from "./Card.tsx";
-
-type postProps = {
+import { AuthContext } from "../A/contextPage.tsx";
+import { useState,useEffect } from "react";
+export type postProps = {
 	id: number,
 	title: string,
 	image: string,
@@ -20,6 +21,7 @@ type postState = {
 }
 
 export function Home() {
+<<<<<<< Updated upstream
 	const [posts, setPosts] = React.useState<postProps[]>([]);
 	const [searchText, setSearchText] = React.useState('');
 	const [filteredPosts, setFilteredPosts] = React.useState<postProps[]>([]);
@@ -54,14 +56,51 @@ export function Home() {
 					                description={post.description}
 					/>)
 				}
+=======
+	const token = React.useContext(AuthContext);
+    async function getPosts() {
+    
+        const response = await fetch("http://localhost:5066/api/Post",{headers:{'authorization':`Bearer ${token.accessToken}`}} );
+        const posts:postProps[]= await response.json();
+        return posts;
+    
+    }
+    const[posts,setPost]=useState<postProps[]>()
+    useEffect(()=>{
+        getPosts().then(posts=>setPost(posts))
+    },[])
+
+
+	
+	//getPosts().then((posts) =>console.log(posts))
+		
+	
+
+
+	return (
+		<>
+		
+			<div className={"CardContainer"}>
+			{posts?.map(post=><ActionAreaCard key={post.id} post={post}/>)}
+				<h2>id til logget inn person:{token.Id}</h2>
+
+>>>>>>> Stashed changes
 			</div>
 
 		</>
 	)
 }
 
+<<<<<<< Updated upstream
 async function getPosts(): Promise<postProps[]> {
 	const response = await fetch("https://borro.azurewebsites.net/api/Post");
 	return await response.json();
+=======
+/*async function getPosts() {
+	
+	const response = await fetch("http://localhost:5066/api/Post",{headers:{'authorization': `Bearer ${token.accessToken}`}} );
+	const posts:postProps[]= await response.json();
+	return posts;
+>>>>>>> Stashed changes
 
-}
+}*/
