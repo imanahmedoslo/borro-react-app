@@ -18,7 +18,7 @@ export type postProps = {
 }
 
 async function FetchPost(id: number) {
-	const res = await fetch(`https://localhost:7245/api/Post/${id}`);
+	const res = await fetch(`https://borro.azurewebsites.net/api/Post/${id}`);
 	try {
 		if (!res.ok) {
 			throw new Error(`Http error status code ${res.status}`);
@@ -50,7 +50,7 @@ export function ViewPost() {
     }
 
 	return (
-		<Card sx={{maxWidth: 345}} className={"CardMui"}>
+		<Card sx={{maxWidth: 600}} className={"CardMui"}>
 			<CardMedia
 				component="img"
 				height="140"
