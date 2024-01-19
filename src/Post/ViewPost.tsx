@@ -2,6 +2,7 @@ import {useState, useEffect} from "react";
 import {Card} from "@mui/material";
 import {CardMedia, CardContent, Typography} from "@mui/material";
 import { useParams } from "react-router-dom";
+import {Button} from "@mui/material";
 
 
 export type postProps = {
@@ -50,21 +51,30 @@ export function ViewPost() {
     }
 
 	return (
-		<Card sx={{maxWidth: 600}} className={"CardMui"}>
+		<div className="viewPostContainer">
+		<Card sx={{maxWidth: 1000, maxHeight: 1000}} className={"PostMui"}>
 			<CardMedia
 				component="img"
-				height="140"
+				height="300"
 				image="https://placehold.co/600x400"
 				alt="Placeholder"
 			/>
 				<CardContent className={"CardMuiContent"}>
-			<Typography gutterBottom variant="h5" component="div">
+			<Typography gutterBottom variant="h4" component="div" marginLeft={2}>
 				{post?.title}
 			</Typography>
-			<Typography variant="body2" color="text.secondary">
+			<Typography variant="body1" color="text.secondary" marginLeft={2}>
 				{post?.description}
 			</Typography>
+			<Typography variant="h5" color="text.secondary" textAlign={"right"} marginRight={7}>
+				Pris: {post?.price},-
+			</Typography>
+			<div className="button-spacing">
+				<Button variant="contained">Reserver</Button>
+				<Button variant="contained">Kontakt</Button>
+			</div>
 		</CardContent>
 		</Card>
+		</div>
 )
 }
