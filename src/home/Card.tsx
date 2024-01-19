@@ -20,7 +20,7 @@ type postProps = {
 }
 
 async function FetchPost(props:postProps){
-	const res = await fetch(`https://localhost:7245/api/Borro/${props.id}`);
+	const res = await fetch(`https://localhost:7245/api/Post/${props.id}`);
     try{
         if(!res.ok) {
             throw new Error(`Http error status code ${res.status}`);
