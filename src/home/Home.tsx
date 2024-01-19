@@ -28,7 +28,14 @@ export function Home() {
 
 	return (
 		<>
-			<div className={"CardContainer"}>
+			<div style={{
+				display: 'flex',
+				flexWrap: 'wrap',
+				justifyContent: 'flex-start',
+				margin: '0 auto',
+				maxWidth: '96%',
+				boxSizing: 'border-box',
+			}}>
 				{posts.map((post: postProps) =>
 					<ActionAreaCard key={post.id}
 					                title={post.title}

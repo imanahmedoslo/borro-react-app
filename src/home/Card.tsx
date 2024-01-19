@@ -16,27 +16,31 @@ export default function ActionAreaCard(cardProps: cardProps) {
 
 	return (
 		<Card sx={{
-			maxWidth: 345,
-			minWidth: 300,
-			margin: 5,
+			flexBasis: {
+				xs: "100%",
+				sm: "40%",
+				md: "31%",
+
+			},
+			flexGrow: 1,
+			maxHeight: 300,
+			margin: 1,
+			boxSizing: 'border-box',
 		}}>
 			<CardActionArea>
 				<CardMedia
 					component="img"
-					height="140"
+					height="210"
 					image="src/assets/img_1.png"
 					alt="Placeholder"
 					sx={{
-
 						backgroundColor: "#8c8c8c"
-					}}
-
-				/>
+					}}/>
 				<CardContent className={"CardMuiContent"}>
-					<Typography gutterBottom variant="h5" component="div">
+					<Typography gutterBottom variant="h4" component="div">
 						{cardProps.title}
 					</Typography>
-					<Typography variant="body2" color="text.secondary">
+					<Typography variant="body1" color="text.secondary">
 						{cardProps.description ?? "No description"}
 					</Typography>
 				</CardContent>

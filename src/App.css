@@ -34,21 +34,11 @@
   }
 }
 
-.card {
-  padding: 2em;
-}
+
 
 .read-the-docs {
   color: #888;
 }
 
-.CardContainer {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: left;
-  align-items: center;
-  margin: 40px 40px;
-  padding: 4px;
-  list-style: none;
-}
+
 
