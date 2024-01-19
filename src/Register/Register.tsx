@@ -13,7 +13,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link,  useNavigate  } from 'react-router-dom';
 import { useState } from 'react';
 import Logo from '../Logo';
-type CreateObject={
+export type CreateUserType={
   Email:string,
   Password:string,
 }
@@ -34,9 +34,9 @@ const handlePassword=(password:string,repeatedPassword:string):boolean=>{
     return true;
   } 
  }
- function generateObject(isCorrectEmail:boolean,PasswordsAlign:boolean, email:string,password:string):CreateObject|null{
+ function generateObject(isCorrectEmail:boolean,PasswordsAlign:boolean, email:string,password:string):CreateUserType|null{
   if(isCorrectEmail&&PasswordsAlign){
-    var userInfo:CreateObject={Email:email,Password:password}
+    var userInfo:CreateUserType={Email:email,Password:password}
     return userInfo
   }
   else return null;
@@ -44,8 +44,13 @@ const handlePassword=(password:string,repeatedPassword:string):boolean=>{
 
  
 
+<<<<<<< Updated upstream
 async function CreateUser(userInfo:CreateObject):Promise<number>{
   const response= await fetch(`https://borro.azurewebsites.net/api/user`, {method:'POST', headers:{'Content-Type':'application/json'} ,body:JSON.stringify(userInfo)});
+=======
+async function CreateUser(userInfo:CreateUserType):Promise<number>{
+  const response= await fetch(`http://localhost:5066/api/Borro/user`, {method:'POST', headers:{'Content-Type':'application/json'} ,body:JSON.stringify(userInfo)});
+>>>>>>> Stashed changes
   const statusCode= await response.status
 return statusCode;
 }

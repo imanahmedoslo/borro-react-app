@@ -11,22 +11,42 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Stack from '@mui/material/Stack';
 import Logo from '../Logo';
-import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
+import { useState } from 'react';
+import { BrowserRouter, Route, Routes, Link, useNavigate } from 'react-router-dom';
 import { ForkRight, Home } from '@mui/icons-material';
+import { CreateUserType } from '../Register/Register';
+import { Context } from '@popperjs/core';
 
-
-
+type TokenAndId={
+  accessToken:string,
+  Id:number
+}
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
+/*async function LoginFunctionality(userInfo:CreateUserType){
+const response= await fetch(`http://localhost:5066/api/Login`, {method:'POST', headers:{'Content-Type':'application/json'} ,body:JSON.stringify(userInfo)});
+if (!response.ok) {
+  throw new Error(`HTTP error! Status: ${response.status}`);
+}
+ const responseJson=  await response.json()
+const LoginResponse:TokenAndId={
+  accessToken:responseJson.accessToken,
+  Id:responseJson.id
+}
+return LoginResponse
+}*/
+type LoginProps={
+  LoginFunctionality:(userInfo:CreateUserType)=>Promise<void>
+}
 
-export default function LogIn() {
+export default function LogIn({LoginFunctionality}:LoginProps) {
+  const navigate = useNavigate();
+  const [email,setEmail]=useState<string>("");
+ const [password, setPassword]=useState<string>("")
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const userInfo:CreateUserType={Email:email,Password:password}
+    LoginFunctionality(userInfo).then(response=> navigate('/'))
   };
 
   return (
@@ -49,6 +69,7 @@ export default function LogIn() {
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 2 }}>
             <TextField
               margin="normal"
+              onChange={e=>setEmail(e.target.value)}
               required
               fullWidth
               id="email"
@@ -59,6 +80,7 @@ export default function LogIn() {
             />
             <TextField
               margin="normal"
+              onChange={e=>setPassword(e.target.value)}
               required
               fullWidth
               name="password"
@@ -68,7 +90,7 @@ export default function LogIn() {
               autoComplete="current-password"
             />
             <Stack spacing={{xs:1, sm: 2}} direction='row' alignItems="center">
-            <Link to={"/user"} style={{ flexGrow: 1 }}>
+            
             <Button
               type="submit"
               fullWidth
@@ -77,7 +99,6 @@ export default function LogIn() {
               >
               Sign In
             </Button>
-            </Link>
             <Link to={"/register"} style={{ flexGrow: 1 }}>
             <Button
               type="submit"
@@ -96,9 +117,6 @@ export default function LogIn() {
                 
               </Grid>
               <Grid item>
-                
-              
-               
               </Grid>
             </Grid>
           </Box>
