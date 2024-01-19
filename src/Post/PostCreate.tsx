@@ -82,8 +82,8 @@ export default function PostCreate() {
             />
             If the Item is free please check the box
             <Checkbox></Checkbox>
-
-            <Button component="label" variant="contained" startIcon={<CloudUploadIcon/>}>
+            
+            <Button component="label" variant="contained" startIcon={<CloudUploadIcon/>}  >
             Upload a picture of your item
             <VisuallyHiddenInput type="file" />
             </Button>
