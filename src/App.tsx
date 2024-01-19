@@ -11,6 +11,7 @@ import {PlanetList} from "./examples/PlanetList.tsx";
 import SearchAppBar from "./home/Search.tsx";
 import Register from './Register/Register.tsx';
 import PostCreate from './PostPage/PostCreate.tsx';
+import { ViewPost, postProps } from './PostPage/ViewPost.tsx';
 
 
 type ProtectedRouteProps = {
@@ -59,6 +60,7 @@ function App() {
 					<Route path={"/planets"} element={<PlanetList/>}></Route>
 					<Route path={"/planets/:planetId"} element={<PlanetDetail/>}></Route>
 					<Route path={"/postCreate"}element={<PostCreate/>}></Route>
+					<Route path={"/post/:postId"}element={<ViewPost />}></Route>
 				</Routes>
 			</BrowserRouter>
 		</>
