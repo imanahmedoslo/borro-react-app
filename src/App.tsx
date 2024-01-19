@@ -10,7 +10,7 @@ import {PlanetDetail} from "./examples/PlanetDetail.tsx";
 import {PlanetList} from "./examples/PlanetList.tsx";
 import SearchAppBar from "./home/Search.tsx";
 import Register from './Register/Register.tsx';
-import PostPage from './PostPage/PostPage.tsx';
+import PostCreate from './PostPage/PostCreate.tsx';
 
 
 type ProtectedRouteProps = {
@@ -49,7 +49,7 @@ function App() {
 						<Link to={"/planets"}><Button>Planet</Button></Link>
 					</div>
 					<div>
-						<Link to={"/postPage"}><Button> post an add </Button></Link>
+						<Link to={"/postCreate"}><Button> post an add </Button></Link>
 					</div>
 				</div>
 				<Routes>
@@ -58,7 +58,7 @@ function App() {
 					<Route path={"/register"} element={<Register/>}></Route>
 					<Route path={"/planets"} element={<PlanetList/>}></Route>
 					<Route path={"/planets/:planetId"} element={<PlanetDetail/>}></Route>
-					<Route path={"/postPage"}element={<PostPage/>}></Route>
+					<Route path={"/postCreate"}element={<PostCreate/>}></Route>
 				</Routes>
 			</BrowserRouter>
 		</>

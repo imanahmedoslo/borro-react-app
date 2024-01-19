@@ -8,25 +8,36 @@ import Box from '@mui/material/Box';
 //import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
 import Stack from '@mui/material/Stack';
 import Logo from '../Logo';
 import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 import { ForkRight, Home } from '@mui/icons-material';
 import Checkbox from '@mui/material/Checkbox';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
-
+const VisuallyHiddenInput = styled('input')({
+  clip: 'rect(0 0 0 0)',
+  clipPath: 'inset(50%)',
+  height: 1,
+  overflow: 'hidden',
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+  whiteSpace: 'nowrap',
+  width: 1,
+});
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function PostPage() {
+export default function PostCreate() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+      title: data.get('title'),
+      description: data.get('description'),
     });
   };
 
@@ -45,7 +56,7 @@ export default function PostPage() {
         >
         <Logo height={70}width={70}/>
           <Typography component="h1" variant="h5">
-            Log In
+            Create an add
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 2 }}>
           <TextField
@@ -71,6 +82,12 @@ export default function PostPage() {
             />
             If the Item is free please check the box
             <Checkbox></Checkbox>
+
+            <Button component="label" variant="contained" startIcon={<CloudUploadIcon/>}>
+            Upload a picture of your item
+            <VisuallyHiddenInput type="file" />
+            </Button>
+
            
             <Stack spacing={{xs:1, sm: 2}} direction='row' alignItems="center">
             <Link to={"/Calendar"} style={{ flexGrow: 1 }}>
@@ -84,7 +101,6 @@ export default function PostPage() {
             </Button>
             </Link>
            
-            
             </Stack>
 
             <Grid container>
@@ -93,8 +109,6 @@ export default function PostPage() {
               </Grid>
               <Grid item>
                 
-              
-               
               </Grid>
             </Grid>
           </Box>
