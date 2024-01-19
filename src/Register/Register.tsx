@@ -45,7 +45,7 @@ const handlePassword=(password:string,repeatedPassword:string):boolean=>{
  
 
 async function CreateUser(userInfo:CreateObject):Promise<number>{
-  const response= await fetch(`http://localhost:5066/api/Borro/user`, {method:'POST', headers:{'Content-Type':'application/json'} ,body:JSON.stringify(userInfo)});
+  const response= await fetch(`https://borro.azurewebsites.net/api/user`, {method:'POST', headers:{'Content-Type':'application/json'} ,body:JSON.stringify(userInfo)});
   const statusCode= await response.status
 return statusCode;
 }

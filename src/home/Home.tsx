@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import SearchAppBar from "./Search.tsx";
 import ActionAreaCard from "./Card.tsx";
 
@@ -20,22 +20,28 @@ type postState = {
 }
 
 export function Home() {
+	const [posts, setPosts] = React.useState<postProps[]>([]);
 
-	getPosts().then((posts) => { console.log(posts)});
+	useEffect(() => {
+		getPosts().then((posts: postProps[]) => setPosts(posts));
+	}, []);
 
 	return (
 		<>
 			<div className={"CardContainer"}>
-				<ActionAreaCard/>
-				<ActionAreaCard/>
-				<ActionAreaCard/>
-
+				{posts.map((post: postProps) =>
+					<ActionAreaCard key={post.id}
+					                title={post.title}
+					                description={post.description}
+					/>)
+				}
 			</div>
+
 		</>
 	)
 }
 
-async function getPosts() {
+async function getPosts(): Promise<postProps[]> {
 	const response = await fetch("https://borro.azurewebsites.net/api/Post");
 	return await response.json();
 

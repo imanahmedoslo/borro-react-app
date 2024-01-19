@@ -12,6 +12,7 @@ import SearchAppBar from "./home/Search.tsx";
 import Register from './Register/Register.tsx';
 import PostCreate from './Post/PostCreate.tsx';
 import { ViewPost, postProps } from './Post/ViewPost.tsx';
+import Calender from './Post/PostCreateCalender.tsx';
 
 
 type ProtectedRouteProps = {
@@ -61,6 +62,7 @@ function App() {
 					<Route path={"/planets/:planetId"} element={<PlanetDetail/>}></Route>
 					<Route path={"/postCreate"}element={<PostCreate/>}></Route>
 					<Route path={"/post/:postId"}element={<ViewPost />}></Route>
+					<Route path={"/Calendar"}element={<Calender/>}></Route>
 				</Routes>
 			</BrowserRouter>
 		</>
