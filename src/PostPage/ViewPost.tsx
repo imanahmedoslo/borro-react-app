@@ -1,4 +1,8 @@
 import { useState, useEffect } from "react";
+import { Card } from "@mui/material";
+import Typography from "@mui/material";
+import CardMedia from "@mui/material";
+import CardContent from "@mui/material";
 
 
 type postProps = {
@@ -39,6 +43,21 @@ async function FetchPost(props:postProps){
     },[]);
 
     return(
-        
-    )
+        <Card sx={{maxWidth: 345}} className={"CardMui"}>
+				{/* <CardMedia
+					component="img"
+					height="140"
+					image="src/assets/img.png"
+					alt="Placeholder"
+				/>
+				<CardContent className={"CardMuiContent"}>
+					<Typography gutterBottom variant="h5" component="div">
+						{post?.title}
+					</Typography>
+					<Typography variant="body2" color="text.secondary">
+						{post?.description}
+					</Typography>
+				</CardContent> */}
+		</Card>   
+        )
   }
