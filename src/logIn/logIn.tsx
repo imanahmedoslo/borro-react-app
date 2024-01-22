@@ -92,9 +92,9 @@ export default function LogIn({LoginFunctionality}:LoginProps) {
               id="password"
               autoComplete="current-password"
             />
-            <Stack spacing={{xs:1, sm: 2}} direction='row' alignItems="center">
+            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
             
-            <Button
+            <Button 
               type="submit"
               fullWidth
               variant="contained"
@@ -102,7 +102,7 @@ export default function LogIn({LoginFunctionality}:LoginProps) {
               >
               Sign In
             </Button>
-            <Link to={"/register"} style={{ flexGrow: 1 }}>
+            <Link to={"/register"} >
             <Button
               type="submit"
               fullWidth
@@ -113,7 +113,7 @@ export default function LogIn({LoginFunctionality}:LoginProps) {
             </Button>
             </Link>
             
-            </Stack>
+            </div>
 
             <Grid container>
               <Grid item xs>
@@ -130,3 +130,5 @@ export default function LogIn({LoginFunctionality}:LoginProps) {
     </>
   );
 }
+// style={{ flexGrow: 1 }}
+// {{sm: 1}} direction='row' alignItems="center">
