@@ -1,47 +1,49 @@
 import * as React from 'react';
 import {useState} from 'react'
-import { Range, DateRange, DateRangeProps } from 'react-date-range';
+import { Range, DateRange, DateRangeProps, RangeKeyDict } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 
+type calenderProps={
+  state:Range[],
+  setState:(state:Range[])=>void,
+  handleDateChange:(item:RangeKeyDict)=>void
+}
 
-
-export default function Calendar() {
-    const [dateRange, setDateRange] = useState<Range[]>([
+ export default function Calendar({state,handleDateChange,setState}:calenderProps) {
+     const [dateRange, setDateRange] = useState<Range[]>([
       {
         startDate: new Date(),
         endDate: new Date(),
-        key: 'selection'
-      }
+         key: 'selection'
+       }
     ]);
   
-    const handleDateChange = (item) => {
+   /* const handleDateChange = (item:RangeKeyDict) => {
       // Update the state when the date range changes
-      setDateRange([item.selection]);
-    };
+       setDateRange([item.selection]);
+       console.log(item)
+       console.log(dateRange)
+       console.log(item.selection)
+     };*/
   
-    return (
-        <div style={calendarContainerStyle}>
-      <DateRange
+     return (
+         <div style={calendarContainerStyle}>
+       <DateRange
         editableDateInputs={true}
-        onChange={handleDateChange}
+        onChange={e=>handleDateChange(e)}
         moveRangeOnFirstSelection={false}
-        ranges={dateRange}
+       ranges={dateRange}
         weekStartsOn={1}
 
-      />
+       />
       </div>
-    );
-  }
+     );
+   }
   const calendarContainerStyle = {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '50vh',
-  };
-
-
-
-
-
+     display: 'flex',
+     justifyContent: 'center',
+     alignItems: 'center',
+     height: '50vh',
+   };
 

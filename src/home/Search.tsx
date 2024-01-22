@@ -55,7 +55,6 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
 }));
 
 export default function SearchAppBar({setSearchText}: { setSearchText: (text: string) => void }) {
-	const isLoggedIn: boolean = localStorage.getItem('logInStatus') === 'true' ? true : false
 	const [state, setState] = useState({
 		left: false,
 	});
@@ -67,7 +66,7 @@ export default function SearchAppBar({setSearchText}: { setSearchText: (text: st
 	const openDrawer = () => {
 		setState(state => ({...state, left: true}));
 	}
-
+	const isLoggedIn: boolean = localStorage.getItem('logInStatus') === 'true' ? true : false
 
 	return (
 		<Box sx={{flexGrow: 1}}>

@@ -46,6 +46,7 @@ function App() {
 	}
 
 
+
 	return (
 		<>
 			<SearchContext.Provider value={{searchText, setSearchText}}>
@@ -69,5 +70,4 @@ function App() {
 		</>
 	)
 }
-
 export default App
