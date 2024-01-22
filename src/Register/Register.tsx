@@ -44,13 +44,9 @@ const handlePassword=(password:string,repeatedPassword:string):boolean=>{
 
  
 
-<<<<<<< Updated upstream
-async function CreateUser(userInfo:CreateObject):Promise<number>{
-  const response= await fetch(`https://borro.azurewebsites.net/api/user`, {method:'POST', headers:{'Content-Type':'application/json'} ,body:JSON.stringify(userInfo)});
-=======
+
 async function CreateUser(userInfo:CreateUserType):Promise<number>{
   const response= await fetch(`http://localhost:5066/api/Borro/user`, {method:'POST', headers:{'Content-Type':'application/json'} ,body:JSON.stringify(userInfo)});
->>>>>>> Stashed changes
   const statusCode= await response.status
 return statusCode;
 }

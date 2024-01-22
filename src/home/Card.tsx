@@ -4,12 +4,9 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import {CardActionArea} from '@mui/material';
-<<<<<<< Updated upstream
 import {useEffect, useState} from 'react';
-=======
-import { useEffect, useState } from 'react';
 import { postProps } from './Home';
->>>>>>> Stashed changes
+
 
 
 type cardProps = {
@@ -17,18 +14,13 @@ type cardProps = {
 	description: string;
 }
 
-<<<<<<< Updated upstream
 export default function ActionAreaCard(cardProps: cardProps) {
 
-=======
+
 type CardProps={
 	post:postProps
 }
-
-export default function ActionAreaCard(post:CardProps) {
-const postObject= post.post;
->>>>>>> Stashed changes
-	return (
+return (
 		<Card sx={{
 			flexBasis: {
 				xs: "100%",
@@ -51,19 +43,12 @@ const postObject= post.post;
 						backgroundColor: "#8c8c8c"
 					}}/>
 				<CardContent className={"CardMuiContent"}>
-<<<<<<< Updated upstream
+
 					<Typography gutterBottom variant="h4" component="div">
 						{cardProps.title}
 					</Typography>
 					<Typography variant="body1" color="text.secondary">
 						{cardProps.description ?? "No description"}
-=======
-					<Typography gutterBottom variant="h5" component="div">
-						{postObject.title}
-					</Typography>
-					<Typography variant="body2" color="text.secondary">
-						{postObject.description}
->>>>>>> Stashed changes
 					</Typography>
 				</CardContent>
 			</CardActionArea>

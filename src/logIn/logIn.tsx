@@ -12,15 +12,12 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Stack from '@mui/material/Stack';
 import Logo from '../Logo';
 import { useState } from 'react';
-import { BrowserRouter, Route, Routes, Link, useNavigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Link, useNavigate,Navigate } from 'react-router-dom';
 import { ForkRight, Home } from '@mui/icons-material';
 import { CreateUserType } from '../Register/Register';
 import { Context } from '@popperjs/core';
+import { TokenAndId } from '../A/contextPage';
 
-type TokenAndId={
-  accessToken:string,
-  Id:number
-}
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 /*async function LoginFunctionality(userInfo:CreateUserType){
@@ -40,15 +37,21 @@ type LoginProps={
 }
 
 export default function LogIn({LoginFunctionality}:LoginProps) {
+  const sessionInfo:TokenAndId={accessToken:localStorage.getItem('token')??"",Id:parseInt(localStorage.getItem('id')??""),IsLoggedIn:localStorage.getItem('logInStatus')==='true'?true:false,ExpiresAt:localStorage.getItem('ExpiresAt')??``} ;
   const navigate = useNavigate();
   const [email,setEmail]=useState<string>("");
  const [password, setPassword]=useState<string>("")
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const userInfo:CreateUserType={Email:email,Password:password}
-    LoginFunctionality(userInfo).then(response=> navigate('/'))
+    try{
+      LoginFunctionality(userInfo).then(response=> navigate('/'))
+    }
+    catch{
+      console.error("could not log in");
+    };
+    
   };
-
   return (
     <>
     
