@@ -60,8 +60,8 @@ async function CreateUser(userInfo:CreateUserType):Promise<number>{
       throw new Error(`Error creating user: ${statusCode}`);
     }
 }
--
-export function Register() {
+
+export default function Register() {
   const navigate = useNavigate();
  const [email,setEmail]=useState<string>("");
  const [password, setPassword]=useState<string>("")
