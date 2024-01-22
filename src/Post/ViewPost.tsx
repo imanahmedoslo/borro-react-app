@@ -42,8 +42,10 @@ export function ViewPost() {
     const {postId} = useParams<keyof ViewPostParams>() as ViewPostParams;
 
 	useEffect(() => {
-		FetchPost(parseInt(postId))
-			.then(thePost => setPost(thePost))
+		if(postId){
+			FetchPost(parseInt(postId))
+				.then(thePost => setPost(thePost))
+		}
 	}, []);
 
     if (!post) {
