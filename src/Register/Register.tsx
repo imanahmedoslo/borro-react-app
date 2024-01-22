@@ -46,9 +46,19 @@ const handlePassword=(password:string,repeatedPassword:string):boolean=>{
 
 
 async function CreateUser(userInfo:CreateUserType):Promise<number>{
-  const response= await fetch(`https://borro.azurewebsites.net/api/Borro/user`, {method:'POST', headers:{'Content-Type':'application/json'} ,body:JSON.stringify(userInfo)});
-  const statusCode= await response.status
-return statusCode;
+  const response= await fetch(`https://borro.azurewebsites.net/api/User`, {
+    method:'POST', 
+    headers:{'Content-Type':'application/json'}, 
+    body:JSON.stringify(userInfo)
+  });
+
+    if (response.ok) {
+      const data = await response.json(); 
+      return data.userId;
+    } else {
+      const statusCode = await response.status;
+      throw new Error(`Error creating user: ${statusCode}`);
+    }
 }
 
 export default function Register() {
@@ -56,20 +66,29 @@ export default function Register() {
  const [email,setEmail]=useState<string>("");
  const [password, setPassword]=useState<string>("")
  const [repeatedPassword,setRepeatedPassword]=useState<string>("");
+
  const [emailFormat,setEmailFormat]=useState<boolean>(true)
  const[passwordAligned,setPasswordAligned]=useState<boolean>(true)
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const isPasswordsEqual = handlePassword(password,repeatedPassword);
     setPasswordAligned(isPasswordsEqual);
     const EmailIsValid= ValidateEmail(email)
     setEmailFormat(EmailIsValid);
-    const userInfo=generateObject(isPasswordsEqual,EmailIsValid,email,password)
-    if (userInfo!=null) {
-      CreateUser(userInfo).then(code=> code<300?navigate('/login'):navigate('/error'));
-      //this space here
+    const userInfo=generateObject(isPasswordsEqual,EmailIsValid,email,password);
+
+  if (userInfo != null) {
+    try {
+      const userId = await CreateUser(userInfo);
+      navigate(`/userInfo/${userId}`);
+    } catch (error) {
+      console.error(error);
+      navigate('/error');
     }
-    else console.log("if test not accesed");
+  } else {
+    console.log("User info is not valid.");
+  }
 
   };
 

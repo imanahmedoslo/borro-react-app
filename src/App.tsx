@@ -9,6 +9,7 @@ import SearchAppBar from "./home/Search.tsx";
 import Register from './Register/Register.tsx';
 import PostCreate from './Post/PostCreate.tsx';
 import {ViewPost, postProps} from './Post/ViewPost.tsx';
+import { UserInfoForm } from './Register/UserInfoForm.tsx';
 
 import {LoginFunctionality} from './A/contextPage.tsx';
 import {LocationDistance} from "./GoogleAPI/Maps.tsx";
@@ -64,6 +65,7 @@ function App() {
 						<Route path={"/register"} element={<Register/>}></Route>
 						<Route path={"/postCreate"} element={<PostCreate/>}></Route>
 						<Route path={"/post/:postId"} element={<ViewPost/>}></Route>
+						<Route path={"/userInfo/:userId"} element={<UserInfoForm/>}></Route>
 					</Routes>
 				</BrowserRouter>
 			</SearchContext.Provider>
