@@ -11,10 +11,14 @@ import Container from '@mui/material/Container';
 import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
 import Stack from '@mui/material/Stack';
 import Logo from '../Logo';
-import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
-import { ForkRight, Home } from '@mui/icons-material';
 import Checkbox from '@mui/material/Checkbox';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import { useState } from 'react';
+import 'react-date-range/dist/styles.css';
+import 'react-date-range/dist/theme/default.css';
+import { Range, DateRange, DateRangeProps } from 'react-date-range';
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -32,6 +36,15 @@ const VisuallyHiddenInput = styled('input')({
 const defaultTheme = createTheme();
 
 export default function PostCreate() {
+  const [openDialog, setOpenDialog] = useState(false);
+  const handleDialogOpen = () => {
+    setOpenDialog(true);
+  };
+
+  const handleDialogClose = () => {
+    setOpenDialog(false);
+  };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -82,14 +95,45 @@ export default function PostCreate() {
             />
             If the Item is free please check the box
             <Checkbox></Checkbox>
-            
+
+
+            <Stack spacing={{ xs: 1, sm: 2 }} direction="row" alignItems="center" style={{ flexGrow: 1 }}>
             <Button component="label" variant="contained" startIcon={<CloudUploadIcon/>}  >
             Upload a picture of your item
             <VisuallyHiddenInput type="file" />
             </Button>
-
+            </Stack>
            
-            <Stack spacing={{xs:1, sm: 2}} direction='row' alignItems="center">
+            
+            <Stack spacing={{ xs: 1, sm: 2 }} direction="row" alignItems="center" style={{ flexGrow: 1 }}>
+              <Button
+                type="button"
+                fullWidth
+                variant="contained"
+                onClick={handleDialogOpen}
+                sx={{ mt: 4, mb: 2 }}
+              >
+                Choose dates
+              </Button>
+            </Stack>
+
+            
+          </Box>
+        </Box>
+
+         {/* Calendar Dialog */}
+        <Dialog open={openDialog} onClose={handleDialogClose}>
+        <DialogContent>
+          <Calendar />
+        </DialogContent>
+      </Dialog>
+      </Container>
+     
+    </>
+  );
+}
+
+{/* <Stack spacing={{xs:1, sm: 2}} direction='row' alignItems="center">
             <Link to={"/Calendar"} style={{ flexGrow: 1 }}>
             <Button
               type="submit"
@@ -100,22 +144,38 @@ export default function PostCreate() {
               Choose dates 
             </Button>
             </Link>
-           
-            </Stack>
+            </Stack> */}
 
-            <Grid container>
-              <Grid item xs>
-                
-              </Grid>
-              <Grid item>
-                
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
-       
-      </Container>
-     
-    </>
-  );
-}
+              function Calendar() {
+              const [dateRange, setDateRange] = useState<Range[]>([
+                {
+                  startDate: new Date(),
+                  endDate: new Date(),
+                  key: 'selection'
+                }
+              ]);
+            
+              const handleDateChange = (item) => {
+                // Update the state when the date range changes
+                setDateRange([item.selection]);
+              };
+            
+              return (
+                  <div style={calendarContainerStyle}>
+                <DateRange
+                  editableDateInputs={true}
+                  onChange={handleDateChange}
+                  moveRangeOnFirstSelection={false}
+                  ranges={dateRange}
+                  weekStartsOn={1}
+          
+                />
+                </div>
+              );
+            }
+            const calendarContainerStyle = {
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              height: 'flex',
+            };
