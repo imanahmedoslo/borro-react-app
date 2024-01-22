@@ -26,24 +26,20 @@ type calenderProps={
        console.log(dateRange)
        console.log(item.selection)
      };*/
-  
      return (
-         <div style={calendarContainerStyle}>
+         <div>
        <DateRange
         editableDateInputs={true}
         onChange={e=>handleDateChange(e)}
         moveRangeOnFirstSelection={false}
        ranges={dateRange}
         weekStartsOn={1}
+        className='calendarContainerStyle'
+        
 
        />
       </div>
      );
    }
-  const calendarContainerStyle = {
-     display: 'flex',
-     justifyContent: 'center',
-     alignItems: 'center',
-     height: '50vh',
-   };
+  
 

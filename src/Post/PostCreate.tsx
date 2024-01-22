@@ -1,5 +1,5 @@
 
-import * as React from 'react';
+//import * as React from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -22,6 +22,7 @@ import { Range, DateRange, DateRangeProps } from 'react-date-range';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Calendar from './PostCreateCalender';
 import { RangeKeyDict } from 'react-date-range';
+import React, { useRef } from 'react';
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
   clipPath: 'inset(50%)',
@@ -44,6 +45,13 @@ const defaultTheme = createTheme();
 export default function PostCreate() { 
   const [isFree,setIsFree]=useState<boolean>(false);
   const[img,setImg]=useState<string>();
+    const fileInputRef = useRef<HTMLInputElement>(null);
+  
+    const handleCutsomClick = () => {
+      if (fileInputRef.current) {
+        fileInputRef.current.click();
+      }
+    };
   const [dateRange, setDateRange] = useState<Range[]>([
     {
       startDate: new Date(),
@@ -75,33 +83,42 @@ export default function PostCreate() {
     } else {
       setImg(undefined);
     }
+  
   }
   return (
-    <form onSubmit={e=>handleSubmit(e)}>
+    <form style={{display:'flex',flexDirection:'column',width:'100vw', justifyContent:'center', alignItems:'center'}}  onSubmit={e=>handleSubmit(e)}>
 
     
-      <Typography variant="h6" gutterBottom>
+      <Typography variant="h6" gutterBottom style={{paddingLeft:'10px', paddingBottom:'10p',fontSize:'30px', height:'15vh'}}>
         Lag en ny annonse
       </Typography>
-      <Grid container spacing={3}>
+      <Grid container spacing={3} style={{display: 'flex',flexDirection: 'row',justifyContent: 'center',width: '70vw'}}>
+        <div style={{display:'flex', flexDirection:'row', justifyContent:'space-between', width:'100vw'}}>
+        <div style={{display:'flex', flexDirection:'column', paddingLeft:'40px'}}>
+        <Grid >
+          <div style={{display:'flex', flexDirection:'column', paddingTop:'7px'}}>
+          <img src={img} style={{height:'18rem',width:'18rem', borderRadius:'5px', border:'2px grey solid'}}></img>
+          <Button onClick={handleCutsomClick} style={{width:'200px', height:'50px', border:'0.5px solid grey', marginTop:'10px', alignSelf:'center'}}>Velg et bilde:<input type='file' ref={fileInputRef} style={{display:'none'}} onChange={e=>handleimgInput(e)}/></Button>
+          </div>
+        </Grid>
+        </div>
+        <Grid item style={{ paddingTop:'10px', paddingLeft:'10px', paddingRight:'10px',border:'black solid 1px',borderRadius:'5px',backgroundColor:'white', height:'fit-content' }}>
+        <Calendar state={dateRange} setState={setDateRange} handleDateChange={handleDateChange}/>
+      </Grid>
+        </div>
+        <Grid item xs={12}>
         <Grid item xs={12} sm={6}>
           <TextField
+          style={{width:'200px', marginLeft:'5px'}}
             required
             id="Title"
             name="title"
-            label="Title"
+            label="Skriv inn Tittel:"
             fullWidth
             autoComplete="title"
             variant="standard"
           />
         </Grid>
-        <Grid>
-          <div>
-          <img src={img} style={{height:'200px',width:'200px'}}></img>
-          <input type='file' onChange={e=>handleimgInput(e)}/>
-          </div>
-        </Grid>
-        <Grid item xs={12}>
           <TextField
             required
             id="description"
@@ -144,8 +161,8 @@ export default function PostCreate() {
             variant="standard"
           />
         </Grid>
-        { isFree&&<Grid item xs={12} sm={6}>
-          <TextField
+       <Grid item xs={12} sm={6}>
+       { isFree&&<TextField
             required
             id="price"
             name="price"
@@ -153,17 +170,15 @@ export default function PostCreate() {
             fullWidth
             autoComplete="price"
             variant="standard"
-          />
-        </Grid>}
-        <Grid item xs={12}>
+          />}
+          <Grid item xs={12}>
           <FormControlLabel
             control={<Checkbox  onChange={e=>setIsFree(e.target.checked?true:false)} color="secondary" name="saveAddress" value="yes"  />}
-            label="Check the box if the item is free"
+            label="Kryss av for å angi pris"
           />
         </Grid>
-      </Grid>
-      <Grid>
-        <Calendar state={dateRange} setState={setDateRange} handleDateChange={handleDateChange}/>
+        </Grid>
+        <Button variant='contained' type='submit' style={{marginLeft:'30px', marginTop:'10px'}}>Lagre endringer</Button>
       </Grid>
       </form>
     
@@ -312,3 +327,7 @@ return()}*/
               alignItems: 'center',
               height: 'flex',
             };*/
+
+
+
+            
