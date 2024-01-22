@@ -12,7 +12,7 @@ import SearchAppBar from "./home/Search.tsx";
 import Register from './Register/Register.tsx';
 import PostCreate from './Post/PostCreate.tsx';
 import { ViewPost, postProps } from './Post/ViewPost.tsx';
-import Calender from './Post/PostCreateCalender.tsx';
+//import Calender from './Post/PostCreateCalender.tsx';
 import { Token } from '@mui/icons-material';
 import { LoginFunctionality } from './A/contextPage.tsx';
 
@@ -66,7 +66,7 @@ function ProtectedRoute(props: ProtectedRouteProps) {
 					<Route path={"/planets/:planetId"} element={<PlanetDetail/>}></Route>
 					<Route path={"/postCreate"}element={<PostCreate/>}></Route>
 					<Route path={"/post/:postId"}element={<ViewPost />}></Route>
-					<Route path={"/Calendar"}element={<Calender/>}></Route>
+					
 				</Routes>
 			</BrowserRouter>
 		</>
@@ -74,3 +74,6 @@ function ProtectedRoute(props: ProtectedRouteProps) {
 }
 
 export default App
+
+
+//<Route path={"/Calendar"}element={<Calender/>}></Route>
