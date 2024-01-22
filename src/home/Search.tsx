@@ -10,7 +10,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import {DrawerMenu, DrawerMenuProps} from "./Drawer.tsx";
 import {useState} from "react";
-import { LogedInIcon } from '../A/contextPage.tsx';
+import {LogedInIcon} from '../A/contextPage.tsx';
 
 const Search = styled('div')(({theme}) => ({
 	position: 'relative',
@@ -55,7 +55,7 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
 }));
 
 export default function SearchAppBar({setSearchText}: { setSearchText: (text: string) => void }) {
-	const isLoggedIn:boolean= localStorage.getItem('logInStatus')==='true'?true:false
+	const isLoggedIn: boolean = localStorage.getItem('logInStatus') === 'true' ? true : false
 	const [state, setState] = useState({
 		left: false,
 	});
@@ -105,10 +105,10 @@ export default function SearchAppBar({setSearchText}: { setSearchText: (text: st
 							onChange={event => setSearchText(event.target.value)} // update search text
 						/>
 					</Search>
-					{isLoggedIn&&<LogedInIcon/>}
+					{isLoggedIn && <LogedInIcon/>}
 				</Toolbar>
 			</AppBar>
-			
+
 		</Box>
 	);
 }

@@ -1,5 +1,6 @@
-import {Drawer} from "@mui/material";
-import {useState} from "react";
+import {Button, Drawer, List, ListItem} from "@mui/material";
+import React, {useState} from "react";
+import {Link} from "react-router-dom";
 
 export type DrawerMenuProps = {
 	open: boolean;
@@ -13,7 +14,11 @@ export function DrawerMenu(props : DrawerMenuProps) {
 			anchor={"left"}
 			open={props.open}
 			onClose={props.onClose}>
-			{("Drawer")}
+			<List>
+				<ListItem><Link to="/"><Button>Home</Button></Link></ListItem>
+				<ListItem><Link to="/login"><Button>Login</Button></Link></ListItem>
+				<ListItem><Link to="/postCreate"><Button>post an add</Button></Link></ListItem>
+			</List>
 		</Drawer>
 	</>
 }
