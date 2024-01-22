@@ -52,14 +52,29 @@ export function Home() {
 				maxWidth: '96%',
 				boxSizing: 'border-box',
 			}}>
-				{filteredPosts.map((post: postProps) =>
-					<ActionAreaCard key={post.id}
-					                title={post.title}
-					                description={post.description}
-					/>)
-				}
-			</div>
+		{filteredPosts.map(post =>
+		<ActionAreaCard
+		key={post.id}
+		id={post.id}
+		title={post.title}
+		description={post.description}
+		/>)}
+			</div>	
+					
+	</>)
+	
+	
+	}
+								
+    
+   
 
-		</>
-	)
-}
+
+	
+
+	
+
+
+
+
+

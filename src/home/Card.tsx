@@ -6,22 +6,29 @@ import Typography from '@mui/material/Typography';
 import {CardActionArea} from '@mui/material';
 import {useEffect, useState} from 'react';
 import { postProps } from './Home';
+import { useNavigate } from 'react-router-dom';
 
 
 
 type cardProps = {
 	title: string;
 	description: string;
+	id: number,
 }
 
 export default function ActionAreaCard(cardProps: cardProps) {
+	const navigate = useNavigate();
+
+	const handleClick = () => {
+		navigate(`/post/${cardProps.id}`)
+	}
 
 
 type CardProps={
 	post:postProps
 }
 return (
-		<Card sx={{
+		<Card onClick={handleClick} sx={{
 			flexBasis: {
 				xs: "100%",
 				sm: "40%",
