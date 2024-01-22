@@ -19,7 +19,9 @@ import { useState } from 'react';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import { Range, DateRange, DateRangeProps } from 'react-date-range';
-
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Calendar from './PostCreateCalender';
+import { RangeKeyDict } from 'react-date-range';
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
   clipPath: 'inset(50%)',
@@ -35,7 +37,139 @@ const VisuallyHiddenInput = styled('input')({
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
-export default function PostCreate() {
+
+
+
+
+export default function PostCreate() { 
+  const [isFree,setIsFree]=useState<boolean>(false);
+  const[img,setImg]=useState<string>();
+  const [dateRange, setDateRange] = useState<Range[]>([
+    {
+      startDate: new Date(),
+      endDate: new Date(),
+       key: 'selection'
+     }
+  ]);
+  const handleDateChange = (item:RangeKeyDict) => {
+    // Update the state when the date range changes
+     setDateRange([item.selection]);
+     console.log(item)
+     console.log(dateRange)
+     console.log(item.selection)
+   };
+   const handleSubmit=(e:React.FormEvent<HTMLFormElement>)=>{
+    
+   }
+  const handleimgInput=(e:React.ChangeEvent<HTMLInputElement>)=>{
+    const file= e.target.files?.[0]
+    if (file) {
+      // Convert the selected file to a data URL
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const result = reader.result?.toString();
+        setImg(result);
+        console.log(result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setImg(undefined);
+    }
+  }
+  return (
+    <form onSubmit={e=>handleSubmit(e)}>
+
+    
+      <Typography variant="h6" gutterBottom>
+        Lag en ny annonse
+      </Typography>
+      <Grid container spacing={3}>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            id="Title"
+            name="title"
+            label="Title"
+            fullWidth
+            autoComplete="title"
+            variant="standard"
+          />
+        </Grid>
+        <Grid>
+          <div>
+          <img src={img} style={{height:'200px',width:'200px'}}></img>
+          <input type='file' onChange={e=>handleimgInput(e)}/>
+          </div>
+        </Grid>
+        <Grid item xs={12}>
+          <TextField
+            required
+            id="description"
+            name="description"
+            label="Description"
+            fullWidth
+            autoComplete="description"
+            variant="standard"
+          />
+        </Grid>
+        
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            id="post-addresse"
+            name="post-addresse"
+            label="Post-addresse"
+            fullWidth
+            autoComplete="post-addresse"
+            variant="standard"
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            id="addresse"
+            name="addresse"
+            label="Addresse"
+            fullWidth
+            variant="standard"
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            required
+            id="zip"
+            name="zip"
+            label="Zip / Postal code"
+            fullWidth
+            autoComplete="shipping postal-code"
+            variant="standard"
+          />
+        </Grid>
+        { isFree&&<Grid item xs={12} sm={6}>
+          <TextField
+            required
+            id="price"
+            name="price"
+            label="Price pr day"
+            fullWidth
+            autoComplete="price"
+            variant="standard"
+          />
+        </Grid>}
+        <Grid item xs={12}>
+          <FormControlLabel
+            control={<Checkbox  onChange={e=>setIsFree(e.target.checked?true:false)} color="secondary" name="saveAddress" value="yes"  />}
+            label="Check the box if the item is free"
+          />
+        </Grid>
+      </Grid>
+      <Grid>
+        <Calendar state={dateRange} setState={setDateRange} handleDateChange={handleDateChange}/>
+      </Grid>
+      </form>
+    
+  );
+}
+/*export default function PostCreate() {
   const [openDialog, setOpenDialog] = useState(false);
   const handleDialogOpen = () => {
     setOpenDialog(true);
@@ -53,8 +187,8 @@ export default function PostCreate() {
       description: data.get('description'),
     });
   };
-
-  return (
+return()}*/
+  /*return (
     <>
     
       <Container component="main" maxWidth="xs">
@@ -121,22 +255,21 @@ export default function PostCreate() {
           </Box>
         </Box>
 
-         {/* Calendar Dialog */}
-        <Dialog open={openDialog} onClose={handleDialogClose}>
-        <DialogContent>
-          <Calendar />
-        </DialogContent>
-      </Dialog>
-      </Container>
+         {/* Calendar Dialog *///}
+       // <Dialog open={openDialog} onClose={handleDialogClose}>
+      //  <DialogContent>
+      //  </DialogContent>
+      //</Dialog>
+     // </Container>
      
-    </>
-  );
-}
+   // </>
+  //);
+//}
 
-{/* <Stack spacing={{xs:1, sm: 2}} direction='row' alignItems="center">
-            <Link to={"/Calendar"} style={{ flexGrow: 1 }}>
-            <Button
-              type="submit"
+//{/* <Stack spacing={{xs:1, sm: 2}} direction='row' alignItems="center">
+           // <Link to={"/Calendar"} style={{ flexGrow: 1 }}>
+           // <Button
+            /*  type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 4, mb: 2}}
@@ -144,9 +277,9 @@ export default function PostCreate() {
               Choose dates 
             </Button>
             </Link>
-            </Stack> */}
+            </Stack> *///}
 
-              function Calendar() {
+           /*   function Calendar() {
               const [dateRange, setDateRange] = useState<Range[]>([
                 {
                   startDate: new Date(),
@@ -164,7 +297,7 @@ export default function PostCreate() {
                   <div style={calendarContainerStyle}>
                 <DateRange
                   editableDateInputs={true}
-                  onChange={handleDateChange}
+                  onChange={handleDateChange()}
                   moveRangeOnFirstSelection={false}
                   ranges={dateRange}
                   weekStartsOn={1}
@@ -178,4 +311,4 @@ export default function PostCreate() {
               justifyContent: 'center',
               alignItems: 'center',
               height: 'flex',
-            };
+            };*/
