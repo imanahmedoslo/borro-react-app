@@ -17,10 +17,12 @@ type UserInfoType = {
   userId: number,
 };
 
-async function CreateUserInfo(userInfo: UserInfoType): Promise<number> {
+async function CreateUserInfo(userInfo: UserInfoType, authToken: string): Promise<number> {
   const response = await fetch('https://borro.azurewebsites.net/api/UserInfo', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${authToken}`},
     body: JSON.stringify({
       firstName: userInfo.firstName,
       lastName: userInfo.lastName,
@@ -68,7 +70,14 @@ export function UserInfoForm(){
       userId,
     };
 
-    const statusCode = await CreateUserInfo(userInfo);
+    const authToken = localStorage.getItem('authToken');
+
+    if (!authToken) {
+      console.error('Authentication token is not available.');
+      return navigate('/login');
+    }
+    
+    const statusCode = await CreateUserInfo(userInfo, authToken);
     if (statusCode === 201) {
       navigate('/');
     } else {
