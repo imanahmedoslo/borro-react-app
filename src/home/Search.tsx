@@ -54,10 +54,10 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
 	},
 }));
 
-export default function SearchAppBar({setSearchText}: {setSearchText: (text: string) => void}) {
+export default function SearchAppBar({setSearchText}: { setSearchText: (text: string) => void }) {
 	const isLoggedIn:boolean= localStorage.getItem('logInStatus')==='true'?true:false
 	const [state, setState] = useState({
-		left: true,
+		left: false,
 	});
 
 	const onClose = () => {
@@ -80,7 +80,12 @@ export default function SearchAppBar({setSearchText}: {setSearchText: (text: str
 						edge="start"
 						color="inherit"
 						aria-label="open drawer"
-						sx={{mr: 2}}>
+						sx={{
+							mr: 2,
+							'&:focus': {
+								outline: 'none',
+							},
+						}}>
 						<MenuIcon/>
 					</IconButton>
 					<Typography
@@ -90,7 +95,7 @@ export default function SearchAppBar({setSearchText}: {setSearchText: (text: str
 						sx={{flexGrow: 1, display: {xs: 'none', sm: 'block'}}}>
 						borro
 					</Typography>
-					<Search >
+					<Search>
 						<SearchIconWrapper>
 							<SearchIcon/>
 						</SearchIconWrapper>

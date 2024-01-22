@@ -10,7 +10,6 @@ export function DrawerMenu(props : DrawerMenuProps) {
 
 	return <>
 		<Drawer
-			BackdropProps={{invisible: true}}
 			anchor={"left"}
 			open={props.open}
 			onClose={props.onClose}>

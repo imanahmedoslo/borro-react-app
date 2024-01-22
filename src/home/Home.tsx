@@ -2,6 +2,7 @@ import React from "react";
 import SearchAppBar from "./Search.tsx";
 import ActionAreaCard from "./Card.tsx";
 import { useState,useEffect } from "react";
+
 export type postProps = {
 	id: number,
 	title: string,
@@ -15,7 +16,9 @@ export type postProps = {
 	userId: number
 }
 
-
+type postState = {
+	posts: postProps[]
+}
 
 export function Home() {
 	const [posts, setPosts] = React.useState<postProps[]>([]);
@@ -25,7 +28,7 @@ export function Home() {
 	async function getPosts(): Promise<postProps[]> {
 		const response = await fetch("https://borro.azurewebsites.net/api/Post");
 		return await response.json();}
-	
+
 	useEffect(() => {
 		getPosts().then((posts: postProps[]) => setPosts(posts));
 	}, []);
@@ -38,8 +41,9 @@ export function Home() {
 		);
 	}, [posts, searchText]);
 
-	return (<>
-	<SearchAppBar setSearchText={setSearchText} />
+	return (
+		<>
+			<SearchAppBar setSearchText={setSearchText}/>
 			<div style={{
 				display: 'flex',
 				flexWrap: 'wrap',
@@ -48,23 +52,14 @@ export function Home() {
 				maxWidth: '96%',
 				boxSizing: 'border-box',
 			}}>
-		{filteredPosts.map(post =><ActionAreaCard key={post.id} title={post.title} description={post.description}/>)}
-			</div>	
-					
-	</>)
-	
-	
-	}
-								
-    
-   
+				{filteredPosts.map((post: postProps) =>
+					<ActionAreaCard key={post.id}
+					                title={post.title}
+					                description={post.description}
+					/>)
+				}
+			</div>
 
-
-	
-
-	
-
-
-
-
-
+		</>
+	)
+}

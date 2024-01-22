@@ -51,9 +51,7 @@ function ProtectedRoute(props: ProtectedRouteProps) {
 					<div>
 						<Link to={"/login"}><Button>Login</Button></Link>
 					</div>
-					<div>
-						<Link to={"/planets"}><Button>Planet</Button></Link>
-					</div>
+
 					<div>
 						<Link to={"/postCreate"}><Button> post an add </Button></Link>
 					</div>
@@ -62,8 +60,6 @@ function ProtectedRoute(props: ProtectedRouteProps) {
 					<Route path={"/"} element={<Home/>}></Route>
 					<Route path={"/login"} element={<ProtectedRoute><LogIn LoginFunctionality={LoginFunctionality}/></ProtectedRoute>}></Route>
 					<Route path={"/register"} element={<Register/>}></Route>
-					<Route path={"/planets"} element={<PlanetList/>}></Route>
-					<Route path={"/planets/:planetId"} element={<PlanetDetail/>}></Route>
 					<Route path={"/postCreate"}element={<PostCreate/>}></Route>
 					<Route path={"/post/:postId"}element={<ViewPost />}></Route>
 					<Route path={"/Calendar"}element={<Calender/>}></Route>

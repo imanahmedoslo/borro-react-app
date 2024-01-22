@@ -29,11 +29,15 @@ return (
 
 			},
 			flexGrow: 1,
-			maxHeight: 300,
+			maxHeight: 350,
 			margin: 1,
 			boxSizing: 'border-box',
 		}}>
-			<CardActionArea>
+			<CardActionArea sx={{
+				"&:focus": {
+					outline: 'none',
+				},
+			}}>
 				<CardMedia
 					component="img"
 					height="210"
