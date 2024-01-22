@@ -3,7 +3,6 @@ import SearchAppBar from "./Search.tsx";
 import ActionAreaCard from "./Card.tsx";
 import {useState, useEffect} from "react";
 import {SearchContext} from "../App.tsx";
-import MapContainer from "../GoogleAPI/Maps.tsx";
 
 export type postProps = {
 	id: number,
@@ -56,7 +55,7 @@ export function Home() {
 
 	return (
 		<>
-			<MapContainer/>
+
 			<div style={{
 				display: 'flex',
 				flexWrap: 'wrap',

@@ -12,6 +12,7 @@ import {ViewPost, postProps} from './Post/ViewPost.tsx';
 import { UserInfoForm } from './Register/UserInfoForm.tsx';
 
 import {LoginFunctionality} from './A/contextPage.tsx';
+import {LocationDistance} from "./GoogleAPI/Maps.tsx";
 
 
 type ProtectedRouteProps = {
@@ -49,6 +50,7 @@ function App() {
 
 	return (
 		<>
+			<LocationDistance/>
 			<SearchContext.Provider value={{searchText, setSearchText}}>
 				<BrowserRouter>
 					<SearchAppBar setSearchText={setSearchText}/>
