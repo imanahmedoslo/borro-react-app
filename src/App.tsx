@@ -10,14 +10,14 @@ import Register from './Register/Register.tsx';
 import PostCreate from './Post/PostCreate.tsx';
 import {ViewPost, postProps} from './Post/ViewPost.tsx';
 import {UserInfoForm} from './Register/UserInfoForm.tsx';
-
 import {LoginFunctionality} from './A/contextPage.tsx';
 import {LocationDistance} from "./GoogleAPI/Maps.tsx";
 import {LoadScript} from "@react-google-maps/api";
 
 
+
 type ProtectedRouteProps = {
-  children?: JSX.Element;
+	children?: JSX.Element;
 
 }
 export const SearchContext = React.createContext<{
@@ -70,7 +70,10 @@ function App() {
             <Route path={"/postCreate"} element={<PostCreate/>}></Route>
             <Route path={"/post/:postId"} element={<ViewPost/>}></Route>
             <Route path={"/userInfo/:userId"} element={<UserInfoForm/>}></Route>
-          </Routes>
+          <Route path={"/userProfile/:id"} element={<UserProfile/>}></Route>
+						<Route path={"/editUser/:id"} element={<EditUserProfile/>}></Route>
+						<Route path={"/changePassword/:id"} element={<ChangePassword/>}></Route>
+					</Routes>
         </BrowserRouter>
       </SearchContext.Provider>
     </>

@@ -15,12 +15,15 @@ export function DrawerMenu(props : DrawerMenuProps) {
 			onClose={props.onClose}>
 			<List>
 
-				<ListItem><Link to="/"><Button>Home</Button></Link></ListItem>
+				<ListItem><Link to="/"><Button>Annonser</Button></Link></ListItem>
+				<Divider orientation="horizontal"/>
+				<ListItem><Link to="/postCreate"><Button>Legg ut annonse</Button></Link></ListItem>
+				<Divider orientation="horizontal"/>
+				<ListItem><Link to="/login"><Button>Lagret annonser</Button></Link></ListItem>
+				<Divider orientation="horizontal"/>
+				<ListItem><Link to="/login"><Button>Meldinger</Button></Link></ListItem>
 				<Divider orientation="horizontal"/>
 
-				<ListItem><Link to="/login"><Button>Login</Button></Link></ListItem>
-				<Divider orientation="horizontal"/>
-				<ListItem><Link to="/postCreate"><Button>post an add</Button></Link></ListItem>
 
 			</List>
 		</Drawer>
