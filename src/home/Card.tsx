@@ -14,6 +14,7 @@ type cardProps = {
 	title: string;
 	description: string;
 	id: number,
+	img:string
 }
 
 export default function ActionAreaCard(cardProps: cardProps) {
@@ -28,7 +29,7 @@ type CardProps={
 	post:postProps
 }
 return (
-		<Card onClick={handleClick} sx={{
+		<Card key={cardProps.id} onClick={handleClick} sx={{
 			flexBasis: {
 				xs: "100%",
 				sm: "40%",
@@ -48,7 +49,8 @@ return (
 				<CardMedia
 					component="img"
 					height="210"
-					image="src/assets/img_1.png"
+					image={cardProps.img}
+					src={cardProps.img}
 					alt="Placeholder"
 					sx={{
 						backgroundColor: "#8c8c8c"

@@ -13,6 +13,7 @@ import { UserInfoForm } from './Register/UserInfoForm.tsx';
 
 import {LoginFunctionality} from './A/contextPage.tsx';
 import {LocationDistance} from "./GoogleAPI/Maps.tsx";
+import { MyPosts } from './Post/MyPosts.tsx';
 
 
 type ProtectedRouteProps = {
@@ -63,6 +64,7 @@ function App() {
 						<Route path={"/postCreate"} element={<PostCreate/>}></Route>
 						<Route path={"/post/:postId"} element={<ViewPost/>}></Route>
 						<Route path={"/userInfo/:userId"} element={<UserInfoForm/>}></Route>
+						<Route path={`/posts/:userId`} element={<MyPosts/>}></Route>
 					</Routes>
 				</BrowserRouter>
 			</SearchContext.Provider>

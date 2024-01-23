@@ -58,7 +58,7 @@ export function ViewPost() {
 			<CardMedia
 				component="img"
 				height="300"
-				image="https://placehold.co/600x400"
+				image={`${post.image}`}
 				alt="Placeholder"
 			/>
 				<CardContent className={"CardMuiContent"}>
