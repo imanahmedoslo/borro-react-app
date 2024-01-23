@@ -8,7 +8,7 @@ export type DrawerMenuProps = {
 }
 export function DrawerMenu(props : DrawerMenuProps) {
 
-	return <>
+	return <> 
 		<Drawer
 			anchor={"left"}
 			open={props.open}

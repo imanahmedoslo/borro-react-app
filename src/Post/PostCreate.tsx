@@ -1,20 +1,10 @@
 
-//import * as React from 'react';
 import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-//import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import { createTheme, styled, ThemeProvider } from '@mui/material/styles';
-import Stack from '@mui/material/Stack';
-import Logo from '../Logo';
 import Checkbox from '@mui/material/Checkbox';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
 import { useState } from 'react';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
@@ -23,6 +13,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Calendar from './PostCreateCalender';
 import { RangeKeyDict } from 'react-date-range';
 import React, { useRef } from 'react';
+
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
   clipPath: 'inset(50%)',

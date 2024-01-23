@@ -12,7 +12,7 @@ export type TokenAndId = {
 	ExpiresAt: string,
 	IsLoggedIn: boolean
 }
-type ProfileType = {
+export type ProfileType = {
 	Id: number,
 	firstName: string,
 	LastName: string,
@@ -25,6 +25,7 @@ type ProfileType = {
 	About: string,
 	UserId: number
 }
+
 
 export async function LoginFunctionality(userInfo: CreateUserType) {
 	const response = await fetch(`https://borro.azurewebsites.net/api/Login
@@ -91,4 +92,9 @@ export function LogedInIcon() {
 			</>
 		)
 	}
+}
+
+export async function getPosts() {
+	const response = await fetch("https://borro.azurewebsites.net/api/Post");
+	return await response.json();
 }

@@ -58,7 +58,7 @@ export function Home() {
 		<>
 			<div>
 				<div>
-					<Filter/>
+					<Filter />
 				</div>
 				<div style={{
 					display: 'flex',
@@ -74,6 +74,7 @@ export function Home() {
 							id={post.id}
 							title={post.title}
 							description={post.description}
+							location={post.location}
 						/>)}
 				</div>
 			</div>

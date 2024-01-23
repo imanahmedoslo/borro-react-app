@@ -27,15 +27,20 @@ const MapContainer = () => {
 */
 
 import React, {useEffect, useState} from "react";
-import {GoogleMap, LoadScript} from "@react-google-maps/api";
+import {GoogleMap, LoadScript } from "@react-google-maps/api";
+import Typography from "@mui/material/Typography";
 
 interface ILocation {
 	lat: number;
 	lng: number;
 }
 
-type Library = "geometry";
-const libraries: Library[] = ["geometry"];
+type AddressProps = {
+	userAddress: string;
+	postAddress: string;
+}
+
+
 
 async function getGeocode(address: string): Promise<ILocation> {
 	const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyBRA8VU6f0Ciqy3aa5-JCQlS4TEqliQECs`);
@@ -47,19 +52,17 @@ async function getGeocode(address: string): Promise<ILocation> {
 			lng: response.data.results[0].geometry.location.lng,
 			lat: response.data.results[0].geometry.location.lat
 		}
-		console.log(geoLocation);
 		return geoLocation;
 	} else {
 		throw new Error('Unable to find location');
 	}
 }
 
-export function LocationDistance() {
-	const [mapsLoaded, setMapsLoaded] = useState(false);
+export function LocationDistance(props: AddressProps) {
 	const [distance, setDistance] = useState<number | null>(null);
 
 	useEffect(() => {
-		if (mapsLoaded) {
+		if (props.userAddress !== "" && props.postAddress !== "") {
 			const getDistance = (loc1: ILocation, loc2: ILocation): number => {
 				const latLng1 = new window.google.maps.LatLng(loc1.lat, loc1.lng);
 				const latLng2 = new window.google.maps.LatLng(loc2.lat, loc2.lng);
@@ -67,24 +70,20 @@ export function LocationDistance() {
 			};
 
 			async function fetchLocationsAndComputeDistance() {
-				const loc1 = await getGeocode("solstad terrasse 30");
-				const loc2 = await getGeocode("Nydalen oslo spaces");
+				const loc1 = await getGeocode(props.userAddress);
+				const loc2 = await getGeocode(props.postAddress);
 				setDistance(parseFloat((getDistance(loc1, loc2) / 1000).toFixed(2)));
 			}
 
 			fetchLocationsAndComputeDistance();
 		}
-	}, [mapsLoaded]);
+	}, [props.userAddress, props.postAddress]);
 
 	return (
 		<div>
-			<LoadScript
-				googleMapsApiKey="AIzaSyBRA8VU6f0Ciqy3aa5-JCQlS4TEqliQECs"
-				libraries={libraries}
-				onLoad={() => setMapsLoaded(true)}>
-			</LoadScript>
 
-			{distance && distance > 0 ? <p>Distance: {distance}km</p> : <p>Loading</p>}
+
+			{distance && distance > 0 ? <Typography>Distance: {distance}km</Typography> : <Typography>Loading</Typography>}
 		</div>
 	);
 };

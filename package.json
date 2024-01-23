@@ -24,7 +24,9 @@
     "react-date-range": "^2.0.0-alpha.4",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.2",
-    "styled-components": "^6.1.8"
+    "styled-components": "^6.1.8",
+    "@react-buddy/ide-toolbox": "^2.4.0",
+    "@react-buddy/palette-mui": "^5.0.1"
   },
   "devDependencies": {
     "@types/google.maps": "^3.54.10",
