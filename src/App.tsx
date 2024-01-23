@@ -14,6 +14,7 @@ import {LoginFunctionality} from './A/contextPage.tsx';
 import {LocationDistance} from "./GoogleAPI/Maps.tsx";
 import { UserProfile } from './user/UserProfile.tsx';
 import { EditUserProfile } from './user/EditUserProfile.tsx';
+import { ChangePassword } from './user/ChangePassword.tsx';
 
 
 type ProtectedRouteProps = {
@@ -66,6 +67,7 @@ function App() {
 						<Route path={"/userInfo/:userId"} element={<UserInfoForm/>}></Route>
 						<Route path={"/userProfile/:id"} element={<UserProfile/>}></Route>
 						<Route path={"/editUser/:id"} element={<EditUserProfile/>}></Route>
+						<Route path={"/changePassword/:id"} element={<ChangePassword/>}></Route>
 					</Routes>
 				</BrowserRouter>
 			</SearchContext.Provider>
