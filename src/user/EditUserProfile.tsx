@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { TextField, Button, Container, Typography, Box } from '@mui/material';
+import React, {useEffect, useState} from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
+import {Box, Button, Container, TextField, Typography} from '@mui/material';
 
 type UserInfoType = {
   firstName: string,
@@ -12,16 +12,16 @@ type UserInfoType = {
   phoneNumber: string,
   birthDate: string | null,
   about: string | null,
-  userId: number,  
+  userId: number,
 };
 
 type UserCredentialsType = {
-    email: string,
+  email: string,
 };
 
 export function EditUserProfile() {
   const navigate = useNavigate();
-  const { id } = useParams<{ id: string}>();
+  const {id} = useParams<{ id: string }>();
   const userId = id ? parseInt(id, 10) : 0;
   console.log('Retrieved user ID from URL:', id);
 
@@ -55,8 +55,8 @@ export function EditUserProfile() {
         const userInfoData = await userInfoResponse.json();
         const userCredentialsData = await userCredentialsResponse.json();
 
-        setUserInfo({ ...userInfoData, userId }); // Update the form state with the fetched data
-        setUserCredentials({ email: userCredentialsData.email}); // Do not prefill the password for security reasons
+        setUserInfo({...userInfoData, userId}); // Update the form state with the fetched data
+        setUserCredentials({email: userCredentialsData.email}); // Do not prefill the password for security reasons
       } catch (error) {
         console.error('Failed to fetch user data', error);
         navigate('/error');
@@ -66,7 +66,7 @@ export function EditUserProfile() {
     fetchUserData();
   }, [userId, navigate]);
 
-  
+
   const [userInfo, setUserInfo] = useState<UserInfoType>({
     firstName: '',
     lastName: '',
@@ -95,7 +95,7 @@ export function EditUserProfile() {
         },
         body: JSON.stringify(userInfo),
       });
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
@@ -108,13 +108,13 @@ export function EditUserProfile() {
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setUserInfo({ ...userInfo, [name]: value });
+    const {name, value} = event.target;
+    setUserInfo({...userInfo, [name]: value});
   };
 
   const handleCredentialsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    setUserCredentials({ ...userCredentials, [name]: value });
+    const {name, value} = event.target;
+    setUserCredentials({...userCredentials, [name]: value});
   };
 
   return (
@@ -122,7 +122,7 @@ export function EditUserProfile() {
       <Typography component="h1" variant="h5">
         Edit User Information
       </Typography>
-      <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
+      <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 3}}>
         <TextField
           margin="normal"
           fullWidth
@@ -165,18 +165,18 @@ export function EditUserProfile() {
           onChange={handleInputChange}
         />
 
-|       <label htmlFor="birthDate">Fødselsdato</label>
-        <input type="date" 
-        name="birthDate" 
-        form='yyyy-MM-dd' 
-        value={userInfo.birthDate?.split("T")[0] ?? ""}
-        onChange={handleInputChange}/>
+        | <label htmlFor="birthDate">Fødselsdato</label>
+        <input type="date"
+               name="birthDate"
+               form='yyyy-MM-dd'
+               value={userInfo.birthDate?.split("T")[0] ?? ""}
+               onChange={handleInputChange}/>
 
         <Button
           type="submit"
           fullWidth
           variant="contained"
-          sx={{ mt: 3, mb: 2 }}
+          sx={{mt: 3, mb: 2}}
         >
           Save Changes
         </Button>

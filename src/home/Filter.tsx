@@ -3,13 +3,15 @@ import Typography from "@mui/material/Typography";
 import React, {useEffect, useState} from "react";
 import {LocationDistance} from "../GoogleAPI/Maps.tsx";
 import {Button, Slider} from "@mui/material";
-import {getPosts, getUser, ProfileType} from "../A/contextPage.tsx";
+import {getPosts, getUser} from "../A/contextPage.tsx";
 
 
 export function Filter() {
   const [vis, setVis] = useState(false);
   const [userAddress, setUserAddress] = useState<string>("");
   const [postAddress, setPostAddress] = useState<string>("");
+  const [postDistance, setPostDistance] = useState<number>(0);
+
 
   useEffect(() => {
     async function fetchUserAddress() {
@@ -43,7 +45,8 @@ export function Filter() {
       </Button>
 
       <Box sx={vis ? {backgroundColor: "#e7e7e7"} : {display: "none"}}>
-        <LocationDistance userAddress={userAddress} postAddress={"oslo nydalen spaces"}/>
+        <LocationDistance userAddress={userAddress}
+                          postAddress={"oslo nydalen spaces"}/>
         <DistanceSlider/>
       </Box>
     </Box>
@@ -56,6 +59,7 @@ function DistanceSlider() {
   const handleChange = (event: Event, newValue: number | number[]) => {
     setValue(newValue as number[]);
   };
+
 
   return (
     <Box sx={{width: 300}}>

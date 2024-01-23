@@ -1,6 +1,3 @@
-
-
-
 export function ChangePassword() {
-    return "test";
+  return "test";
 }

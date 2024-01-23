@@ -1,31 +1,32 @@
 import {Button, Divider, Drawer, List, ListItem} from "@mui/material";
-import React, {useState} from "react";
+import React from "react";
 import {Link} from "react-router-dom";
 
 export type DrawerMenuProps = {
-	open: boolean;
-	onClose: () => void
+  open: boolean;
+  onClose: () => void
 }
-export function DrawerMenu(props : DrawerMenuProps) {
 
-	return <> 
-		<Drawer
-			anchor={"left"}
-			open={props.open}
-			onClose={props.onClose}>
-			<List>
+export function DrawerMenu(props: DrawerMenuProps) {
 
-				<ListItem><Link to="/"><Button>Annonser</Button></Link></ListItem>
-				<Divider orientation="horizontal"/>
-				<ListItem><Link to="/postCreate"><Button>Legg ut annonse</Button></Link></ListItem>
-				<Divider orientation="horizontal"/>
-				<ListItem><Link to="/login"><Button>Lagret annonser</Button></Link></ListItem>
-				<Divider orientation="horizontal"/>
-				<ListItem><Link to="/login"><Button>Meldinger</Button></Link></ListItem>
-				<Divider orientation="horizontal"/>
+  return <>
+    <Drawer
+      anchor={"left"}
+      open={props.open}
+      onClose={props.onClose}>
+      <List>
+
+        <ListItem><Link to="/"><Button>Annonser</Button></Link></ListItem>
+        <Divider orientation="horizontal"/>
+        <ListItem><Link to="/postCreate"><Button>Legg ut annonse</Button></Link></ListItem>
+        <Divider orientation="horizontal"/>
+        <ListItem><Link to="/login"><Button>Lagret annonser</Button></Link></ListItem>
+        <Divider orientation="horizontal"/>
+        <ListItem><Link to="/login"><Button>Meldinger</Button></Link></ListItem>
+        <Divider orientation="horizontal"/>
 
 
-			</List>
-		</Drawer>
-	</>
+      </List>
+    </Drawer>
+  </>
 }
