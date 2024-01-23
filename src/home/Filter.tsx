@@ -6,7 +6,12 @@ import {Button, Slider} from "@mui/material";
 import {getPosts, getUser} from "../A/contextPage.tsx";
 
 
-export function Filter() {
+type FilterProps = {
+  sliderValue: number;
+  setSliderValue: (value: number) => void;
+}
+
+export function Filter({sliderValue, setSliderValue}: FilterProps) {
   const [vis, setVis] = useState(false);
   const [userAddress, setUserAddress] = useState<string>("");
   const [postAddress, setPostAddress] = useState<string>("");
@@ -33,7 +38,10 @@ export function Filter() {
 
 
   return (
-    <Box sx={{objectFit: "contain", backgroundColor: "#c9c9c9", width: "40%"}}>
+    <Box sx={{
+      objectFit: "contain",
+      backgroundColor: "#c9c9c9",
+      width: "40%"}}>
       <Button
         onClick={onClick}
         sx={{
@@ -47,17 +55,20 @@ export function Filter() {
       <Box sx={vis ? {backgroundColor: "#e7e7e7"} : {display: "none"}}>
         <LocationDistance userAddress={userAddress}
                           postAddress={"oslo nydalen spaces"}/>
-        <DistanceSlider/>
+        <DistanceSlider sliderValue={sliderValue}
+                        setSliderValue={setSliderValue}/>
       </Box>
     </Box>
   )
 }
 
-function DistanceSlider() {
-  const [value, setValue] = useState<number[]>([10]);
+function DistanceSlider({ sliderValue, setSliderValue } : FilterProps) {
+  const [value, setValue] = useState<number[]>([50]);
 
   const handleChange = (event: Event, newValue: number | number[]) => {
-    setValue(newValue as number[]);
+    const value = newValue as number[];
+    setValue(value);
+    setSliderValue(value[0]);
   };
 
 

@@ -38,7 +38,7 @@ type AddressProps = {
 }
 
 
-async function getGeocode(address: string): Promise<ILocation> {
+export async function getGeocode(address: string): Promise<ILocation> {
   const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyBRA8VU6f0Ciqy3aa5-JCQlS4TEqliQECs`);
 
   if (response.data && response.data.results &&
@@ -82,7 +82,4 @@ export function LocationDistance(props: AddressProps) {
         <Typography>Loading</Typography>}
     </div>
   );
-};
-
-
-
+}

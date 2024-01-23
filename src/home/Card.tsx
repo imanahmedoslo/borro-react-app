@@ -46,7 +46,7 @@ export default function ActionAreaCard(cardProps: cardProps) {
 
       },
       flexGrow: 1,
-      maxHeight: 350,
+      maxHeight: 370,
       margin: 1,
       boxSizing: 'border-box',
     }}>
@@ -75,8 +75,7 @@ export default function ActionAreaCard(cardProps: cardProps) {
           </Typography>
           {cardProps.location ?
             <LocationDistance userAddress={userAddress}
-                              postAddress={cardProps.location}
-                              onDistanceChange={setDistance}/> : null}
+                              postAddress={cardProps.location}/> : null}
         </CardContent>
       </CardActionArea>
     </Card>
