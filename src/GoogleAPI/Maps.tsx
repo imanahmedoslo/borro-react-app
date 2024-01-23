@@ -40,7 +40,9 @@ const libraries: Library[] = ["geometry"];
 async function getGeocode(address: string): Promise<ILocation> {
 	const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyBRA8VU6f0Ciqy3aa5-JCQlS4TEqliQECs`);
 
-	if (response.data && response.data.results && response.data.results[0] && response.data.results[0].geometry && response.data.results[0].geometry.location) {
+	if (response.data && response.data.results &&
+		response.data.results[0] && response.data.results[0].geometry &&
+		response.data.results[0].geometry.location) {
 		const geoLocation: ILocation = {
 			lng: response.data.results[0].geometry.location.lng,
 			lat: response.data.results[0].geometry.location.lat
@@ -52,12 +54,9 @@ async function getGeocode(address: string): Promise<ILocation> {
 	}
 }
 
-export const LocationDistance = () => {
+export function LocationDistance() {
 	const [mapsLoaded, setMapsLoaded] = useState(false);
 	const [distance, setDistance] = useState<number | null>(null);
-	const location1: ILocation = {lat: 59.85996627807617, lng: 10.45582389831543};
-	const location2: ILocation = {lat: 60.1452907, lng: 11.1938162};
-
 
 	useEffect(() => {
 		if (mapsLoaded) {
@@ -68,9 +67,9 @@ export const LocationDistance = () => {
 			};
 
 			async function fetchLocationsAndComputeDistance() {
-				const loc1 = await getGeocode("asker trekanten");
+				const loc1 = await getGeocode(" solstad terrasse 30");
 				const loc2 = await getGeocode("Nydalen oslo spaces");
-				setDistance(getDistance(loc1, loc2));
+				setDistance(parseFloat((getDistance(loc1, loc2) / 1000).toFixed(2)));
 			}
 
 			fetchLocationsAndComputeDistance();
@@ -85,7 +84,7 @@ export const LocationDistance = () => {
 				onLoad={() => setMapsLoaded(true)}>
 			</LoadScript>
 
-			{distance && distance > 0 ? <p>Distance: {distance} meters</p> : <p>Loading</p>}
+			{distance && distance > 0 ? <p>Distance: {distance}km</p> : <p>Loading</p>}
 		</div>
 	);
 };
