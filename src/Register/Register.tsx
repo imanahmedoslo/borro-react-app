@@ -75,6 +75,7 @@ export default function Register() {
 
  const [emailFormat,setEmailFormat]=useState<boolean>(true)
  const[passwordAligned,setPasswordAligned]=useState<boolean>(true)
+ const[showPassword, setShowPassword]=useState<boolean>(true)
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -134,7 +135,7 @@ export default function Register() {
                   fullWidth
                   name="password"
                   label="Password"
-                  type="password"
+                  type={showPassword ? "text" : "password" }
                   id="password"
                   autoComplete="new-password"
                 />
@@ -145,14 +146,15 @@ export default function Register() {
                   fullWidth
                   name="RepeatPassword"
                   label="RepeatPassword"
-                  type="password"
+                  type={showPassword ? "text" : "password" }
                   id="RepeatPassword"
                   autoComplete="rpeated-password"
                 />
               </Grid>
               <Grid item xs={12}>
                 <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
+                  control={<Checkbox value="allowExtraEmails" color="primary"
+                  onChange={e=>setShowPassword(e.target.checked?true:false)} />}
                   label="Vis passord"
                 />
               </Grid>
