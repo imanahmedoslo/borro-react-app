@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { TextField, Button, Container, Typography, Box } from '@mui/material';
-import { useParams } from 'react-router-dom';
-import { ErrorPage } from './ErrorPage';
+import React, {useState} from 'react';
+import {useNavigate, useParams} from 'react-router-dom';
+import {Box, Button, Container, TextField, Typography} from '@mui/material';
+import {ErrorPage} from './ErrorPage';
 
 type UserInfoType = {
   firstName: string,
@@ -22,7 +21,8 @@ async function CreateUserInfo(userInfo: UserInfoType, authToken: string): Promis
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${authToken}`},
+      'Authorization': `Bearer ${authToken}`
+    },
     body: JSON.stringify({
       firstName: userInfo.firstName,
       lastName: userInfo.lastName,
@@ -40,20 +40,20 @@ async function CreateUserInfo(userInfo: UserInfoType, authToken: string): Promis
   return response.status;
 }
 
-export function UserInfoForm(){
+export function UserInfoForm() {
   const navigate = useNavigate();
   const params = useParams();
-  
+
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [profileImage, setProfileImage] = useState(''); // For simplicity, this is a string. You might want to handle file uploads instead.
+  const [profileImage, setProfileImage] = useState('');
   const [address, setAddress] = useState('');
   const [postCode, setPostCode] = useState('');
   const [city, setCity] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [birthDate, setBirthDate] = useState('');
   const [about, setAbout] = useState('');
-  const [userId, setUserId] = useState(params.userId ? parseInt(params.userId, 10) : 0); 
+  const [userId, setUserId] = useState(params.userId ? parseInt(params.userId, 10) : 0);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -70,13 +70,13 @@ export function UserInfoForm(){
       userId,
     };
 
-    const authToken = localStorage.getItem('authToken');
+    const authToken = localStorage.getItem('token');
 
     if (!authToken) {
       console.error('Authentication token is not available.');
       return navigate('/login');
     }
-    
+
     const statusCode = await CreateUserInfo(userInfo, authToken);
     if (statusCode === 201) {
       navigate('/');
@@ -90,7 +90,7 @@ export function UserInfoForm(){
       <Typography component="h1" variant="h5">
         Vennligst legg til mer informasjon.
       </Typography>
-      <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
+      <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 3}}>
         <TextField
           margin="normal"
           required
@@ -154,9 +154,9 @@ export function UserInfoForm(){
           fullWidth
           label="Fødselsdato"
           type="date"
-          value={birthDate}
+          value={birthDate?.split("T")[0] ?? ""}
           onChange={(e) => setBirthDate(e.target.value)}
-          InputLabelProps={{ shrink: true }}
+          InputLabelProps={{shrink: true}}
         />
         <TextField
           margin="normal"
@@ -171,7 +171,7 @@ export function UserInfoForm(){
           type="submit"
           fullWidth
           variant="contained"
-          sx={{ mt: 3, mb: 2 }}
+          sx={{mt: 3, mb: 2}}
         >
           Submit
         </Button>
