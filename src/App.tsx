@@ -37,7 +37,7 @@ function App() {
 
   function ProtectedRoute(props: ProtectedRouteProps) {
     const isLoggedIn = localStorage.getItem('logInStatus') === 'true' ? true : false;
-    if (isLoggedIn) {
+    if (!isLoggedIn) {
       return <Navigate to="/login"/>
     }
     return <>
@@ -58,11 +58,7 @@ function App() {
           <SearchAppBar setSearchText={setSearchText}/>
           <Routes>
             <Route path={"/"} element={<Home/>}></Route>
-            <Route path={"/login"}
-                   element={
-                     <ProtectedRoute>
-                       <LogIn LoginFunctionality={LoginFunctionality}/>
-                     </ProtectedRoute>}>
+            <Route path={"/login"} element={<LogIn LoginFunctionality={LoginFunctionality}/>}>
             </Route>
             <Route path={"/register"} element={<Register/>}></Route>
             <Route path={"/postCreate"} element={
