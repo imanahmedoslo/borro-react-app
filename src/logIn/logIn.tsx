@@ -17,6 +17,7 @@ import { ForkRight, Home } from '@mui/icons-material';
 import { CreateUserType } from '../Register/Register';
 import { Context } from '@popperjs/core';
 import { TokenAndId } from '../A/contextPage';
+import { Checkbox, FormControlLabel } from '@mui/material';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -41,6 +42,8 @@ export default function LogIn({LoginFunctionality}:LoginProps) {
   const navigate = useNavigate();
   const [email,setEmail]=useState<string>("");
  const [password, setPassword]=useState<string>("")
+ const [showPassword, setShowPassword]=useState<boolean> (false);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const userInfo:CreateUserType={Email:email,Password:password}
@@ -88,10 +91,22 @@ export default function LogIn({LoginFunctionality}:LoginProps) {
               fullWidth
               name="password"
               label="Password"
-              type="password"
+              type={showPassword ? "text" : "password" }
               id="password"
               autoComplete="current-password"
             />
+
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={<Checkbox value="" color="primary" 
+                  //onChange={() => setShowPassword(!showPassword)}/>
+                  onChange={e=>setShowPassword(e.target.checked?true:false)}/>
+                
+                }
+                  label="Vis passord"
+                />
+              </Grid>   
+
             <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
             
             <Button 
