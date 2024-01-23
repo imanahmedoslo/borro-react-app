@@ -13,6 +13,12 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link,  useNavigate  } from 'react-router-dom';
 import { useState } from 'react';
 import Logo from '../Logo';
+import { LoginFunctionality } from '../A/contextPage';
+
+
+
+
+
 export type CreateUserType={
   Email:string,
   Password:string,
@@ -81,6 +87,8 @@ export default function Register() {
   if (userInfo != null) {
     try {
       const userId = await CreateUser(userInfo);
+      LoginFunctionality(userInfo);
+
       navigate(`/userInfo/${userId}`);
     } catch (error) {
       console.error(error);

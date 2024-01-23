@@ -46,7 +46,7 @@ export async function LoginFunctionality(userInfo: CreateUserType) {
 	console.log(response)
 }
 
-async function getUser() {
+export async function getUser() {
 	const sessionInfo: TokenAndId = {
 		accessToken: localStorage.getItem('token') ?? "",
 		Id: parseInt(localStorage.getItem('id') ?? ""),
