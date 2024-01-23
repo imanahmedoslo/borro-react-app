@@ -70,7 +70,7 @@ export function UserInfoForm(){
       userId,
     };
 
-    const authToken = localStorage.getItem('authToken');
+    const authToken = localStorage.getItem('token');
 
     if (!authToken) {
       console.error('Authentication token is not available.');
