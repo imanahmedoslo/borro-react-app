@@ -3,6 +3,7 @@ import SearchAppBar from "./Search.tsx";
 import ActionAreaCard from "./Card.tsx";
 import {useState, useEffect} from "react";
 import {SearchContext} from "../App.tsx";
+import {Filter} from "./Filter.tsx";
 
 export type postProps = {
 	id: number,
@@ -25,7 +26,7 @@ export function Home() {
 	const [filteredPosts, setFilteredPosts] = React.useState<postProps[]>([]);
 	const [posts, setPosts] = React.useState<postProps[]>([]);
 
-	const { searchText } = useContext(SearchContext);
+	const {searchText} = useContext(SearchContext);
 
 	useEffect(() => {
 		setFilteredPosts(
@@ -55,24 +56,27 @@ export function Home() {
 
 	return (
 		<>
-
-			<div style={{
-				display: 'flex',
-				flexWrap: 'wrap',
-				justifyContent: 'flex-start',
-				margin: '0 auto',
-				maxWidth: '96%',
-				boxSizing: 'border-box',
-			}}>
-				{filteredPosts.map(post =>
-					<ActionAreaCard
-						key={post.id}
-						id={post.id}
-						title={post.title}
-						description={post.description}
-					/>)}
+			<div>
+				<div>
+					<Filter/>
+				</div>
+				<div style={{
+					display: 'flex',
+					flexWrap: 'wrap',
+					justifyContent: 'flex-start',
+					margin: '0 auto',
+					maxWidth: '96%',
+					boxSizing: 'border-box',
+				}}>
+					{filteredPosts.map(post =>
+						<ActionAreaCard
+							key={post.id}
+							id={post.id}
+							title={post.title}
+							description={post.description}
+						/>)}
+				</div>
 			</div>
-
 		</>)
 
 

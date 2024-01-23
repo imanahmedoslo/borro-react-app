@@ -47,7 +47,6 @@ function App() {
 
 	return (
 		<>
-			<LocationDistance/>
 			<SearchContext.Provider value={{searchText, setSearchText}}>
 				<BrowserRouter>
 					<SearchAppBar setSearchText={setSearchText}/>

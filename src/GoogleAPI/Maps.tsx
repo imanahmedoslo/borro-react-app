@@ -67,7 +67,7 @@ export function LocationDistance() {
 			};
 
 			async function fetchLocationsAndComputeDistance() {
-				const loc1 = await getGeocode(" solstad terrasse 30");
+				const loc1 = await getGeocode("solstad terrasse 30");
 				const loc2 = await getGeocode("Nydalen oslo spaces");
 				setDistance(parseFloat((getDistance(loc1, loc2) / 1000).toFixed(2)));
 			}
