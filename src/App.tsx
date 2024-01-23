@@ -13,6 +13,9 @@ import {UserInfoForm} from './Register/UserInfoForm.tsx';
 import {LoginFunctionality} from './A/contextPage.tsx';
 import {LocationDistance} from "./GoogleAPI/Maps.tsx";
 import {LoadScript} from "@react-google-maps/api";
+import {UserProfile} from "./user/UserProfile.tsx";
+import {EditUserProfile} from "./user/EditUserProfile.tsx";
+import {ChangePassword} from "./user/ChangePassword.tsx";
 
 
 
