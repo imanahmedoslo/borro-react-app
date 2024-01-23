@@ -33,39 +33,49 @@ interface ILocation {
 	lat: number;
 	lng: number;
 }
+
 type Library = "geometry";
 const libraries: Library[] = ["geometry"];
-export  const LocationDistance = () => {
-	const [mapsLoaded, setMapsLoaded] = useState(false);
-	const [distance, setDistance] = useState<number | null>(null);
-	const location1: ILocation = {lat: 59.85996627807617, lng: 10.45582389831543};
-	const location2: ILocation = {lat: 60.1452907, lng: 11.1938162};
-	const [loca, setLoca] = useState<ILocation >({lat: 0.0, lng: 0.0});
-	const [loca2, setLoca2] = useState<ILocation >({lat: 0.0, lng: 0.0});
 
-	async function getGeocode(address: string) : Promise<ILocation> {
-		const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyBRA8VU6f0Ciqy3aa5-JCQlS4TEqliQECs`);
-		const geoLocation :ILocation = {
+async function getGeocode(address: string): Promise<ILocation> {
+	const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyBRA8VU6f0Ciqy3aa5-JCQlS4TEqliQECs`);
+
+	if (response.data && response.data.results && response.data.results[0] && response.data.results[0].geometry && response.data.results[0].geometry.location) {
+		const geoLocation: ILocation = {
 			lng: response.data.results[0].geometry.location.lng,
 			lat: response.data.results[0].geometry.location.lat
 		}
 		console.log(geoLocation);
 		return geoLocation;
+	} else {
+		throw new Error('Unable to find location');
 	}
+}
+
+export const LocationDistance = () => {
+	const [mapsLoaded, setMapsLoaded] = useState(false);
+	const [distance, setDistance] = useState<number | null>(null);
+	const location1: ILocation = {lat: 59.85996627807617, lng: 10.45582389831543};
+	const location2: ILocation = {lat: 60.1452907, lng: 11.1938162};
 
 
 	useEffect(() => {
 		if (mapsLoaded) {
 			const getDistance = (loc1: ILocation, loc2: ILocation): number => {
-		getGeocode("solstad terrasse 30").then(value => setLoca(value));
-		getGeocode("Nydalen oslo spaces").then(value => setLoca2(value));
-				const latLng1 = new window.google.maps.LatLng(loca.lat, loca.lng);
-				const latLng2 = new window.google.maps.LatLng(loca2.lat, loca2?.lng);
+				const latLng1 = new window.google.maps.LatLng(loc1.lat, loc1.lng);
+				const latLng2 = new window.google.maps.LatLng(loc2.lat, loc2.lng);
 				return window.google.maps.geometry.spherical.computeDistanceBetween(latLng1, latLng2);
 			};
-			setDistance(getDistance(loca, loca2));
+
+			async function fetchLocationsAndComputeDistance() {
+				const loc1 = await getGeocode("asker trekanten");
+				const loc2 = await getGeocode("Nydalen oslo spaces");
+				setDistance(getDistance(loc1, loc2));
+			}
+
+			fetchLocationsAndComputeDistance();
 		}
-	}, [mapsLoaded]); // add mapsLoaded as dependency
+	}, [mapsLoaded]);
 
 	return (
 		<div>
@@ -75,7 +85,7 @@ export  const LocationDistance = () => {
 				onLoad={() => setMapsLoaded(true)}>
 			</LoadScript>
 
-			{distance && distance > 0 ? <p>Distance: { distance} meters</p> : <p>Loading</p>}
+			{distance && distance > 0 ? <p>Distance: {distance} meters</p> : <p>Loading</p>}
 		</div>
 	);
 };

@@ -35,12 +35,9 @@ function App() {
 	function ProtectedRoute(props: ProtectedRouteProps) {
 		const isLoggedIn = localStorage.getItem('logInStatus') === 'true' ? true : false;
 		//const navigate = useNavigate();
-
 		if (isLoggedIn) {
 			return <Navigate to="/"/>
 		}
-
-
 		return <>
 			{props.children}
 		</>
