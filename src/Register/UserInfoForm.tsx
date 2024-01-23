@@ -154,7 +154,7 @@ export function UserInfoForm(){
           fullWidth
           label="Fødselsdato"
           type="date"
-          value={birthDate}
+          value={birthDate?.split("T")[0] ?? ""}
           onChange={(e) => setBirthDate(e.target.value)}
           InputLabelProps={{ shrink: true }}
         />
