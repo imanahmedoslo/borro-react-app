@@ -70,6 +70,15 @@ export function UserProfile() {
         <Button variant="contained" onClick={() => navigate(`/editUser/${user.id}`)}>
           Rediger profil
         </Button>
+        <Button variant="contained" onClick={() => navigate(`/changePassword/${user.id}`)}>
+          Endre passord
+        </Button>
+        <Typography variant='h5' gutterBottom>
+          Navn
+        </Typography>
+        <Typography variant='h6' gutterBottom>
+          
+        </Typography>
       </Container>
     );
   };

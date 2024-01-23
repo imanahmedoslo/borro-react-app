@@ -46,7 +46,7 @@ export function UserInfoForm(){
   
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [profileImage, setProfileImage] = useState(''); // For simplicity, this is a string. You might want to handle file uploads instead.
+  const [profileImage, setProfileImage] = useState(''); 
   const [address, setAddress] = useState('');
   const [postCode, setPostCode] = useState('');
   const [city, setCity] = useState('');

@@ -56,7 +56,7 @@ export function EditUserProfile() {
         const userCredentialsData = await userCredentialsResponse.json();
 
         setUserInfo({ ...userInfoData, userId }); // Update the form state with the fetched data
-        setUserCredentials({ email: userCredentialsData.email, password: '' }); // Do not prefill the password for security reasons
+        setUserCredentials({ email: userCredentialsData.email}); // Do not prefill the password for security reasons
       } catch (error) {
         console.error('Failed to fetch user data', error);
         navigate('/error');
@@ -66,6 +66,7 @@ export function EditUserProfile() {
     fetchUserData();
   }, [userId, navigate]);
 
+  
   const [userInfo, setUserInfo] = useState<UserInfoType>({
     firstName: '',
     lastName: '',
@@ -74,10 +75,11 @@ export function EditUserProfile() {
     postCode: '',
     city: '',
     phoneNumber: '',
-    birthDate: null,
+    birthDate: '',
     about: null,
     userId: userId,
   });
+
   const [userCredentials, setUserCredentials] = useState<UserCredentialsType>({
     email: ''
   });
@@ -153,16 +155,7 @@ export function EditUserProfile() {
           value={userInfo.phoneNumber}
           onChange={handleInputChange}
         />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          label="Fødselsdato"
-          name="date"
-          value={userInfo.birthDate}
-          onChange={handleInputChange}
-          InputLabelProps={{ shrink: true }}
-        />
+
         <TextField
           margin="normal"
           fullWidth
@@ -171,6 +164,13 @@ export function EditUserProfile() {
           value={userInfo.about}
           onChange={handleInputChange}
         />
+
+|       <label htmlFor="birthDate">Fødselsdato</label>
+        <input type="date" 
+        name="birthDate" 
+        form='yyyy-MM-dd' 
+        value={userInfo.birthDate?.split("T")[0] ?? ""}
+        onChange={handleInputChange}/>
 
         <Button
           type="submit"

@@ -41,9 +41,8 @@ function App() {
 
   function ProtectedRoute(props: ProtectedRouteProps) {
     const isLoggedIn = localStorage.getItem('logInStatus') === 'true' ? true : false;
-    //const navigate = useNavigate();
     if (isLoggedIn) {
-      return <Navigate to="/"/>
+      return <Navigate to="/login"/>
     }
     return <>
       {props.children}
@@ -65,17 +64,37 @@ function App() {
             <Route path={"/"} element={<Home/>}></Route>
             <Route path={"/login"}
                    element={
-                     <ProtectedRoute>
-                       <LogIn LoginFunctionality={LoginFunctionality}/>
+					   <ProtectedRoute>
+                       	<LogIn LoginFunctionality={LoginFunctionality}/>
                      </ProtectedRoute>}>
             </Route>
             <Route path={"/register"} element={<Register/>}></Route>
-            <Route path={"/postCreate"} element={<PostCreate/>}></Route>
+            <Route path={"/postCreate"} element={
+				<ProtectedRoute>
+					<PostCreate/>
+				</ProtectedRoute>}>
+			</Route>
             <Route path={"/post/:postId"} element={<ViewPost/>}></Route>
-            <Route path={"/userInfo/:userId"} element={<UserInfoForm/>}></Route>
-          <Route path={"/userProfile/:id"} element={<UserProfile/>}></Route>
-						<Route path={"/editUser/:id"} element={<EditUserProfile/>}></Route>
-						<Route path={"/changePassword/:id"} element={<ChangePassword/>}></Route>
+            <Route path={"/userInfo/:userId"} element={
+				<ProtectedRoute>
+			<UserInfoForm/>
+			</ProtectedRoute>}>
+			</Route>
+          <Route path={"/userProfile/:id"} element={
+			<ProtectedRoute>
+		  <UserProfile/>
+		  </ProtectedRoute>}>
+		  </Route>
+						<Route path={"/editUser/:id"} element={
+							<ProtectedRoute>
+						<EditUserProfile/>
+						</ProtectedRoute>}>
+						</Route>
+						<Route path={"/changePassword/:id"} element={
+							<ProtectedRoute>
+						<ChangePassword/>
+						</ProtectedRoute>}>
+						</Route>
 					</Routes>
         </BrowserRouter>
       </SearchContext.Provider>
