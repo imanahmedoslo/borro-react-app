@@ -10,9 +10,10 @@ import Register from './Register/Register.tsx';
 import PostCreate from './Post/PostCreate.tsx';
 import {ViewPost, postProps} from './Post/ViewPost.tsx';
 import { UserInfoForm } from './Register/UserInfoForm.tsx';
-
 import {LoginFunctionality} from './A/contextPage.tsx';
 import {LocationDistance} from "./GoogleAPI/Maps.tsx";
+import { UserProfile } from './user/UserProfile.tsx';
+import { EditUserProfile } from './user/EditUserProfile.tsx';
 
 
 type ProtectedRouteProps = {
@@ -63,6 +64,8 @@ function App() {
 						<Route path={"/postCreate"} element={<PostCreate/>}></Route>
 						<Route path={"/post/:postId"} element={<ViewPost/>}></Route>
 						<Route path={"/userInfo/:userId"} element={<UserInfoForm/>}></Route>
+						<Route path={"/userProfile/:id"} element={<UserProfile/>}></Route>
+						<Route path={"/editUser/:id"} element={<EditUserProfile/>}></Route>
 					</Routes>
 				</BrowserRouter>
 			</SearchContext.Provider>

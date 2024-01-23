@@ -64,9 +64,12 @@ export async function getUser() {
 export function LogedInIcon() {
 	const navigate = useNavigate();
 	const [profile, setProfile] = useState<ProfileType | null>()
+
 	useEffect(() => {
 		getUser().then(res => setProfile(res));
 	}, [])
+
+	const userId = localStorage.getItem('id');
 
 	function handleLogOut() {
 		localStorage.clear();
@@ -78,7 +81,7 @@ export function LogedInIcon() {
 		return (
 			<>
 				<div style={{display: 'flex', flexDirection: 'row'}}>
-					<AccountBoxIcon sx={{mr: 2}} style={{color: 'blue', height: '50px', width: '50px'}}/>
+					<AccountBoxIcon sx={{mr: 2}} style={{color: 'blue', height: '50px', width: '50px'}} onClick={() => navigate(`/userProfile/${userId}`)}/>
 
 					<Typography gutterBottom variant="h4" component="div">
 						{profile.firstName ?? 'novalue'}
