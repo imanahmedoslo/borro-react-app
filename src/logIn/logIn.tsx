@@ -16,8 +16,12 @@ import {Checkbox, FormControlLabel} from '@mui/material';
 import { useAuth } from '../App';
 
 export default function LogIn() {
-  const { sessionInfo, onLogin } = useAuth();
   const navigate = useNavigate();
+  const { sessionInfo, onLogin } = useAuth();
+  /*if(sessionInfo||localStorage.getItem('token')){
+    navigate('/')
+  }*/
+ 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("")
   const [showPassword, setShowPassword] = useState<boolean>(false);
