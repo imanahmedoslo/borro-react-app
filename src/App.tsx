@@ -70,6 +70,8 @@ function App() {
               </ProtectedRoute>}>
             </Route>
             <Route path={"/post/:postId"} element={<ViewPost/>}></Route>
+            <Route path={"/post/:postId"} element={<ViewPost/>}></Route>
+            <Route path={"/posts/:postId"} element={<MyPosts/>}></Route>
             <Route path={"/userInfo/:userId"} element={
               <ProtectedRoute>
                 <UserInfoForm/>
