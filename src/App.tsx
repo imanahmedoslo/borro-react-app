@@ -4,22 +4,23 @@ import LogIn from './logIn/logIn.tsx'
 import {BrowserRouter, Navigate, Route, Routes, useNavigate} from "react-router-dom";
 import React, {useEffect, useState} from "react";
 import SearchAppBar from "./home/Search.tsx";
-import Register, { CreateUserType } from './Register/Register.tsx';
+import Register, {CreateUserType} from './Register/Register.tsx';
 import PostCreate from './Post/PostCreate.tsx';
 import {ViewPost} from './Post/ViewPost.tsx';
 import {UserInfoForm} from './Register/UserInfoForm.tsx';
-import {LoginFunctionality, TokenAndId} from './A/contextPage.tsx';
+import {TokenAndId} from './A/contextPage.tsx';
 import {LoadScript} from "@react-google-maps/api";
 import {UserProfile} from "./user/UserProfile.tsx";
 import {EditUserProfile} from "./user/EditUserProfile.tsx";
 import {ChangePassword} from "./user/ChangePassword.tsx";
-import { MyPosts } from './Post/MyPosts.tsx';
-import { jwtDecode } from 'jwt-decode' 
+import {MyPosts} from './Post/MyPosts.tsx';
+import {jwtDecode} from 'jwt-decode'
+import {Footer} from "./Footer/Footer.tsx";
 
 
-type LoginResponse={
+type LoginResponse = {
   accessToken: string,
-  expiresAt:string,
+  expiresAt: string,
 }
 
 const AuthContext = React.createContext<{
@@ -40,52 +41,49 @@ export const useAuth = () => {
 type AuthProviderProps = {
   children?: JSX.Element;
 }
-type DecodedJwtPayload ={
+type DecodedJwtPayload = {
   address: string;
   id: string;
   exp: number;
   iss: string;
   aud: string;
 }
-type decodedInfo={
-address:string,
-id:number,
+type decodedInfo = {
+  address: string,
+  id: number,
 }
-function DecodeToken():decodedInfo{
-  const token= localStorage.getItem('token')??"";
-  const decoded= jwtDecode<DecodedJwtPayload>(token);
-  const result:decodedInfo={
-    address:decoded.address,
-    id:parseInt(decoded.id)
+
+function DecodeToken(): decodedInfo {
+  const token = localStorage.getItem('token') ?? "";
+  const decoded = jwtDecode<DecodedJwtPayload>(token);
+  const result: decodedInfo = {
+    address: decoded.address,
+    id: parseInt(decoded.id)
   }
   return result;
 }
 
 
-const AuthProvider = ({ children }: AuthProviderProps) => {
+const AuthProvider = ({children}: AuthProviderProps) => {
   const [sessionInfo, setSessionInfo] = useState<TokenAndId | null>(null);
-  const[decoded,setDecoded]=useState<decodedInfo|null>(null)
+  const [decoded, setDecoded] = useState<decodedInfo | null>(null)
   const navigate = useNavigate();
 
-  
-  
 
   useEffect(() => {
-    if(localStorage.getItem('token')){
-      const decodedInfo= DecodeToken();
+    if (localStorage.getItem('token')) {
+      const decodedInfo = DecodeToken();
       const sessionInfoFromLs: TokenAndId = {
         accessToken: localStorage.getItem('token') ?? "",
-        id:decodedInfo?.id??0,
+        id: decodedInfo?.id ?? 0,
         // IsLoggedIn: localStorage.getItem('logInStatus') === 'true' ? true : false,
         expiresAt: localStorage.getItem('expiresAt') ?? "",
-        address:decodedInfo?.address??""
+        address: decodedInfo?.address ?? ""
       };
       setSessionInfo(sessionInfoFromLs);
     }
-      
 
 
-    
   }, [localStorage.getItem('token')])
 
   const handleLogin = async (userInfo: CreateUserType) => {
@@ -148,9 +146,9 @@ function App() {
   const [mapsLoaded, setMapsLoaded] = useState(false);
   const [searchText, setSearchText] = useState('');
 
-  
+
   function ProtectedRoute(props: ProtectedRouteProps) {
-    const{sessionInfo}=useAuth()
+    const {sessionInfo} = useAuth()
     if (!sessionInfo?.accessToken && !localStorage.getItem('token')) {
       return <Navigate to="/login"/>
     }
@@ -161,7 +159,7 @@ function App() {
 
 
   return (
-      <>
+    <>
       <LoadScript
         googleMapsApiKey="AIzaSyBRA8VU6f0Ciqy3aa5-JCQlS4TEqliQECs"
         libraries={libraries}
@@ -169,53 +167,54 @@ function App() {
 
       <SearchContext.Provider value={{searchText, setSearchText}}>
         <BrowserRouter>
-        <AuthProvider>
-          <>
-          <SearchAppBar setSearchText={setSearchText}/>
-          <Routes>
-            <Route path={"/"} element={<Home/>}></Route>
-            <Route path={"/login"} element={<LogIn />}>
-            </Route>
-            <Route path={"/register"} element={<Register/>}></Route>
-            <Route path={"/postCreate"} element={
-              <ProtectedRoute>
-                <PostCreate/>
-              </ProtectedRoute>}>
-            </Route>
-            <Route path={"/post/:postId"} element={<ViewPost/>}></Route>
-            <Route path={"/post/:postId"} element={<ViewPost/>}></Route>
-            <Route path={"/posts/:postId"} element={
-              <ProtectedRoute>
-                <MyPosts/>
-              </ProtectedRoute>
-            }></Route>
-            <Route path={"/userInfo/:userId"} element={
-              <ProtectedRoute>
-                <UserInfoForm/>
-              </ProtectedRoute>}>
-            </Route>
-            <Route path={"/userProfile/:id"} element={
-              <ProtectedRoute>
-                <UserProfile/>
-              </ProtectedRoute>}>
-            </Route>
-            <Route path={"/editUser/:id"} element={
-              <ProtectedRoute>
-                <EditUserProfile/>
-              </ProtectedRoute>}>
-            </Route>
-            <Route path={"/changePassword/:id"} element={
-              <ProtectedRoute>
-                <ChangePassword/>
-              </ProtectedRoute>}>
-            </Route>
-          </Routes>
-          </>
-        </AuthProvider>
-          
+          <AuthProvider>
+            <>
+              <SearchAppBar setSearchText={setSearchText}/>
+              <Routes>
+                <Route path={"/"} element={<Home/>}></Route>
+                <Route path={"/login"} element={<LogIn/>}>
+                </Route>
+                <Route path={"/register"} element={<Register/>}></Route>
+                <Route path={"/postCreate"} element={
+                  <ProtectedRoute>
+                    <PostCreate/>
+                  </ProtectedRoute>}>
+                </Route>
+                <Route path={"/post/:postId"} element={<ViewPost/>}></Route>
+                <Route path={"/post/:postId"} element={<ViewPost/>}></Route>
+                <Route path={"/posts/:postId"} element={
+                  <ProtectedRoute>
+                    <MyPosts/>
+                  </ProtectedRoute>
+                }></Route>
+                <Route path={"/userInfo/:userId"} element={
+                  <ProtectedRoute>
+                    <UserInfoForm/>
+                  </ProtectedRoute>}>
+                </Route>
+                <Route path={"/userProfile/:id"} element={
+                  <ProtectedRoute>
+                    <UserProfile/>
+                  </ProtectedRoute>}>
+                </Route>
+                <Route path={"/editUser/:id"} element={
+                  <ProtectedRoute>
+                    <EditUserProfile/>
+                  </ProtectedRoute>}>
+                </Route>
+                <Route path={"/changePassword/:id"} element={
+                  <ProtectedRoute>
+                    <ChangePassword/>
+                  </ProtectedRoute>}>
+                </Route>
+              </Routes>
+            <Footer/>
+            </>
+          </AuthProvider>
+
         </BrowserRouter>
       </SearchContext.Provider>
-      </>
+    </>
   )
 }
 

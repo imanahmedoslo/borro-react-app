@@ -83,10 +83,10 @@ export function LoggedInIcon({userId}: Props) {
     return (
       <>
         <div style={{display: 'flex', flexDirection: 'row'}}>
-          <AccountBoxIcon sx={{mr: 2}} style={{color: 'blue', height: '50px', width: '50px'}}
+          <AccountBoxIcon style={{color: '#FBF7EF', height: '50px', width: '50px'}}
                           onClick={() => navigate(`/userProfile/${userId}`)}/>
 
-          <Typography gutterBottom variant="h4" component="div">
+          <Typography gutterBottom variant="h4" component="div" marginY={"auto"} mr={2}>
             {profile.firstName ?? 'novalue'}
           </Typography>
 
