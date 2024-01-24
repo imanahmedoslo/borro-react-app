@@ -14,7 +14,8 @@ type cardProps = {
 	title: string;
 	description: string;
 	id: number,
-	img:string
+	img:string,
+  location:string,
 }
 
 export default function ActionAreaCard(cardProps: cardProps) {
@@ -38,9 +39,7 @@ export default function ActionAreaCard(cardProps: cardProps) {
   }
 
 
-type CardProps={
-	post:postProps
-}
+
 return (
 		<Card key={cardProps.id} onClick={handleClick} sx={{
 			flexBasis: {
@@ -83,37 +82,4 @@ return (
         </CardContent>
       </CardActionArea>
     </Card>
-  );
-			},
-			flexGrow: 1,
-			maxHeight: 350,
-			margin: 1,
-			boxSizing: 'border-box',
-		}}>
-			<CardActionArea sx={{
-				"&:focus": {
-					outline: 'none',
-				},
-			}}>
-				<CardMedia
-					component="img"
-					height="210"
-					image={cardProps.img}
-					src={cardProps.img}
-					alt="Placeholder"
-					sx={{
-						backgroundColor: "#8c8c8c"
-					}}/>
-				<CardContent className={"CardMuiContent"}>
-
-					<Typography gutterBottom variant="h4" component="div">
-						{cardProps.title}
-					</Typography>
-					<Typography variant="body1" color="text.secondary">
-						{cardProps.description ?? "No description"}
-					</Typography>
-				</CardContent>
-			</CardActionArea>
-		</Card>
-	);
-}
+)}

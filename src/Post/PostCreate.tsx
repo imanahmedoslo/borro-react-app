@@ -1,80 +1,16 @@
+
+//import * as React from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import {createTheme, styled} from '@mui/material/styles';
 import {  styled,  } from '@mui/material/styles';
 import Logo from '../Logo';
 import Checkbox from '@mui/material/Checkbox';
-import React, {useRef, useState} from 'react';
-import { useEffect } from 'react';
-
+import { useEffect, useState } from 'react';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
-import {Range, RangeKeyDict} from 'react-date-range';
-import {Range, RangeKeyDict} from 'react-date-range';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Calendar from './PostCreateCalender';
-
-
-const VisuallyHiddenInput = styled('input')({
-  clip: 'rect(0 0 0 0)',
-  clipPath: 'inset(50%)',
-  height: 1,
-  overflow: 'hidden',
-  position: 'absolute',
-  bottom: 0,
-  left: 0,
-  whiteSpace: 'nowrap',
-  width: 1,
-});
-
-// TODO remove, this demo shouldn't need to reset the theme.
-const defaultTheme = createTheme();
-
-
-export default function PostCreate() {
-  const [isFree, setIsFree] = useState<boolean>(false);
-  const [img, setImg] = useState<string>();
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const handleCutsomClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
-export default function PostCreate() {
-  const [isFree, setIsFree] = useState<boolean>(false);
-  const [img, setImg] = useState<string>();
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const handleCutsomClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
-  const [dateRange, setDateRange] = useState<Range[]>([
-    {
-      startDate: new Date(),
-      endDate: new Date(),
-      key: 'selection'
-    }
-      key: 'selection'
-    }
-  ]);
-  const handleDateChange = (item: RangeKeyDict) => {
-  const handleDateChange = (item: RangeKeyDict) => {
-    // Update the state when the date range changes
-    setDateRange([item.selection]);
-    console.log(item)
-    console.log(dateRange)
-    console.log(item.selection)
-  };
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-
-  }
-  const handleimgInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
 import React, { useRef } from 'react';
 import Select from 'react-select'
 import { Navigate,useNavigate } from 'react-router-dom';
@@ -280,16 +216,25 @@ export default function PostCreate() {
             value={price}
             onChange={e=>setPrice(e.currentTarget.value)}
           />}
-          <Grid item xs={12}>
-            <FormControlLabel
-              control={<Checkbox onChange={e => setIsFree(e.target.checked ? true : false)} color="secondary"
-                                 name="saveAddress" value="yes"/>}
-              label="Kryss av for å angi pris"
-            />
-          </Grid>
+          <Grid item xs={12} style={{marginTop: "15px"}}>
+          <FormControlLabel
+            control={<Checkbox  onChange={e=>setIsFree(e.target.checked?true:false)} color="secondary" name="saveAddress" value="yes"  />}
+            label="Kryss av for å angi pris"
+          />
         </Grid>
-        <Button variant='contained' type='submit' style={{marginLeft: '30px', marginTop: '10px'}}>Lagre
-          endringer</Button>
+        </Grid>
+          <Grid item xs={12} sm={6} style={{gap:'5px'}}>
+          <div>
+            <label htmlFor="stratDate" >StartsDato:</label>
+            <input type="date" name="stratDate" form='yyyy-MM-dd' value={selectedStartDate} onChange={e=>setSelectedStartDate(e.currentTarget.value)}/>
+            </div>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+          <div>
+          <label htmlFor="endDate">SluttsDato:</label>
+          <input type="date" name="endDate"  value={selectedEndDate} onChange={e=>setSelectedEndDate(e.currentTarget.value)}/>
+            </div>
+          </Grid>
       </Grid>
       <Button variant='outlined' type='submit' style={{width:'200px', height:'50px',marginTop:'30px', marginRight:'21px', marginBottom:'20px'}}>Lagre endringer</Button>
       </form>

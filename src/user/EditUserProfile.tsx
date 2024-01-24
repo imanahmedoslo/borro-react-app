@@ -142,6 +142,30 @@ export function EditUserProfile() {
         <TextField
           margin="normal"
           fullWidth
+          label="Adresse"
+          value={userInfo.address}
+          onChange={handleInputChange}
+        />
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          label="Postnummer"
+          value={userInfo.postCode}
+          onChange={handleInputChange}
+          type="number"
+        />
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          label="Poststed"
+          value={userInfo.city}
+          onChange={handleInputChange}
+        />
+        <TextField
+          margin="normal"
+          fullWidth
           label="Epost"
           name="email"
           value={userCredentials.email}
