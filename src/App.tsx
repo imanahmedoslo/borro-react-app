@@ -13,6 +13,7 @@ import {LoadScript} from "@react-google-maps/api";
 import {UserProfile} from "./user/UserProfile.tsx";
 import {EditUserProfile} from "./user/EditUserProfile.tsx";
 import {ChangePassword} from "./user/ChangePassword.tsx";
+import { MyPosts } from './Post/MyPosts.tsx';
 
 
 type ProtectedRouteProps = {
@@ -28,6 +29,7 @@ export const SearchContext = React.createContext<{
   },
 });
 
+
 type Library = "geometry";
 const libraries: Library[] = ["geometry"];
 
@@ -35,6 +37,7 @@ function App() {
   const [mapsLoaded, setMapsLoaded] = useState(false);
   const [searchText, setSearchText] = useState('');
 
+  
   function ProtectedRoute(props: ProtectedRouteProps) {
     const isLoggedIn = localStorage.getItem('logInStatus') === 'true' ? true : false;
     if (!isLoggedIn) {
@@ -93,5 +96,6 @@ function App() {
     </>
   )
 }
+
 
 export default App

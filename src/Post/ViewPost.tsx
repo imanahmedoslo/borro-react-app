@@ -46,6 +46,7 @@ export function ViewPost() {
     }
   }, []);
 
+
   if (!post) {
     return <>Loading...</>
   }
@@ -56,7 +57,8 @@ export function ViewPost() {
         <CardMedia
           component="img"
           height="300"
-          image="https://placehold.co/600x400"
+          image={`${post.image}`}
+          src={post.image}
           alt="Placeholder"
         />
         <CardContent className={"CardMuiContent"}>

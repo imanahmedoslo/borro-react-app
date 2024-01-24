@@ -11,10 +11,11 @@ import {getUser} from "../A/contextPage.tsx";
 
 
 type cardProps = {
-  title: string;
-  description: string;
-  id: number;
-  location: string;
+	title: string;
+	description: string;
+	id: number,
+	img:string,
+  location:string,
 }
 
 export default function ActionAreaCard(cardProps: cardProps) {
@@ -37,12 +38,14 @@ export default function ActionAreaCard(cardProps: cardProps) {
     navigate(`/post/${cardProps.id}`)
   }
 
-  return (
-    <Card onClick={handleClick} sx={{
-      flexBasis: {
-        xs: "100%",
-        sm: "40%",
-        md: "31%",
+
+
+return (
+		<Card key={cardProps.id} onClick={handleClick} sx={{
+			flexBasis: {
+				xs: "100%",
+				sm: "40%",
+				md: "31%",
 
       },
       flexGrow: 1,

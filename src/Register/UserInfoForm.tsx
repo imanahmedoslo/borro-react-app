@@ -97,6 +97,7 @@ export function UserInfoForm() {
           fullWidth
           label="Fornavn"
           autoFocus
+          name='firstName'
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
         />
@@ -105,6 +106,7 @@ export function UserInfoForm() {
           required
           fullWidth
           label="Etternavn"
+          name='lastName'
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
         />
@@ -120,6 +122,7 @@ export function UserInfoForm() {
           required
           fullWidth
           label="Adresse"
+          name='address'
           value={address}
           onChange={(e) => setAddress(e.target.value)}
         />
@@ -128,6 +131,7 @@ export function UserInfoForm() {
           required
           fullWidth
           label="Postnummer"
+          name='postCode'
           value={postCode}
           onChange={(e) => setPostCode(e.target.value)}
           type="number"
@@ -137,6 +141,7 @@ export function UserInfoForm() {
           required
           fullWidth
           label="Poststed"
+          name='city'
           value={city}
           onChange={(e) => setCity(e.target.value)}
         />
@@ -145,6 +150,7 @@ export function UserInfoForm() {
           required
           fullWidth
           label="Telefonnummer"
+          name='phoneNumber'
           value={phoneNumber}
           onChange={(e) => setPhoneNumber(e.target.value)}
         />
@@ -154,6 +160,7 @@ export function UserInfoForm() {
           fullWidth
           label="Fødselsdato"
           type="date"
+          name='birthDate'
           value={birthDate?.split("T")[0] ?? ""}
           onChange={(e) => setBirthDate(e.target.value)}
           InputLabelProps={{shrink: true}}
@@ -163,6 +170,7 @@ export function UserInfoForm() {
           fullWidth
           label="Bio"
           value={about}
+          name='about'
           onChange={(e) => setAbout(e.target.value)}
           multiline
           rows={4}
