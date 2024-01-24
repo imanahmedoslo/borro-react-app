@@ -15,32 +15,8 @@ import {TokenAndId} from '../A/contextPage';
 import {Checkbox, FormControlLabel} from '@mui/material';
 import { useAuth } from '../App';
 
-// TODO remove, this demo shouldn't need to reset the theme.
-const defaultTheme = createTheme();
-/*async function LoginFunctionality(userInfo:CreateUserType){
-const response= await fetch(`https://borro.azurewebsites.net/api/Login`, {method:'POST', headers:{'Content-Type':'application/json'} ,body:JSON.stringify(userInfo)});
-if (!response.ok) {
-  throw new Error(`HTTP error! Status: ${response.status}`);
-}
- const responseJson=  await response.json()
-const LoginResponse:TokenAndId={
-  accessToken:responseJson.accessToken,
-  Id:responseJson.id
-}
-return LoginResponse
-}*/
-type LoginProps = {
-  LoginFunctionality: (userInfo: CreateUserType) => Promise<void>
-}
-
 export default function LogIn() {
   const { sessionInfo, onLogin } = useAuth();
-  // const sessionInfo: TokenAndId = {
-  //   accessToken: localStorage.getItem('token') ?? "",
-  //   Id: parseInt(localStorage.getItem('id') ?? ""),
-  //   IsLoggedIn: localStorage.getItem('logInStatus') === 'true' ? true : false,
-  //   ExpiresAt: localStorage.getItem('ExpiresAt') ?? ``
-  // };
   const navigate = useNavigate();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("")
@@ -101,7 +77,6 @@ export default function LogIn() {
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="" color="primary"
-                  //onChange={() => setShowPassword(!showPassword)}/>
                                    onChange={e => setShowPassword(e.target.checked ? true : false)}/>
 
                 }
@@ -147,5 +122,3 @@ export default function LogIn() {
     </>
   );
 }
-// style={{ flexGrow: 1 }}
-// {{sm: 1}} direction='row' alignItems="center">
