@@ -75,8 +75,6 @@ export function LoggedInIcon({userId}: Props) {
   const navigate = useNavigate();
   const [profile, setProfile] = useState<ProfileType | null>()
 
-  console.log(userId);
-
   useEffect(() => {
     getUser(userId).then(res => setProfile(res));
   }, [])

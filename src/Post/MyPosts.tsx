@@ -14,10 +14,12 @@ export function MyPosts(){
     },[])
 
     async function GetAllUserPosts(){
+      if (!sessionInfo) {
+        return []
+      }
       const response= await fetch(`https://borro.azurewebsites.net/api/Post/posts/${sessionInfo?.id}?userId=${sessionInfo?.id}`,{method: 'GET', headers: {'Content-Type': 'application/json','Authorization': `Bearer ${sessionInfo?.accessToken}`}});
-    const responseJson:postProps[]= await response.json();
-    return responseJson;
-    
+      const responseJson:postProps[]= await response.json();
+      return responseJson;
   }
 
     return(<>
