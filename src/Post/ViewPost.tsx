@@ -1,6 +1,8 @@
 import {useEffect, useState} from "react";
 import {Button, Card, CardContent, CardMedia, Typography} from "@mui/material";
 import {useParams} from "react-router-dom";
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
 
 
 export type postProps = {
@@ -31,6 +33,7 @@ async function FetchPost(id: number) {
   }
 }
 
+
 type ViewPostParams = {
   postId: string;
 }
@@ -38,6 +41,13 @@ type ViewPostParams = {
 export function ViewPost() {
   const [post, setPost] = useState<postProps>();
   const {postId} = useParams<keyof ViewPostParams>() as ViewPostParams;
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   useEffect(() => {
     if (postId) {
@@ -73,7 +83,18 @@ export function ViewPost() {
           </Typography>
           <div className="button-spacing">
             <Button variant="contained">Reserver</Button>
-            <Button variant="contained">Kontakt</Button>
+            
+            <Button onClick={handleOpen} variant="contained">Kontakt</Button>
+          <dialog open={open} onClose={handleClose}>
+          <DialogContent>
+          "kontakt detaljer"
+          <Button onClick={handleClose} color="primary">
+            "lukk vindu"
+          </Button>
+          </DialogContent>
+
+          </dialog>
+
           </div>
         </CardContent>
       </Card>
