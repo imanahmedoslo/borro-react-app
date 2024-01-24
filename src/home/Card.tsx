@@ -62,6 +62,7 @@ return (
           component="img"
           height="210"
           image="src/assets/img_1.png"
+          src={cardProps.img}
           alt="Placeholder"
           sx={{
             backgroundColor: "#8c8c8c"
