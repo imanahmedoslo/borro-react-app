@@ -18,9 +18,9 @@ import { useAuth } from '../App';
 export default function LogIn() {
   const navigate = useNavigate();
   const { sessionInfo, onLogin } = useAuth();
-  /*if(sessionInfo||localStorage.getItem('token')){
+  if(sessionInfo||localStorage.getItem('token')){
     navigate('/')
-  }*/
+  }
  
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("")
