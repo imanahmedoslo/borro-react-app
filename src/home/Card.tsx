@@ -8,7 +8,7 @@ import {CardActionArea} from '@mui/material';
 import {useNavigate} from 'react-router-dom';
 import {LocationDistance} from "../GoogleAPI/Maps.tsx";
 //import {getUser} from "../A/contextPage.tsx";
-import { useAuth } from '../App.tsx';
+import {useAuth} from '../App.tsx';
 
 
 type cardProps = {
@@ -20,7 +20,7 @@ type cardProps = {
 }
 
 export default function ActionAreaCard(cardProps: cardProps) {
-  const { sessionInfo } = useAuth();
+  const {sessionInfo} = useAuth();
   const [userAddress, setUserAddress] = useState<string>("");
   const [distance, setDistance] = useState<number>(0);
 
@@ -29,7 +29,7 @@ export default function ActionAreaCard(cardProps: cardProps) {
   useEffect(() => {
     async function fetchUserAddress() {
       //const userData = await getUser();
-      setUserAddress(sessionInfo?.address??"");
+      setUserAddress(sessionInfo?.address ?? "");
     }
 
     fetchUserAddress();
@@ -39,12 +39,15 @@ export default function ActionAreaCard(cardProps: cardProps) {
     navigate(`/post/${cardProps.id}`)
   }
 
+  const titleLimit = 15;
+  const descLimit = 30;
+  const addressLimit = 30;
 
   return (
     <Card key={cardProps.id} onClick={handleClick} sx={{
       flexBasis: {
         xs: "100%",
-        sm: "60%",
+        sm: "50%",
         md: "40%",
         lg: "30%",
       },
@@ -72,14 +75,20 @@ export default function ActionAreaCard(cardProps: cardProps) {
             backgroundColor: "#8c8c8c"
           }}/>
         <CardContent className={"CardMuiContent"}>
-          <Typography gutterBottom variant="h4" component="div">
-            {cardProps.title}
+          <Typography variant="h4" color="text.secondary">
+            {cardProps.title?.length > titleLimit
+              ? `${cardProps.title.substring(0, titleLimit)}...`
+              : cardProps.title ?? "No Address"}
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            {cardProps.description ?? "No description"}
+            {cardProps.description?.length > descLimit
+              ? `${cardProps.description.substring(0, descLimit)}...`
+              : cardProps.description ?? "No description"}
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            {cardProps.location ?? "No Address"}
+            {cardProps.location?.length > addressLimit
+              ? `${cardProps.location.substring(0, addressLimit)}...`
+              : cardProps.location ?? "No Address"}
           </Typography>
           {cardProps.location ?
             <LocationDistance userAddress={userAddress}

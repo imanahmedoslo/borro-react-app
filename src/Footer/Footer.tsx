@@ -7,10 +7,8 @@ export function Footer() {
       textAlign: "center",
       backgroundColor: "#293040",
       minHeight: "10em",
-      width: "100%",
-      position: "relative",
-      bottom: 0,
       boxShadow:4,
+      gridArea:"footer"
     }}>
       <Typography sx={{
         color: "white"

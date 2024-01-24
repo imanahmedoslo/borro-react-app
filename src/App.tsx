@@ -16,6 +16,7 @@ import {ChangePassword} from "./user/ChangePassword.tsx";
 import {MyPosts} from './Post/MyPosts.tsx';
 import {jwtDecode} from 'jwt-decode'
 import {Footer} from "./Footer/Footer.tsx";
+import {Box} from "@mui/material";
 
 
 type LoginResponse = {
@@ -159,7 +160,12 @@ function App() {
 
 
   return (
-    <>
+    <Box sx={{
+      minHeight: "100vh",
+      gridTemplateAreas: "header main footer",
+      display: "flex",
+      flexDirection: "column",
+    }}>
       <LoadScript
         googleMapsApiKey="AIzaSyBRA8VU6f0Ciqy3aa5-JCQlS4TEqliQECs"
         libraries={libraries}
@@ -208,13 +214,13 @@ function App() {
                   </ProtectedRoute>}>
                 </Route>
               </Routes>
-            <Footer/>
             </>
           </AuthProvider>
 
         </BrowserRouter>
       </SearchContext.Provider>
-    </>
+      <Footer/>
+    </Box>
   )
 }
 
