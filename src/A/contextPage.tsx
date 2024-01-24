@@ -58,10 +58,11 @@ export async function LoginFunctionality(userInfo: CreateUserType) {
 }
 
 export async function getUser(userId: number) {
-  const response = await fetch(`https://borro.azurewebsites.net/api/UserInfo/${userId}`, {headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${localStorage.getItem('token')}`
-  },});
+  const response = await fetch(`https://borro.azurewebsites.net/api/UserInfo/${userId}`, {
+    method: 'GET',
+    headers: {'Content-Type': 'application/json',
+              'Authorization': `Bearer ${localStorage.getItem('token')}`}
+  });
   const object = await response.json();
   return object;
 }

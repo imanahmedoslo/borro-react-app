@@ -108,9 +108,12 @@ export function ViewPost() {
             <Button onClick={handleOpen} variant="contained">Kontakt</Button>
           <dialog open={open} onClose={handleClose}>
           <DialogContent>   
-            {contacts?.eMail}
-            {contacts?.phoneNumber}
-          "kontakt detaljer"
+            <p>Kontakt detaljer</p>
+            <p>{contacts?.firstName} {contacts?.lastName}</p>
+            <p></p>
+           <p> epost {contacts?.eMail}</p>
+           <p> telefon nummber {contacts?.phoneNumber}</p>
+          
           <Button onClick={handleClose} color="primary">
             lukk vindu
           </Button>
