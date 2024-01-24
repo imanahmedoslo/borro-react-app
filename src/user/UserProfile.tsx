@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {Avatar, Button, Container, Typography} from '@mui/material';
+import { UploadPicture } from '../Post/UploadPicture';
+import { UserInfoForm } from '../Register/UserInfoForm';
 
 type UserInfoType = {
   firstName: string,
@@ -65,6 +67,7 @@ export function UserProfile() {
         src={user.profileImage}
         sx={{width: 100, height: 100}}
       />
+      <UploadPicture Type={"userInfo"} Id={id}/>
       {/* <Typography variant="h6">{user.email}</Typography> */}
       {/* Add other user details here */}
       <Button variant="contained" onClick={() => navigate(`/editUser/${user.id}`)}>
