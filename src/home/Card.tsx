@@ -83,4 +83,5 @@ return (
         </CardContent>
       </CardActionArea>
     </Card>
-)}
+  );
+}
