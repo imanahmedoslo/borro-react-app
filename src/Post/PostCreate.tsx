@@ -15,6 +15,8 @@ import React, { useRef } from 'react';
 import Select from 'react-select'
 import { Navigate,useNavigate } from 'react-router-dom';
 import { postProps } from './ViewPost';
+import { UploadPicture } from './UploadPicture';
+
 const token= localStorage.getItem('token');
 const LogedInId= localStorage.getItem('id');
 type categoryProps={
@@ -66,9 +68,9 @@ export default function PostCreate() {
   //const [postnumber,setPostnumber]=useState<string>("");
   const[zipCode,setZipCode]=useState<string>("");
   const[city,setCity]=useState<string>("");
+  const[img, setImg] = useState<string>("");
   const [price,setPrice]=useState<string>("");
   const [isFree,setIsFree]=useState<boolean>(false);
-  const[img,setImg]=useState<string>("");
   const[categoryId,setCategoryId]=useState<number>(0);
     const fileInputRef = useRef<HTMLInputElement>(null);
     const handleCutsomClick = () => {
@@ -94,22 +96,7 @@ export default function PostCreate() {
     PostPosts(Post).then(respons=>(navigate(`/posts/${LogedInId}`)))
 
    }
-  const handleimgInput=(e:React.ChangeEvent<HTMLInputElement>)=>{
-    const file= e.target.files?.[0]
-    if (file) {
-      // Convert the selected file to a data URL
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const result = reader.result?.toString()??"";
-        setImg(result);
-        console.log(result);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      setImg("");
-    }
-    
-  }
+  
   const options = categories.map(category => ({
     value: category.type,
     label: category.type,
@@ -126,14 +113,12 @@ export default function PostCreate() {
         <div style={{display:'flex', flexWrap:'wrap' ,justifyContent:'space-around',flexDirection:'row', width:'100vw'}}>
         <div style={{display:'flex', flexDirection:'column'}}>
         <Grid >
-          <div style={{display:'flex', flexDirection:'column', paddingTop:'7px'}}>
-          <img src={img} style={{height:'18rem',width:'18rem', borderRadius:'5px', border:'2px grey solid'}}></img>
-          <Button onClick={handleCutsomClick} style={{width:'200px', height:'50px', border:'0.5px solid grey', marginTop:'10px', alignSelf:'center'}}>Velg et bilde:<input type='file' ref={fileInputRef} style={{display:'none'}} onChange={e=>handleimgInput(e)}/></Button>
-          </div>
+          <div style={{display:'flex', flexDirection:'column', paddingTop:'7px'}}></div>
         </Grid>
         </div>
         </div>
         <Grid item xs={12} sm={6}>
+
           <TextField
           style={{width:'300px', marginLeft:'5px', alignSelf:'start'}}
             required
