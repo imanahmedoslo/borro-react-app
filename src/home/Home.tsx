@@ -25,7 +25,7 @@ type postState = {
 export function Home() {
   const [filteredPosts, setFilteredPosts] = useState<postProps[]>([]);
   const [posts, setPosts] = useState<postProps[]>([]);
-  const [sliderValue, setSliderValue] = useState(100);
+  const [sliderValue, setSliderValue] = useState(50);
   const [userAddress, setUserAddress] = useState("");
   const {searchText} = useContext(SearchContext);
 
