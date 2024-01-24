@@ -43,13 +43,18 @@ export default function ActionAreaCard(cardProps: cardProps) {
     <Card key={cardProps.id} onClick={handleClick} sx={{
       flexBasis: {
         xs: "100%",
-        sm: "40%",
-        md: "31%",
+        sm: "60%",
+        md: "40%",
+        lg: "30%",
       },
       flexGrow: 1,
       maxHeight: 370,
       margin: 1,
       boxSizing: 'border-box',
+      boxShadow: 1,
+      "&:hover": {
+        boxShadow: 5,
+      }
     }}>
       <CardActionArea sx={{
         "&:focus": {

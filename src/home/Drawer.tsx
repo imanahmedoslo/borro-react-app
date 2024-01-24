@@ -11,6 +11,12 @@ export function DrawerMenu(props: DrawerMenuProps) {
 
   return <>
     <Drawer
+      PaperProps={{
+        sx: {
+          width: 250,
+          backgroundColor: "#FBF7EF",
+        },
+      }}
       anchor={"left"}
       open={props.open}
       onClose={props.onClose}>
@@ -24,7 +30,6 @@ export function DrawerMenu(props: DrawerMenuProps) {
         <Divider orientation="horizontal"/>
         <ListItem><Link to="/login"><Button>Meldinger</Button></Link></ListItem>
         <Divider orientation="horizontal"/>
-
 
       </List>
     </Drawer>
