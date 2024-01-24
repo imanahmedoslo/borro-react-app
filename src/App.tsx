@@ -193,7 +193,7 @@ function App() {
                     <MyPosts/>
                   </ProtectedRoute>
                 }></Route>
-                <Route path={"/userInfo/:userId"} element={
+                <Route path={"/createUserInfo/:userId"} element={
                   <ProtectedRoute>
                     <UserInfoForm/>
                   </ProtectedRoute>}>

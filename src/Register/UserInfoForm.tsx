@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {Box, Button, Container, TextField, Typography} from '@mui/material';
 import {ErrorPage} from './ErrorPage';
+import { UploadPicture } from '../Post/UploadPicture';
+import { useAuth } from '../App';
 
 type UserInfoType = {
   firstName: string,
@@ -16,12 +18,13 @@ type UserInfoType = {
   userId: number,
 };
 
-async function CreateUserInfo(userInfo: UserInfoType, authToken: string): Promise<number> {
+async function CreateUserInfo(userInfo: UserInfoType): Promise<number> {
+  const {sessionInfo} = useAuth();
   const response = await fetch('https://borro.azurewebsites.net/api/UserInfo', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${authToken}`
+      'Authorization': `Bearer ${sessionInfo?.accessToken}`,
     },
     body: JSON.stringify({
       firstName: userInfo.firstName,
@@ -70,14 +73,7 @@ export function UserInfoForm() {
       userId,
     };
 
-    const authToken = localStorage.getItem('token');
-
-    if (!authToken) {
-      console.error('Authentication token is not available.');
-      return navigate('/login');
-    }
-
-    const statusCode = await CreateUserInfo(userInfo, authToken);
+    const statusCode = await CreateUserInfo(userInfo);
     if (statusCode === 201) {
       navigate('/');
     } else {
@@ -91,6 +87,7 @@ export function UserInfoForm() {
         Vennligst legg til mer informasjon.
       </Typography>
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 3}}>
+      <Typography component="h3">Last opp profilbilde</Typography>
         <TextField
           margin="normal"
           required
@@ -110,13 +107,7 @@ export function UserInfoForm() {
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
         />
-        <TextField
-          margin="normal"
-          fullWidth
-          label="Profile Image URL"
-          value={profileImage}
-          onChange={(e) => setProfileImage(e.target.value)}
-        />
+
         <TextField
           margin="normal"
           required

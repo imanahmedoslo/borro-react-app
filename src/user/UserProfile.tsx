@@ -7,7 +7,6 @@ import { UserInfoForm } from '../Register/UserInfoForm';
 type UserInfoType = {
   firstName: string,
   lastName: string,
-  profileImage: string,
   address: string,
   postCode: string,
   city: string,
@@ -15,7 +14,12 @@ type UserInfoType = {
   birthDate: Date;
   about: string,
   id: number,
+  userInfo: UserInfo
 };
+
+type UserInfo = {
+  profileImage: string
+}
 
 
 export function UserProfile() {
@@ -23,34 +27,38 @@ export function UserProfile() {
   const navigate = useNavigate();
   const {id} = useParams();
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        console.log(`Fetching user info for ID: ${id}`);
-        const response = await fetch(`https://borro.azurewebsites.net/api/User/${id}`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
-          },
-        });
+  const fetchUser = async () => {
+    try {
+      console.log(`Fetching user info for ID: ${id}`);
+      const response = await fetch(`https://borro.azurewebsites.net/api/User/${id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const userData = await response.json();
-        setUser(userData);
-      } catch (error) {
-        console.error("Fetching user failed", error);
-        navigate('/error');
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
-    };
 
+      const userData = await response.json();
+      setUser(userData);
+    } catch (error) {
+      console.error("Fetching user failed", error);
+      navigate('/error');
+    }
+  };
+
+  useEffect(() => {
     if (id) {
       fetchUser();
     }
   }, [id]);
+
+  const onPictureUploaded = () => {
+    fetchUser();
+  }
 
 
   if (!user) {
@@ -64,10 +72,10 @@ export function UserProfile() {
       </Typography>
       <Avatar
         alt="User Avatar"
-        src={user.profileImage}
+        src={user.userInfo.profileImage}
         sx={{width: 100, height: 100}}
       />
-      <UploadPicture Type={"userInfo"} Id={id}/>
+      <UploadPicture Type={"userInfo"} Id={id} onPictureUploaded={onPictureUploaded} />
       {/* <Typography variant="h6">{user.email}</Typography> */}
       {/* Add other user details here */}
       <Button variant="contained" onClick={() => navigate(`/editUser/${user.id}`)}>
@@ -75,6 +83,9 @@ export function UserProfile() {
       </Button>
       <Button variant="contained" onClick={() => navigate(`/changePassword/${user.id}`)}>
         Endre passord
+      </Button>
+      <Button variant="contained" onClick={() => navigate(`/createUserInfo/${user.id}`)}>
+        Lag bruker profil
       </Button>
       <Typography variant='h5' gutterBottom>
         Navn

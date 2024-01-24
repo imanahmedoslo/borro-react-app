@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-export function UploadPicture({Type, Id}) {
+export function UploadPicture({Type, Id, onPictureUploaded}) {
     const [file, setFile] = useState();
     const [fileName, setFileName] = useState();
 
@@ -20,6 +20,7 @@ export function UploadPicture({Type, Id}) {
 
         try{
             const res = await axios.post("https://borro.azurewebsites.net/api/FileUpload", formData);
+            onPictureUploaded();
         } catch(ex) {
             console.log(ex);
         }
