@@ -87,7 +87,7 @@ export function LoggedInIcon({userId}: Props) {
                           onClick={() => navigate(`/userProfile/${userId}`)}/>
 
           <Typography gutterBottom variant="h4" component="div" marginY={"auto"} mr={2}>
-            {profile.firstName ?? 'novalue'}
+            {profile.firstName ?? 'Ola'}
           </Typography>
 
           <Button style={{textAlign: 'center', height: '50px'}} variant="contained" onClick={onLogout}>
