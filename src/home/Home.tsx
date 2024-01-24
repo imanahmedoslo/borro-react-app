@@ -96,12 +96,16 @@ export function Home() {
           <Filter sliderValue={sliderValue}
                   setSliderValue={setSliderValue}/>
         </Box>
-        <Box style={{
+        <Box sx={{
           display: 'flex',
           flexWrap: 'wrap',
           justifyContent: 'flex-start',
-          margin: '0 auto',
-          maxWidth: '96%',
+          margin: '5% auto',
+          maxWidth: {
+            xs:'95%',
+            sm:'80%',
+            md:'70%',
+          },
           boxSizing: 'border-box',
         }}>
           {filteredPosts.map(post =>

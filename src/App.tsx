@@ -14,6 +14,7 @@ import {UserProfile} from "./user/UserProfile.tsx";
 import {EditUserProfile} from "./user/EditUserProfile.tsx";
 import {ChangePassword} from "./user/ChangePassword.tsx";
 import { MyPosts } from './Post/MyPosts.tsx';
+import {Footer} from "./Footer/Footer.tsx";
 
 
 type ProtectedRouteProps = {
@@ -93,6 +94,7 @@ function App() {
               </ProtectedRoute>}>
             </Route>
           </Routes>
+          <Footer/>
         </BrowserRouter>
       </SearchContext.Provider>
     </>
