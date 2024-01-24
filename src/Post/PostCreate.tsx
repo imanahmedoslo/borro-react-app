@@ -6,13 +6,16 @@ import {createTheme, styled} from '@mui/material/styles';
 import {  styled,  } from '@mui/material/styles';
 import Logo from '../Logo';
 import Checkbox from '@mui/material/Checkbox';
+import React, {useRef, useState} from 'react';
 import { useEffect } from 'react';
 
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import {Range, RangeKeyDict} from 'react-date-range';
+import {Range, RangeKeyDict} from 'react-date-range';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Calendar from './PostCreateCalender';
+
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -40,13 +43,26 @@ export default function PostCreate() {
       fileInputRef.current.click();
     }
   };
+export default function PostCreate() {
+  const [isFree, setIsFree] = useState<boolean>(false);
+  const [img, setImg] = useState<string>();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleCutsomClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
   const [dateRange, setDateRange] = useState<Range[]>([
     {
       startDate: new Date(),
       endDate: new Date(),
       key: 'selection'
     }
+      key: 'selection'
+    }
   ]);
+  const handleDateChange = (item: RangeKeyDict) => {
   const handleDateChange = (item: RangeKeyDict) => {
     // Update the state when the date range changes
     setDateRange([item.selection]);
@@ -265,13 +281,15 @@ export default function PostCreate() {
             onChange={e=>setPrice(e.currentTarget.value)}
           />}
           <Grid item xs={12}>
-          <FormControlLabel
-            control={<Checkbox  onChange={e=>setIsFree(e.target.checked?true:false)} color="secondary" name="saveAddress" value="yes"  />}
-            label="Kryss av for å angi pris"
-          />
+            <FormControlLabel
+              control={<Checkbox onChange={e => setIsFree(e.target.checked ? true : false)} color="secondary"
+                                 name="saveAddress" value="yes"/>}
+              label="Kryss av for å angi pris"
+            />
+          </Grid>
         </Grid>
-        </Grid>
-        <Button variant='contained' type='submit' style={{marginLeft:'30px', marginTop:'10px'}}>Lagre endringer</Button>
+        <Button variant='contained' type='submit' style={{marginLeft: '30px', marginTop: '10px'}}>Lagre
+          endringer</Button>
       </Grid>
       <Button variant='outlined' type='submit' style={{width:'200px', height:'50px',marginTop:'30px', marginRight:'21px', marginBottom:'20px'}}>Lagre endringer</Button>
       </form>

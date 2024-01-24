@@ -1,9 +1,22 @@
 import {useEffect, useState} from "react";
 import {Button, Card, CardContent, CardMedia, Typography} from "@mui/material";
 import {useParams} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {Button, Card, CardContent, CardMedia, Typography} from "@mui/material";
+import {useParams} from "react-router-dom";
 
 
 export type postProps = {
+  postId: number,
+  title: string,
+  image: string,
+  price: number,
+  dateFrom: Date,
+  dateTo: Date,
+  description: string,
+  location: string,
+  categoryId: number,
+  userId: number
   postId: number,
   title: string,
   image: string,
@@ -22,7 +35,18 @@ async function FetchPost(id: number) {
     if (!res.ok) {
       throw new Error(`Http error status code ${res.status}`);
     }
+  const res = await fetch(`https://borro.azurewebsites.net/api/Post/${id}`);
+  try {
+    if (!res.ok) {
+      throw new Error(`Http error status code ${res.status}`);
+    }
 
+    const resObject = await res.json();
+    return resObject;
+  } catch (error) {
+    console.log(error);
+    return Error("Could not find find this post.");
+  }
     const resObject = await res.json();
     return resObject;
   } catch (error) {
@@ -33,9 +57,12 @@ async function FetchPost(id: number) {
 
 type ViewPostParams = {
   postId: string;
+  postId: string;
 }
 
 export function ViewPost() {
+  const [post, setPost] = useState<postProps>();
+  const {postId} = useParams<keyof ViewPostParams>() as ViewPostParams;
   const [post, setPost] = useState<postProps>();
   const {postId} = useParams<keyof ViewPostParams>() as ViewPostParams;
 
@@ -45,7 +72,16 @@ export function ViewPost() {
         .then(thePost => setPost(thePost))
     }
   }, []);
+  useEffect(() => {
+    if (postId) {
+      FetchPost(parseInt(postId))
+        .then(thePost => setPost(thePost))
+    }
+  }, []);
 
+  if (!post) {
+    return <>Loading...</>
+  }
   if (!post) {
     return <>Loading...</>
   }

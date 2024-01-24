@@ -2,29 +2,37 @@ import './App.css'
 import {Home} from "./home/Home.tsx";
 import LogIn from './logIn/logIn.tsx'
 import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 import React, {useState} from "react";
 import SearchAppBar from "./home/Search.tsx";
 import Register from './Register/Register.tsx';
 import PostCreate from './Post/PostCreate.tsx';
 import {ViewPost} from './Post/ViewPost.tsx';
 import {UserInfoForm} from './Register/UserInfoForm.tsx';
+import {ViewPost} from './Post/ViewPost.tsx';
+import {UserInfoForm} from './Register/UserInfoForm.tsx';
 import {LoginFunctionality} from './A/contextPage.tsx';
-import {LocationDistance} from "./GoogleAPI/Maps.tsx";
-import { MyPosts } from './Post/MyPosts.tsx';
 import {LoadScript} from "@react-google-maps/api";
 import {UserProfile} from "./user/UserProfile.tsx";
 import {EditUserProfile} from "./user/EditUserProfile.tsx";
 import {ChangePassword} from "./user/ChangePassword.tsx";
+import { MyPosts } from './Post/MyPosts.tsx';
 
 
 type ProtectedRouteProps = {
+  children?: JSX.Element;
   children?: JSX.Element;
 
 }
 export const SearchContext = React.createContext<{
   searchText: string;
   setSearchText: React.Dispatch<React.SetStateAction<string>>;
+  searchText: string;
+  setSearchText: React.Dispatch<React.SetStateAction<string>>;
 }>({
+  searchText: '',
+  setSearchText: () => {
+  },
   searchText: '',
   setSearchText: () => {
   },
@@ -33,10 +41,24 @@ export const SearchContext = React.createContext<{
 type Library = "geometry";
 const libraries: Library[] = ["geometry"];
 
+type Library = "geometry";
+const libraries: Library[] = ["geometry"];
+
 function App() {
   const [mapsLoaded, setMapsLoaded] = useState(false);
   const [searchText, setSearchText] = useState('');
+  const [mapsLoaded, setMapsLoaded] = useState(false);
+  const [searchText, setSearchText] = useState('');
 
+  function ProtectedRoute(props: ProtectedRouteProps) {
+    const isLoggedIn = localStorage.getItem('logInStatus') === 'true' ? true : false;
+    if (!isLoggedIn) {
+      return <Navigate to="/login"/>
+    }
+    return <>
+      {props.children}
+    </>
+  }
   function ProtectedRoute(props: ProtectedRouteProps) {
     const isLoggedIn = localStorage.getItem('logInStatus') === 'true' ? true : false;
     if (!isLoggedIn) {
@@ -94,30 +116,7 @@ function App() {
       </SearchContext.Provider>
     </>
   )
-	return (
-		<>
-			<LocationDistance/>
-			<SearchContext.Provider value={{searchText, setSearchText}}>
-				<BrowserRouter>
-					<SearchAppBar setSearchText={setSearchText}/>
-					<Routes>
-						<Route path={"/"} element={<Home/>}></Route>
-						<Route path={"/login"}
-						       element={
-							       <ProtectedRoute>
-								       <LogIn LoginFunctionality={LoginFunctionality}/>
-							       </ProtectedRoute>}>
-						</Route>
-						<Route path={"/register"} element={<Register/>}></Route>
-						<Route path={"/postCreate"} element={<PostCreate/>}></Route>
-						<Route path={"/post/:postId"} element={<ViewPost/>}></Route>
-						<Route path={"/userInfo/:userId"} element={<UserInfoForm/>}></Route>
-						<Route path={`/posts/:userId`} element={<MyPosts/>}></Route>
-					</Routes>
-				</BrowserRouter>
-			</SearchContext.Provider>
-		</>
-	)
 }
+
 
 export default App
