@@ -1,6 +1,7 @@
 import {Button, Divider, Drawer, List, ListItem} from "@mui/material";
 import React from "react";
 import {Link} from "react-router-dom";
+import { useAuth } from "../App";
 
 export type DrawerMenuProps = {
   open: boolean;
@@ -8,6 +9,7 @@ export type DrawerMenuProps = {
 }
 
 export function DrawerMenu(props: DrawerMenuProps) {
+  const{sessionInfo}=useAuth()
 
   return <>
     <Drawer
@@ -26,7 +28,7 @@ export function DrawerMenu(props: DrawerMenuProps) {
         <Divider orientation="horizontal"/>
         <ListItem><Link to="/postCreate"><Button>Legg ut annonse</Button></Link></ListItem>
         <Divider orientation="horizontal"/>
-        <ListItem><Link to="/login"><Button>Lagret annonser</Button></Link></ListItem>
+        <ListItem><Link to="/posts/:postId"><Button>Mine annonser</Button></Link></ListItem>
         <Divider orientation="horizontal"/>
         <ListItem><Link to="/login"><Button>Meldinger</Button></Link></ListItem>
         <Divider orientation="horizontal"/>
