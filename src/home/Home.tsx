@@ -30,6 +30,8 @@ export function Home() {
   const {searchText} = useContext(SearchContext);
 
 
+  console.log(sliderValue);
+
   async function getPosts(): Promise<postProps[]> {
     const response = await fetch("https://borro.azurewebsites.net/api/Post");
     return await response.json();
@@ -48,43 +50,43 @@ export function Home() {
     fetchUserAddress();
   }, []);
 
-useEffect(() => {
-  async function filterPosts() {
-    let searchFilteredPosts = posts;
+  useEffect(() => {
+    async function filterPosts() {
+      let searchFilteredPosts = posts;
 
-    if (searchText.trim()) {
-      searchFilteredPosts = searchFilteredPosts.filter(post =>
-        post.title.toLowerCase().includes(searchText.toLowerCase()));
-    }
-
-    let finalFilteredPosts = [];
-
-    // Only proceed if userAddress is non-empty
-    if (userAddress.trim()) {
-      for (let post of searchFilteredPosts) {
-        // Try-catch block around distance calculation
-        try {
-          const distance = await calculateDistance(userAddress, post.location);
-          console.log({distance, sliderValue}); // additional log for debugging
-
-          if (distance <= sliderValue) {
-            finalFilteredPosts.push(post);
-            console.log(post); // additional log for debugging
-          }
-        } catch (err) {
-          console.error(`Failed to calculate distance for post with id ${post.id}, error: ${err}`);
-        }
+      if (searchText.trim()) {
+        searchFilteredPosts = searchFilteredPosts.filter(post =>
+          post.title.toLowerCase().includes(searchText.toLowerCase()));
       }
-    } else {
-      console.warn('User address is empty, can not filter by distance.');
-      finalFilteredPosts = searchFilteredPosts; // No filtering by distance if no userAddress provided
+
+      let finalFilteredPosts = [];
+
+      // Only proceed if userAddress is non-empty
+      if (userAddress.trim()) {
+        for (let post of searchFilteredPosts) {
+          // Try-catch block around distance calculation
+          try {
+            const distance = await calculateDistance(userAddress, post.location);
+            //console.log({distance, sliderValue}); // additional log for debugging
+
+            if (distance <= sliderValue) {
+              finalFilteredPosts.push(post);
+              //console.log(post); // additional log for debugging
+            }
+          } catch (err) {
+            console.error(`Failed to calculate distance for post with id ${post.id}, error: ${err}`);
+          }
+        }
+      } else {
+        console.warn('User address is empty, can not filter by distance.');
+        finalFilteredPosts = searchFilteredPosts; // No filtering by distance if no userAddress provided
+      }
+
+      setFilteredPosts(finalFilteredPosts);
     }
 
-    setFilteredPosts(finalFilteredPosts);
-  }
-
-  filterPosts();
-}, [posts, searchText, sliderValue, userAddress]);
+    filterPosts();
+  }, [posts, searchText, sliderValue, userAddress]);
 
   return (
     <>

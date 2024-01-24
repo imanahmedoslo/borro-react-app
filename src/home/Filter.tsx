@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import React, {useEffect, useState} from "react";
+import React, {SyntheticEvent, useEffect, useState} from "react";
 import {LocationDistance} from "../GoogleAPI/Maps.tsx";
 import {Button, Slider} from "@mui/material";
 import {getPosts, getUser} from "../A/contextPage.tsx";
@@ -16,7 +16,6 @@ export function Filter({sliderValue, setSliderValue}: FilterProps) {
   const [userAddress, setUserAddress] = useState<string>("");
   const [postAddress, setPostAddress] = useState<string>("");
   const [postDistance, setPostDistance] = useState<number>(0);
-
 
   useEffect(() => {
     async function fetchUserAddress() {
@@ -36,12 +35,12 @@ export function Filter({sliderValue, setSliderValue}: FilterProps) {
     setVis(!vis);
   }
 
-
   return (
     <Box sx={{
       objectFit: "contain",
       backgroundColor: "#c9c9c9",
-      width: "40%"}}>
+      width: "40%"
+    }}>
       <Button
         onClick={onClick}
         sx={{
@@ -51,26 +50,31 @@ export function Filter({sliderValue, setSliderValue}: FilterProps) {
         }}>
         Filter
       </Button>
-
       <Box sx={vis ? {backgroundColor: "#e7e7e7"} : {display: "none"}}>
         <LocationDistance userAddress={userAddress}
-                          postAddress={"oslo nydalen spaces"}/>
+                          postAddress={"oslo nydalen spaces"}
+        />
         <DistanceSlider sliderValue={sliderValue}
-                        setSliderValue={setSliderValue}/>
+                        setSliderValue={setSliderValue}
+        />
       </Box>
     </Box>
-  )
+  );
 }
 
-function DistanceSlider({ sliderValue, setSliderValue } : FilterProps) {
+function DistanceSlider({sliderValue, setSliderValue}: FilterProps) {
   const [value, setValue] = useState<number[]>([50]);
 
   const handleChange = (event: Event, newValue: number | number[]) => {
     const value = newValue as number[];
     setValue(value);
-    setSliderValue(value[0]);
   };
 
+  function handleChangeCommited(event: Event | SyntheticEvent<Element, Event>, newValue: number | number[]): void {
+    const value = newValue as number[];
+    setValue(value);
+    setSliderValue(value[0]);
+  }
 
   return (
     <Box sx={{width: 300}}>
@@ -80,10 +84,10 @@ function DistanceSlider({ sliderValue, setSliderValue } : FilterProps) {
       <Slider
         value={value}
         onChange={handleChange}
+        onChangeCommitted={handleChangeCommited}
         valueLabelDisplay="auto"
         aria-labelledby="range-slider"
       />
-
     </Box>
   );
 }

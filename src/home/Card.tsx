@@ -13,8 +13,8 @@ import {getUser} from "../A/contextPage.tsx";
 type cardProps = {
   title: string;
   description: string;
-  id: number,
-  location: string,
+  id: number;
+  location: string;
 }
 
 export default function ActionAreaCard(cardProps: cardProps) {
