@@ -3,6 +3,7 @@ import {Button, Card, CardContent, CardMedia, Typography} from "@mui/material";
 import {useParams} from "react-router-dom";
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
+//import { useAuth } from "../App";
 
 
 export type postProps = {
@@ -16,6 +17,12 @@ export type postProps = {
   location: string,
   categoryId: number,
   userId: number
+}
+type ownerContacts={
+  firstName:string,
+	lastName:string,
+	phoneNumber:string,
+	eMail:string,
 }
 
 async function FetchPost(id: number) {
@@ -32,6 +39,12 @@ async function FetchPost(id: number) {
     return Error("Could not find find this post.");
   }
 }
+async function FetchUserByPostId(id:number){
+  const res = await fetch(`https://borro.azurewebsites.net/api/UserInfo/postOwner/${id}?postId=${id}`,{method: 'GET', headers: {'Content-Type': 'application/json'}});
+  const responseJson:ownerContacts=await res.json();
+  return responseJson;
+  
+}
 
 
 type ViewPostParams = {
@@ -41,9 +54,16 @@ type ViewPostParams = {
 export function ViewPost() {
   const [post, setPost] = useState<postProps>();
   const {postId} = useParams<keyof ViewPostParams>() as ViewPostParams;
+  const [contacts,setContacts]=useState<ownerContacts|null>(null)
   const [open, setOpen] = useState(false);
+  useEffect(()=>{
+    if(post!=null||post!=undefined){
+      FetchUserByPostId(post?.id).then(result=> setContacts(result))
+    }
+    //FetchUserByPostId(post?.id).then(result=> setContacts(result))
+  },[post])
   const handleOpen = () => {
-    setOpen(true);
+    setOpen(true); 
   };
   const handleClose = () => {
     setOpen(false);
@@ -54,6 +74,7 @@ export function ViewPost() {
       FetchPost(parseInt(postId))
         .then(p => setPost(p))
     }
+    
   }, []);
 
 
@@ -87,8 +108,12 @@ export function ViewPost() {
             <Button onClick={handleOpen} variant="contained">Kontakt</Button>
           <dialog open={open} onClose={handleClose}>
           <DialogContent>   
-            {post.userId}
-          "kontakt detaljer"
+            <p>Kontakt detaljer</p>
+            <p>{contacts?.firstName} {contacts?.lastName}</p>
+            <p></p>
+           <p> epost {contacts?.eMail}</p>
+           <p> telefon nummber {contacts?.phoneNumber}</p>
+          
           <Button onClick={handleClose} color="primary">
             lukk vindu
           </Button>

@@ -101,6 +101,6 @@ export function LoggedInIcon({userId}: Props) {
 }
 
 export async function getPosts() {
-  const response = await fetch("https://borro.azurewebsites.net/api/Post");
+  const response = await fetch("https://borro.azurewebsites.net/api/Post",);
   return await response.json();
 }
