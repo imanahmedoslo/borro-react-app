@@ -141,8 +141,10 @@ export function EditUserProfile() {
         />
         <TextField
           margin="normal"
+          required
           fullWidth
           label="Adresse"
+          name='address'
           value={userInfo.address}
           onChange={handleInputChange}
         />
@@ -151,6 +153,7 @@ export function EditUserProfile() {
           required
           fullWidth
           label="Postnummer"
+          name='postCode'
           value={userInfo.postCode}
           onChange={handleInputChange}
           type="number"
@@ -160,6 +163,7 @@ export function EditUserProfile() {
           required
           fullWidth
           label="Poststed"
+          name='city'
           value={userInfo.city}
           onChange={handleInputChange}
         />
@@ -184,7 +188,7 @@ export function EditUserProfile() {
           margin="normal"
           fullWidth
           label="Bio"
-          name="text"
+          name="about"
           value={userInfo.about}
           onChange={handleInputChange}
         />
