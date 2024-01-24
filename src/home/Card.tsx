@@ -61,7 +61,7 @@ return (
         <CardMedia
           component="img"
           height="210"
-          image="src/assets/img_1.png"
+          image={cardProps.img}
           src={cardProps.img}
           alt="Placeholder"
           sx={{

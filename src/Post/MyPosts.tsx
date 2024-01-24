@@ -19,11 +19,11 @@ export function MyPosts(){
         GetAllUserPosts().then(posts=>(setPosts(posts)))
     },[])
     return(<>
-        <h3 key={'header'}  style={{ paddingBottom:'10p',fontSize:'30px', height:'15vh'}}>
+        <h3   style={{ paddingBottom:'10p',fontSize:'30px', height:'15vh'}}>
       Dine Annonser:
     </h3>
-    <div key={'div'} style={{display:'flex',flexDirection:'row', flexWrap:'wrap', alignItems:'center', overflowX:'hidden' }}>
-    {posts?.map(post=>(<ActionAreaCard location={post.location} key={post.postId} description={post.description} title={post.title} id={post.postId} img={post.image}/>))}
+    <div style={{display:'flex',flexDirection:'row', flexWrap:'wrap', alignItems:'center', overflowX:'hidden' }}>
+    {posts?.map((post, index)=>(<ActionAreaCard location={post.location} key={index} description={post.description} title={post.title} id={post.postId} img={post.image}/>))}
     </div>
     </>
   
