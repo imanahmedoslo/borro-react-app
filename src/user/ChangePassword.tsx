@@ -16,7 +16,7 @@ const handlePassword=(password:string,repeatedPassword:string):boolean=>{
 
 
  export function ChangePassword() {
-    const [gammeltPassord, setgammeltPassord] = useState<string>("");
+    const [oldPassord, setOldPassord] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [repeatedPassword, setRepeatedPassword] = useState<string>("");
     const [passwordAligned, setPasswordAligned] = useState<boolean>(true);
@@ -52,14 +52,14 @@ const handlePassword=(password:string,repeatedPassword:string):boolean=>{
             <Grid container spacing={2}>
               <Grid item xs={12}>
               <Grid item xs={12}>
-                <TextField value={gammeltPassord} onChange={e=>setgammeltPassord(e.target.value)}
+                <TextField value={oldPassord} onChange={e=>setOldPassord(e.target.value)}
                   required
                   fullWidth
-                  name="gammelyPassord"
+                  name="oldPassord"
                   label="gammelt passord"
                   type={showPassword ? "text" : "password" }
-                  id="gammeltPassord"
-                  autoComplete="gammeltPassord"
+                  id="oldPassord"
+                  autoComplete="oldPassord"
                 />
               </Grid>
               </Grid>
@@ -67,22 +67,22 @@ const handlePassword=(password:string,repeatedPassword:string):boolean=>{
                 <TextField value={password} onChange={e=>setPassword(e.target.value)}
                   required
                   fullWidth
-                  name="nyttPassord"
+                  name="newPassord"
                   label="nytt Passord"
                   type={showPassword ? "text" : "password" }
-                  id="nyttPassord"
-                  autoComplete="nyttPassord"
+                  id="newPassord"
+                  autoComplete="newPassord"
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField value={repeatedPassword} onChange={e=>setRepeatedPassword(e.target.value)}
                   required
                   fullWidth
-                  name="gjentaPassord"
+                  name="repeatedPassord"
                   label="gjenta Passord"
                   type={showPassword ? "text" : "password" }
-                  id="gjentaPassord"
-                  autoComplete="gjentaPassord"
+                  id="repeatedPassord"
+                  autoComplete="repeatedPassord"
                 />
               </Grid>
               <Grid item xs={12}>
