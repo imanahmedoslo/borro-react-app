@@ -1,10 +1,14 @@
-
 import React, { useState } from "react";
 import Logo from "../Logo";
 import { defaultTheme } from "react-select";
 import { Box, Button, Checkbox, Container, CssBaseline, FormControlLabel, Grid, TextField, Typography } from "@mui/material";
 import { useTheme } from '@mui/material/styles';
+import { useParams } from "react-router";
 
+
+type user = {
+    id: number;
+}
 
 export function ChangePassword() {
     const [password, setPassword] = useState<string>("");
@@ -12,16 +16,50 @@ export function ChangePassword() {
     const [repeatedPassword, setRepeatedPassword] = useState<string>("");
     const [passwordAligned, setPasswordAligned] = useState<boolean>(true);
     const [showPassword, setShowPassword] = useState<boolean>(false);
+
+    const {id} = useParams<{ id: string }>();
+    const userId = id ? parseInt(id, 10) : 0;
+    console.log('Retrieved user ID from URL:', id);
   
     const handlePassword = (newPassword: string, repeatedPassword: string): boolean => {
       return newPassword === repeatedPassword;
     };
   
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handlePasswordSubmit = (event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       const isPasswordsEqual = handlePassword(newPassword, repeatedPassword);
       setPasswordAligned(isPasswordsEqual);
+      handleIdSubmit()
     };
+
+    const handleIdSubmit = async () => {
+        try {
+          const response = await fetch(`https://borro.azurewebsites.net/api/User/changePassword/${userId}`, {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            },
+
+            // SJEKK SYNTAKSEN PÅ HVORDAN MAN SENDER INN TING SOM JSON. Anførselstegn?Kolon?Erliktegn?
+            body: JSON.stringify({newPassword:
+                newPassword, oldPassword:password
+            }),
+          });
+    
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+    
+    
+        //   navigate(`/userProfile/${id}`);
+        } catch (error) {
+          console.error("Updating user info failed", error);
+        }
+      };
+
+
+
   
     return (
       <>
@@ -40,7 +78,7 @@ export function ChangePassword() {
               <Typography component="h1" variant="h5">
                 Endre passord
               </Typography>
-              <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+              <Box component="form" noValidate onSubmit={handlePasswordSubmit} sx={{ mt: 3 }}>
                 <Grid container spacing={2}>
                   <Grid item xs={12}>
                     <TextField
