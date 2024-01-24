@@ -10,7 +10,8 @@ import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import {DrawerMenu} from "./Drawer.tsx";
-import {LogedInIcon} from '../A/contextPage.tsx';
+import {LoggedInIcon} from '../A/contextPage.tsx';
+import { useAuth } from '../App.tsx';
 
 const Search = styled('div')(({theme}) => ({
   position: 'relative',
@@ -55,6 +56,7 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
 }));
 
 export default function SearchAppBar({setSearchText}: { setSearchText: (text: string) => void }) {
+  const { sessionInfo } = useAuth();
   const [state, setState] = useState({
     left: false,
   });
@@ -66,7 +68,8 @@ export default function SearchAppBar({setSearchText}: { setSearchText: (text: st
   const openDrawer = () => {
     setState(state => ({...state, left: true}));
   }
-  const isLoggedIn: boolean = localStorage.getItem('logInStatus') === 'true' ? true : false
+  const isLoggedIn = !!sessionInfo?.accessToken
+  // const isLoggedIn: boolean = localStorage.getItem('logInStatus') === 'true' ? true : false
 
   return (
     <Box sx={{flexGrow: 1}}>
@@ -104,7 +107,7 @@ export default function SearchAppBar({setSearchText}: { setSearchText: (text: st
               onChange={event => setSearchText(event.target.value)} // update search text
             />
           </Search>
-          {isLoggedIn && <LogedInIcon/>}
+          {isLoggedIn && <LoggedInIcon userId={sessionInfo.id}/>}
         </Toolbar>
       </AppBar>
 

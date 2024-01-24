@@ -3,7 +3,8 @@ import ActionAreaCard from "./Card.tsx";
 import {SearchContext} from "../App.tsx";
 import {Filter} from "./Filter.tsx";
 import {calculateDistance} from "../GoogleAPI/CalculateDistance.tsx";
-import {getUser} from "../A/contextPage.tsx";
+//import {getUser} from "../A/contextPage.tsx";
+import { useAuth } from '../App.tsx';
 
 export type postProps = {
   id: number,
@@ -28,6 +29,7 @@ export function Home() {
   const [sliderValue, setSliderValue] = useState(50);
   const [userAddress, setUserAddress] = useState("");
   const {searchText} = useContext(SearchContext);
+  const {sessionInfo}= useAuth();
 
 
   console.log(sliderValue);
@@ -43,8 +45,8 @@ export function Home() {
 
   useEffect(() => {
     async function fetchUserAddress() {
-      const userData = await getUser();
-      setUserAddress(userData.address);
+      //const userData = await getUser();
+      setUserAddress(sessionInfo?.address??"");
     }
 
     fetchUserAddress();
@@ -110,6 +112,7 @@ export function Home() {
               title={post.title}
               description={post.description}
               location={post.location}
+              img={post.image}
             />)}
         </div>
       </div>

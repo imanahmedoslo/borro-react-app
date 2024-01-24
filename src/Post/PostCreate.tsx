@@ -36,8 +36,6 @@ async function PostPosts(postInfo:CreatePostProps){
   
   const response= await fetch(`https://borro.azurewebsites.net/api/Post`,{method: 'POST', headers: {'Content-Type': 'application/json','Authorization': `Bearer ${token}`}, body:JSON.stringify(postInfo)});
   const responseJson:postProps= await response.json();
-  console.log(responseJson);
-  console.log(responseJson.postId);
   return responseJson;
   }
 
@@ -102,7 +100,6 @@ export default function PostCreate() {
       reader.onloadend = () => {
         const result = reader.result?.toString()??"";
         setImg(result);
-        console.log(result);
       };
       reader.readAsDataURL(file);
     } else {

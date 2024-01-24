@@ -4,7 +4,7 @@ import {useParams} from "react-router-dom";
 
 
 export type postProps = {
-  postId: number,
+  id: number,
   title: string,
   image: string,
   price: number,

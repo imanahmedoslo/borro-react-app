@@ -4,6 +4,7 @@ import React, {SyntheticEvent, useEffect, useState} from "react";
 import {LocationDistance} from "../GoogleAPI/Maps.tsx";
 import {Button, Slider} from "@mui/material";
 import {getPosts, getUser} from "../A/contextPage.tsx";
+import { useAuth } from '../App.tsx';
 
 
 type FilterProps = {
@@ -12,6 +13,7 @@ type FilterProps = {
 }
 
 export function Filter({sliderValue, setSliderValue}: FilterProps) {
+  const{sessionInfo}=useAuth();
   const [vis, setVis] = useState(false);
   const [userAddress, setUserAddress] = useState<string>("");
   const [postAddress, setPostAddress] = useState<string>("");
@@ -19,8 +21,8 @@ export function Filter({sliderValue, setSliderValue}: FilterProps) {
 
   useEffect(() => {
     async function fetchUserAddress() {
-      const userData = await getUser();
-      setUserAddress(userData.address);
+     // const userData = await getUser();
+      setUserAddress(sessionInfo?.address??"");
     }
 
     async function fetchPostAddress() {

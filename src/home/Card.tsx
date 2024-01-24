@@ -7,7 +7,8 @@ import Typography from '@mui/material/Typography';
 import {CardActionArea} from '@mui/material';
 import {useNavigate} from 'react-router-dom';
 import {LocationDistance} from "../GoogleAPI/Maps.tsx";
-import {getUser} from "../A/contextPage.tsx";
+//import {getUser} from "../A/contextPage.tsx";
+import { useAuth } from '../App.tsx';
 
 
 type cardProps = {
@@ -19,16 +20,16 @@ type cardProps = {
 }
 
 export default function ActionAreaCard(cardProps: cardProps) {
+  const { sessionInfo } = useAuth();
   const [userAddress, setUserAddress] = useState<string>("");
   const [distance, setDistance] = useState<number>(0);
-
 
   const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchUserAddress() {
-      const userData = await getUser();
-      setUserAddress(userData.address);
+      //const userData = await getUser();
+      setUserAddress(sessionInfo?.address??"");
     }
 
     fetchUserAddress();
