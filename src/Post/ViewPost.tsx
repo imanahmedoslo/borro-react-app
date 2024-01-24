@@ -58,6 +58,7 @@ export function ViewPost() {
           component="img"
           height="300"
           image={`${post.image}`}
+          src={post.image}
           alt="Placeholder"
         />
         <CardContent className={"CardMuiContent"}>

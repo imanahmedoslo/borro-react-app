@@ -23,7 +23,7 @@ export function MyPosts(){
       Dine Annonser:
     </h3>
     <div key={'div'} style={{display:'flex',flexDirection:'row', flexWrap:'wrap', alignItems:'center', overflowX:'hidden' }}>
-    {posts?.map(post=>(<ActionAreaCard key={post.postId} description={post.description} title={post.title} id={post.postId} img={post.image}/>))}
+    {posts?.map(post=>(<ActionAreaCard location={post.location} key={post.postId} description={post.description} title={post.title} id={post.postId} img={post.image}/>))}
     </div>
     </>
   
