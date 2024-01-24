@@ -52,7 +52,7 @@ export function ViewPost() {
   useEffect(() => {
     if (postId) {
       FetchPost(parseInt(postId))
-        .then(thePost => setPost(thePost))
+        .then(p => setPost(p))
     }
   }, []);
 
@@ -86,10 +86,11 @@ export function ViewPost() {
             
             <Button onClick={handleOpen} variant="contained">Kontakt</Button>
           <dialog open={open} onClose={handleClose}>
-          <DialogContent>
+          <DialogContent>   
+            {post.userId}
           "kontakt detaljer"
           <Button onClick={handleClose} color="primary">
-            "lukk vindu"
+            lukk vindu
           </Button>
           </DialogContent>
 
