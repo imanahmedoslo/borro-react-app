@@ -3,7 +3,8 @@ import Logo from "../Logo";
 import { defaultTheme } from "react-select";
 import { Box, Button, Checkbox, Container, CssBaseline, FormControlLabel, Grid, TextField, Typography } from "@mui/material";
 import { useTheme } from '@mui/material/styles';
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import { useAuth } from "../App";
 
 
 type user = {
@@ -16,6 +17,8 @@ export function ChangePassword() {
     const [repeatedPassword, setRepeatedPassword] = useState<string>("");
     const [passwordAligned, setPasswordAligned] = useState<boolean>(true);
     const [showPassword, setShowPassword] = useState<boolean>(false);
+    const {sessionInfo}=useAuth();
+    const navigate = useNavigate();
 
     const {id} = useParams<{ id: string }>();
     const userId = id ? parseInt(id, 10) : 0;
@@ -38,7 +41,7 @@ export function ChangePassword() {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': `Bearer ${localStorage.getItem('token')}`,
+              'Authorization': `Bearer ${sessionInfo?.accessToken}`,
             },
 
             // SJEKK SYNTAKSEN PÅ HVORDAN MAN SENDER INN TING SOM JSON. Anførselstegn?Kolon?Erliktegn?
@@ -52,7 +55,7 @@ export function ChangePassword() {
           }
     
     
-        //   navigate(`/userProfile/${id}`);
+           navigate(`/`);
         } catch (error) {
           console.error("Updating user info failed", error);
         }
