@@ -6,7 +6,7 @@ import DialogContent from '@mui/material/DialogContent';
 
 
 export type postProps = {
-  postId: number,
+  id: number,
   title: string,
   image: string,
   price: number,
