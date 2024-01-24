@@ -3,13 +3,19 @@ import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import {createTheme, styled} from '@mui/material/styles';
+import {  styled,  } from '@mui/material/styles';
+import Logo from '../Logo';
 import Checkbox from '@mui/material/Checkbox';
 import React, {useRef, useState} from 'react';
+import { useEffect } from 'react';
+
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import {Range, RangeKeyDict} from 'react-date-range';
+import {Range, RangeKeyDict} from 'react-date-range';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Calendar from './PostCreateCalender';
+
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -37,13 +43,26 @@ export default function PostCreate() {
       fileInputRef.current.click();
     }
   };
+export default function PostCreate() {
+  const [isFree, setIsFree] = useState<boolean>(false);
+  const [img, setImg] = useState<string>();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleCutsomClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
   const [dateRange, setDateRange] = useState<Range[]>([
     {
       startDate: new Date(),
       endDate: new Date(),
       key: 'selection'
     }
+      key: 'selection'
+    }
   ]);
+  const handleDateChange = (item: RangeKeyDict) => {
   const handleDateChange = (item: RangeKeyDict) => {
     // Update the state when the date range changes
     setDateRange([item.selection]);
@@ -56,103 +75,184 @@ export default function PostCreate() {
   }
   const handleimgInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
+import React, { useRef } from 'react';
+import Select from 'react-select'
+import { Navigate,useNavigate } from 'react-router-dom';
+import { postProps } from './ViewPost';
+const token= localStorage.getItem('token');
+const LogedInId= localStorage.getItem('id');
+type categoryProps={
+    id: number,
+    type: string,
+}
+type CreatePostProps={
+	title: string,
+	image: string,
+	price: number,
+	dateFrom: Date,
+	dateTo: Date,
+	description: string,
+	location: string,
+	categoryId: number,
+	userId: number
+}
+async function PostPosts(postInfo:CreatePostProps){
+  
+  const response= await fetch(`https://borro.azurewebsites.net/api/Post`,{method: 'POST', headers: {'Content-Type': 'application/json','Authorization': `Bearer ${token}`}, body:JSON.stringify(postInfo)});
+  const responseJson:postProps= await response.json();
+  console.log(responseJson);
+  console.log(responseJson.postId);
+  return responseJson;
+  }
+
+async function GetCategories(){
+  
+const response= await fetch(`https://borro.azurewebsites.net/api/Category`,{method: 'GET', headers: {'Content-Type': 'application/json'}});
+const responseJson:categoryProps[]= await response.json();
+if (!response.ok) {
+  console.error("annonse ble ikke laget");
+  return[]
+  
+}
+else return responseJson;
+}
+export default function PostCreate() { 
+  const navigate=useNavigate();
+  const userId= localStorage.getItem('id')??"";
+  const[categories,setCategories]=useState<categoryProps[]>([])
+  useEffect(()=>{
+    GetCategories().then(categories=>setCategories(categories))
+  },[])
+  const[hasCategory,setHasCategory]=useState<boolean>(false);
+  const[title,setTitle]=useState<string>("");
+  const[description,setDescription]=useState<string>("");
+  const[address,setAddress]=useState<string>("");
+  //const [postnumber,setPostnumber]=useState<string>("");
+  const[zipCode,setZipCode]=useState<string>("");
+  const[city,setCity]=useState<string>("");
+  const [price,setPrice]=useState<string>("");
+  const [isFree,setIsFree]=useState<boolean>(false);
+  const[img,setImg]=useState<string>("");
+  const[categoryId,setCategoryId]=useState<number>(0);
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const handleCutsomClick = () => {
+      if (fileInputRef.current) {
+        fileInputRef.current.click();
+      }
+    };
+    const [selectedStartDate, setSelectedStartDate] = useState<string>("");
+    const [selectedEndDate, setSelectedEndDate] = useState<string>("");
+   const handleSubmit=(e:React.FormEvent<HTMLFormElement>)=>{
+    e.preventDefault();
+    const Post:CreatePostProps={
+      categoryId:categoryId,
+      image:img,
+      dateFrom: new Date(selectedStartDate),
+      dateTo:new Date(selectedEndDate),
+      location:`${address} ${zipCode} ${city}`,
+      description:description,
+      price:parseInt(price??0),
+      title:title,
+      userId:parseInt(userId),
+    }
+    PostPosts(Post).then(respons=>(navigate(`/posts/${LogedInId}`)))
+
+   }
+  const handleimgInput=(e:React.ChangeEvent<HTMLInputElement>)=>{
+    const file= e.target.files?.[0]
     if (file) {
       // Convert the selected file to a data URL
       const reader = new FileReader();
       reader.onloadend = () => {
-        const result = reader.result?.toString();
+        const result = reader.result?.toString()??"";
         setImg(result);
         console.log(result);
       };
       reader.readAsDataURL(file);
     } else {
-      setImg(undefined);
+      setImg("");
     }
-
+    
   }
+  const options = categories.map(category => ({
+    value: category.type,
+    label: category.type,
+    id:category.id
+  }));
   return (
-    <form
-      style={{display: 'flex', flexDirection: 'column', width: '100vw', justifyContent: 'center', alignItems: 'center'}}
-      onSubmit={e => handleSubmit(e)}>
+    <form style={{display:'flex',flexDirection:'column', alignItems:'center', overflowX:'hidden' }}  onSubmit={e=>handleSubmit(e)}>
 
-
-      <Typography variant="h6" gutterBottom
-                  style={{paddingLeft: '10px', paddingBottom: '10p', fontSize: '30px', height: '15vh'}}>
+    
+      <Typography variant="h6" gutterBottom style={{ paddingBottom:'10p',fontSize:'30px', height:'15vh'}}>
         Lag en ny annonse
       </Typography>
-      <Grid container spacing={3}
-            style={{display: 'flex', flexDirection: 'row', justifyContent: 'center', width: '70vw'}}>
-        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100vw'}}>
-          <div style={{display: 'flex', flexDirection: 'column', paddingLeft: '40px'}}>
-            <Grid>
-              <div style={{display: 'flex', flexDirection: 'column', paddingTop: '7px'}}>
-                <img src={img}
-                     style={{height: '18rem', width: '18rem', borderRadius: '5px', border: '2px grey solid'}}></img>
-                <Button onClick={handleCutsomClick} style={{
-                  width: '200px',
-                  height: '50px',
-                  border: '0.5px solid grey',
-                  marginTop: '10px',
-                  alignSelf: 'center'
-                }}>Velg et bilde:<input type='file' ref={fileInputRef} style={{display: 'none'}}
-                                        onChange={e => handleimgInput(e)}/></Button>
-              </div>
-            </Grid>
+      <Grid container spacing={3} style={{display: 'flex',flexDirection: 'row',justifyContent: 'center', alignContent: "center",width: '70vw'}}>
+        <div style={{display:'flex', flexWrap:'wrap' ,justifyContent:'space-around',flexDirection:'row', width:'100vw'}}>
+        <div style={{display:'flex', flexDirection:'column'}}>
+        <Grid >
+          <div style={{display:'flex', flexDirection:'column', paddingTop:'7px'}}>
+          <img src={img} style={{height:'18rem',width:'18rem', borderRadius:'5px', border:'2px grey solid'}}></img>
+          <Button onClick={handleCutsomClick} style={{width:'200px', height:'50px', border:'0.5px solid grey', marginTop:'10px', alignSelf:'center'}}>Velg et bilde:<input type='file' ref={fileInputRef} style={{display:'none'}} onChange={e=>handleimgInput(e)}/></Button>
           </div>
-          <Grid item style={{
-            paddingTop: '10px',
-            paddingLeft: '10px',
-            paddingRight: '10px',
-            border: 'black solid 1px',
-            borderRadius: '5px',
-            backgroundColor: 'white',
-            height: 'fit-content'
-          }}>
-            <Calendar state={dateRange} setState={setDateRange} handleDateChange={handleDateChange}/>
-          </Grid>
+        </Grid>
         </div>
-        <Grid item xs={12}>
-          <Grid item xs={12} sm={6}>
-            <TextField
-              style={{width: '200px', marginLeft: '5px'}}
-              required
-              id="Title"
-              name="title"
-              label="Skriv inn Tittel:"
-              fullWidth
-              autoComplete="title"
-              variant="standard"
-            />
+        </div>
+        <Grid item xs={12} sm={6}>
+          <TextField
+          style={{width:'300px', marginLeft:'5px', alignSelf:'start'}}
+            required
+            id="Title"
+            name="title" 
+            label="Skriv inn Tittel:"
+            fullWidth
+            autoComplete="title"
+            variant="standard"
+            value={title}
+            onChange={e=>setTitle(e.currentTarget.value)}
+          />
           </Grid>
+          <Grid item xs={12} sm={6} style={{ marginTop: "15px", alignSelf:'end'}}>
+        { hasCategory&&<Select onChange={e=>e?setCategoryId(e.id):setCategoryId(0)} options={options}/>}
+          <FormControlLabel
+            control={<Checkbox  onChange={e=>setHasCategory(e.target.checked?true:false)} color="secondary" name="saveAddress" value="yes"  />}
+            label="Kryss av for å angi kategori"
+          />
+        </Grid>
+        
           <TextField
             required
             id="description"
             name="description"
-            label="Description"
+            label="Beskrivelse av produkt"
             fullWidth
             autoComplete="description"
             variant="standard"
+            value={description}
+            onChange={e=>setDescription(e.currentTarget.value)}
           />
-        </Grid>
-
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            id="post-addresse"
-            name="post-addresse"
-            label="Post-addresse"
-            fullWidth
-            autoComplete="post-addresse"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
             id="addresse"
             name="addresse"
             label="Addresse"
             fullWidth
+            autoComplete='Addresse'
             variant="standard"
+            value={address}
+            onChange={e=>setAddress(e.currentTarget.value)}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            id="post-sted"
+            name="post-sted"
+            label="Post-sted"
+            autoComplete='Post-sted'
+            fullWidth
+            variant="standard"
+            value={city}
+            onChange={e=>setCity(e.currentTarget.value)}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -160,21 +260,25 @@ export default function PostCreate() {
             required
             id="zip"
             name="zip"
-            label="Zip / Postal code"
+            label="Postnummer"
             fullWidth
             autoComplete="shipping postal-code"
             variant="standard"
+            value={zipCode}
+            onChange={e=>setZipCode(e.currentTarget.value)}
           />
         </Grid>
-        <Grid item xs={12} sm={6}>
-          {isFree && <TextField
+       <Grid item xs={12} sm={6} style={{alignSelf:'end'}}>
+       { isFree&&<TextField
             required
             id="price"
             name="price"
-            label="Price pr day"
+            label="Pris per dag"
             fullWidth
             autoComplete="price"
             variant="standard"
+            value={price}
+            onChange={e=>setPrice(e.currentTarget.value)}
           />}
           <Grid item xs={12}>
             <FormControlLabel
@@ -187,153 +291,12 @@ export default function PostCreate() {
         <Button variant='contained' type='submit' style={{marginLeft: '30px', marginTop: '10px'}}>Lagre
           endringer</Button>
       </Grid>
-    </form>
-
+      <Button variant='outlined' type='submit' style={{width:'200px', height:'50px',marginTop:'30px', marginRight:'21px', marginBottom:'20px'}}>Lagre endringer</Button>
+      </form>
+    
   );
 }
-/*export default function PostCreate() {
-  const [openDialog, setOpenDialog] = useState(false);
-  const handleDialogOpen = () => {
-    setOpenDialog(true);
-  };
 
-  const handleDialogClose = () => {
-    setOpenDialog(false);
-  };
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      title: data.get('title'),
-      description: data.get('description'),
-    });
-  };
-return()}*/
-/*return (
-  <>
-
-    <Container component="main" maxWidth="xs">
-
-      <Box
-        sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-      <Logo height={70}width={70}/>
-        <Typography component="h1" variant="h5">
-          Create an add
-        </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 2 }}>
-        <TextField
-            margin="normal"
-            required
-            fullWidth
-            name="title"
-            label="Title of your add"
-            type="title"
-            id="title"
-            autoComplete="add title"
-          />
-
-          <TextField
-            margin="normal"
-            required
-            fullWidth
-            id="description"
-            label="Describe the item you want to lend out"
-            name="description"
-            autoComplete="Description"
-            autoFocus
-          />
-          If the Item is free please check the box
-          <Checkbox></Checkbox>
-
-
-          <Stack spacing={{ xs: 1, sm: 2 }} direction="row" alignItems="center" style={{ flexGrow: 1 }}>
-          <Button component="label" variant="contained" startIcon={<CloudUploadIcon/>}  >
-          Upload a picture of your item
-          <VisuallyHiddenInput type="file" />
-          </Button>
-          </Stack>
-
-
-          <Stack spacing={{ xs: 1, sm: 2 }} direction="row" alignItems="center" style={{ flexGrow: 1 }}>
-            <Button
-              type="button"
-              fullWidth
-              variant="contained"
-              onClick={handleDialogOpen}
-              sx={{ mt: 4, mb: 2 }}
-            >
-              Choose dates
-            </Button>
-          </Stack>
-
-
-        </Box>
-      </Box>
-
-       {/* Calendar Dialog *///}
-// <Dialog open={openDialog} onClose={handleDialogClose}>
-//  <DialogContent>
-//  </DialogContent>
-//</Dialog>
-// </Container>
-
-// </>
-//);
-//}
-
-//{/* <Stack spacing={{xs:1, sm: 2}} direction='row' alignItems="center">
-// <Link to={"/Calendar"} style={{ flexGrow: 1 }}>
-// <Button
-/*  type="submit"
-  fullWidth
-  variant="contained"
-  sx={{ mt: 4, mb: 2}}
-  >
-  Choose dates
-</Button>
-</Link>
-</Stack> *///}
-
-/*   function Calendar() {
-   const [dateRange, setDateRange] = useState<Range[]>([
-     {
-       startDate: new Date(),
-       endDate: new Date(),
-       key: 'selection'
-     }
-   ]);
-
-   const handleDateChange = (item) => {
-     // Update the state when the date range changes
-     setDateRange([item.selection]);
-   };
-
-   return (
-       <div style={calendarContainerStyle}>
-     <DateRange
-       editableDateInputs={true}
-       onChange={handleDateChange()}
-       moveRangeOnFirstSelection={false}
-       ranges={dateRange}
-       weekStartsOn={1}
-
-     />
-     </div>
-   );
- }
- const calendarContainerStyle = {
-   display: 'flex',
-   justifyContent: 'center',
-   alignItems: 'center',
-   height: 'flex',
- };*/
 
 
 

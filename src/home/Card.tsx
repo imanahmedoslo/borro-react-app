@@ -11,10 +11,10 @@ import {getUser} from "../A/contextPage.tsx";
 
 
 type cardProps = {
-  title: string;
-  description: string;
-  id: number,
-  location: string,
+	title: string;
+	description: string;
+	id: number,
+	img:string
 }
 
 export default function ActionAreaCard(cardProps: cardProps) {
@@ -37,12 +37,16 @@ export default function ActionAreaCard(cardProps: cardProps) {
     navigate(`/post/${cardProps.id}`)
   }
 
-  return (
-    <Card onClick={handleClick} sx={{
-      flexBasis: {
-        xs: "100%",
-        sm: "40%",
-        md: "31%",
+
+type CardProps={
+	post:postProps
+}
+return (
+		<Card key={cardProps.id} onClick={handleClick} sx={{
+			flexBasis: {
+				xs: "100%",
+				sm: "40%",
+				md: "31%",
 
       },
       flexGrow: 1,
@@ -80,4 +84,36 @@ export default function ActionAreaCard(cardProps: cardProps) {
       </CardActionArea>
     </Card>
   );
+			},
+			flexGrow: 1,
+			maxHeight: 350,
+			margin: 1,
+			boxSizing: 'border-box',
+		}}>
+			<CardActionArea sx={{
+				"&:focus": {
+					outline: 'none',
+				},
+			}}>
+				<CardMedia
+					component="img"
+					height="210"
+					image={cardProps.img}
+					src={cardProps.img}
+					alt="Placeholder"
+					sx={{
+						backgroundColor: "#8c8c8c"
+					}}/>
+				<CardContent className={"CardMuiContent"}>
+
+					<Typography gutterBottom variant="h4" component="div">
+						{cardProps.title}
+					</Typography>
+					<Typography variant="body1" color="text.secondary">
+						{cardProps.description ?? "No description"}
+					</Typography>
+				</CardContent>
+			</CardActionArea>
+		</Card>
+	);
 }
