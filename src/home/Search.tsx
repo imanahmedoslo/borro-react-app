@@ -10,9 +10,8 @@ import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import {DrawerMenu} from "./Drawer.tsx";
-import {LogedInIcon} from '../A/contextPage.tsx';
-import {Link} from "react-router-dom";
 import {LoggedInIcon} from '../A/contextPage.tsx';
+import {Link} from "react-router-dom";
 import { useAuth } from '../App.tsx';
 
 const Search = styled('div')(({theme}) => ({
