@@ -25,14 +25,9 @@
     "react-datepicker": "^4.25.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.2",
-<<<<<<< HEAD
-    "react-select": "^5.8.0",
-    "styled-components": "^6.1.8"
-=======
     "styled-components": "^6.1.8",
     "@react-buddy/ide-toolbox": "^2.4.0",
     "@react-buddy/palette-mui": "^5.0.1"
->>>>>>> ea82331a5dcab22f308c33aebac8895135bfbc62
   },
   "devDependencies": {
     "@types/google.maps": "^3.54.10",
