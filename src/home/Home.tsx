@@ -4,6 +4,7 @@ import {SearchContext} from "../App.tsx";
 import {Filter} from "./Filter.tsx";
 import {calculateDistance} from "../GoogleAPI/CalculateDistance.tsx";
 import {getUser} from "../A/contextPage.tsx";
+import { Box } from "@mui/material";
 
 export type postProps = {
   id: number,
@@ -90,12 +91,12 @@ export function Home() {
 
   return (
     <>
-      <div>
-        <div>
+      <Box>
+        <Box>
           <Filter sliderValue={sliderValue}
                   setSliderValue={setSliderValue}/>
-        </div>
-        <div style={{
+        </Box>
+        <Box style={{
           display: 'flex',
           flexWrap: 'wrap',
           justifyContent: 'flex-start',
@@ -107,11 +108,12 @@ export function Home() {
             <ActionAreaCard
               key={post.id}
               id={post.id}
+              img={post.image}
               title={post.title}
               description={post.description}
               location={post.location}
             />)}
-        </div>
-      </div>
+        </Box>
+      </Box>
     </>)
 }

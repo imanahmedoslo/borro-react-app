@@ -11,6 +11,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import {DrawerMenu} from "./Drawer.tsx";
 import {LogedInIcon} from '../A/contextPage.tsx';
+import {Link} from "react-router-dom";
 
 const Search = styled('div')(({theme}) => ({
   position: 'relative',
@@ -71,7 +72,7 @@ export default function SearchAppBar({setSearchText}: { setSearchText: (text: st
   return (
     <Box sx={{flexGrow: 1}}>
       <DrawerMenu open={state.left} onClose={onClose}/>
-      <AppBar position="static">
+      <AppBar position="static" sx={{backgroundColor: "#293040"}}>
         <Toolbar>
           <IconButton
             onClick={openDrawer}
@@ -87,14 +88,25 @@ export default function SearchAppBar({setSearchText}: { setSearchText: (text: st
             }}>
             <MenuIcon/>
           </IconButton>
+          <Link to="/">
+            <Box component={"img"}
+                 sx={{
+                   height: "40px",
+                   display: {xs: 'none', sm: 'none', md: 'block'},
+                   objectFit: "contain"
+                 }}
+                 src={"src/assets/borro-nobg.png"}
+                 alt={"logo"}
+
+            />
+          </Link>
           <Typography
             variant="h6"
             noWrap
             component="div"
             sx={{flexGrow: 1, display: {xs: 'none', sm: 'block'}}}>
-            borro
           </Typography>
-          <Search>
+          <Search sx={{mr: 2}}>
             <SearchIconWrapper>
               <SearchIcon/>
             </SearchIconWrapper>
@@ -104,6 +116,7 @@ export default function SearchAppBar({setSearchText}: { setSearchText: (text: st
               onChange={event => setSearchText(event.target.value)} // update search text
             />
           </Search>
+
           {isLoggedIn && <LogedInIcon/>}
         </Toolbar>
       </AppBar>

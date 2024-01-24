@@ -38,19 +38,35 @@ export function Filter({sliderValue, setSliderValue}: FilterProps) {
   return (
     <Box sx={{
       objectFit: "contain",
-      backgroundColor: "#c9c9c9",
-      width: "40%"
+      width: "310px",
+      zIndex: 1,
+      position: "fixed",
+
     }}>
       <Button
         onClick={onClick}
+
         sx={{
+          backgroundColor: "#c9c9c9",
+          '&:hover': {
+            backgroundColor: "#c9c9c9",
+          },
           '&:focus': {
             outline: 'none',
-          }
+          },
+          transform: " rotate(270deg) translateX(-214px) translateY(-18px)",
+
+          position: "fixed",
         }}>
         Filter
       </Button>
-      <Box sx={vis ? {backgroundColor: "#e7e7e7"} : {display: "none"}}>
+      <Box
+        sx={vis ? {
+            backgroundColor: "#e7e7e7",
+            padding: "5px",
+          transform: "translateX(-0px) translateY(100px)",
+          } :
+          {display: "none"}}>
         <LocationDistance userAddress={userAddress}
                           postAddress={"oslo nydalen spaces"}
         />
@@ -77,7 +93,10 @@ function DistanceSlider({sliderValue, setSliderValue}: FilterProps) {
   }
 
   return (
-    <Box sx={{width: 300}}>
+    <Box sx={{
+      width: 300,
+
+    }}>
       <Typography id="range-slider" gutterBottom>
         Distance {value} km
       </Typography>
