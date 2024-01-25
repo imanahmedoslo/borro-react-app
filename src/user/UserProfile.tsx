@@ -83,18 +83,21 @@ export function UserProfile() {
 
 	return (
 		<Container component="main" maxWidth="sm">
-			<Typography variant="h4" sx={{textAlign: "center"}}>
+			<Typography variant="h4" sx={{textAlign: "center"}} gutterBottom>
 				Din bruker
 			</Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
 			<Avatar
 				alt="User Avatar"
 				src={user.userInfo.profileImage}
-				sx={{width: 100, height: 100}}
+				sx={{width: 100, height: 100, textAlign: "center"}}
 			/>
+      </Box>
+      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }} >
 			<UploadPicture Type={"userInfo"} Id={id} onPictureUploaded={onPictureUploaded}/>
 			{/* <Typography variant="h6">{user.email}</Typography> */}
 			{/* Add other user details here */}
-
+-     </Box>
 			<Box sx={{
 				borderRadius: 2,
 				border: '1px solid #ffffff',
