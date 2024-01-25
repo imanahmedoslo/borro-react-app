@@ -32,7 +32,7 @@ type UserInfoType = {
     about: string,
   }
 
-export function Reservation({ postId, userId }): React.FC<ReservationProps> {
+export default function Reservation({ postId }: ReservationProps) {
     const [open, setOpen] = useState(false);
     const [dateFrom, setDateFrom] = useState<string>('');
     const [dateTo, setDateTo] = useState<string>('');
@@ -40,7 +40,7 @@ export function Reservation({ postId, userId }): React.FC<ReservationProps> {
 
     const fetchUser = async () => {
         try {
-          console.log(`Fetching user info for ID: ${id}`);
+          console.log(`Fetching user info for ID: ${user?.id}`);
           const response = await fetch(`https://borro.azurewebsites.net/api/User/${id}`, {
             method: 'GET',
             headers: {
@@ -57,15 +57,15 @@ export function Reservation({ postId, userId }): React.FC<ReservationProps> {
           console.log("userData: ", userData)
         } catch (error) {
           console.error("Fetching user failed", error);
-          navigate('/error');
+        //   navigate('/error');
         }
       };
 
       useEffect(() => {
-        if (userId) {
+        if (user?.id) {
           fetchUser();
         }
-      }, [userId]);
+      }, [user?.id]);
   
     const handleOpen = () => {
       setOpen(true);
@@ -84,10 +84,10 @@ export function Reservation({ postId, userId }): React.FC<ReservationProps> {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              userId: userId, // Use the context or state where the user's ID is stored
+              userId: user?.id, // Use the context or state where the user's ID is stored
               postId: postId,
-              dateFrom: new Date(dateFrom),
-              dateTo: new Date(dateTo),
+              dateFrom: new Date(dateFrom).toISOString(),
+              dateTo: new Date(dateTo).toISOString(),
               // Include other fields as required by your backend
             }),
           });
