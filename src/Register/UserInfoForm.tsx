@@ -18,34 +18,12 @@ type UserInfoType = {
   userId: number,
 };
 
-async function CreateUserInfo(userInfo: UserInfoType): Promise<number> {
-  const {sessionInfo} = useAuth();
-  const response = await fetch('https://borro.azurewebsites.net/api/UserInfo', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${sessionInfo?.accessToken}`,
-    },
-    body: JSON.stringify({
-      firstName: userInfo.firstName,
-      lastName: userInfo.lastName,
-      profileImage: userInfo.profileImage,
-      address: userInfo.address,
-      postCode: userInfo.postCode,
-      city: userInfo.city,
-      phoneNumber: userInfo.phoneNumber,
-      birthDate: userInfo.birthDate,
-      about: userInfo.about,
-      userId: userInfo.userId
-    })
-  });
 
-  return response.status;
-}
 
 export function UserInfoForm() {
   const navigate = useNavigate();
   const params = useParams();
+  const {sessionInfo} = useAuth();
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -57,6 +35,30 @@ export function UserInfoForm() {
   const [birthDate, setBirthDate] = useState('');
   const [about, setAbout] = useState('');
   const [userId, setUserId] = useState(params.userId ? parseInt(params.userId, 10) : 0);
+
+  async function CreateUserInfo(userInfo: UserInfoType): Promise<number> {
+    const response = await fetch('https://borro.azurewebsites.net/api/UserInfo', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${sessionInfo?.accessToken}`,
+      },
+      body: JSON.stringify({
+        firstName: userInfo.firstName,
+        lastName: userInfo.lastName,
+        profileImage: userInfo.profileImage,
+        address: userInfo.address,
+        postCode: userInfo.postCode,
+        city: userInfo.city,
+        phoneNumber: userInfo.phoneNumber,
+        birthDate: userInfo.birthDate,
+        about: userInfo.about,
+        userId: userInfo.userId
+      })
+    });
+  
+    return response.status;
+  }
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

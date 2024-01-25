@@ -93,8 +93,9 @@ export default function LogIn() {
                 fullWidth
                 variant="contained"
                 sx={{mt: 4, mb: 2}}
+                style={{backgroundColor:'#D5B263'}}
               >
-                Sign In
+                Logg inn
               </Button>
               <Link to={"/register"}>
                 <Button
@@ -102,8 +103,9 @@ export default function LogIn() {
                   fullWidth
                   variant="contained"
                   sx={{mt: 4, mb: 2}}
+                  style={{backgroundColor:'#D5B263'}}
                 >
-                  Register
+                  Registrer
                 </Button>
               </Link>
 
