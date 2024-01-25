@@ -136,7 +136,7 @@ export function ViewPost() {
 						            alignSelf: "end",
 					            }}
 					>
-						Pris: {post?.price},-
+						Pris: {post?.price <= 0 ? "Gratis": post?.price + ",-"}
 					</Typography>
 
 				</Box>
@@ -144,7 +144,6 @@ export function ViewPost() {
 					display: "flex",
 					justifyContent: "center",
 					gap: 4,
-
 				}}
 				>
 					<Reservation postId={post.id}/>
