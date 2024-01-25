@@ -7,21 +7,16 @@ import Box from '@mui/material/Box';
 //import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import {createTheme} from '@mui/material/styles';
 import Logo from '../Logo';
 import {Link, useNavigate} from 'react-router-dom';
 import {CreateUserType} from '../Register/Register';
-import {TokenAndId} from '../A/contextPage';
 import {Checkbox, FormControlLabel} from '@mui/material';
-import { useAuth } from '../App';
+import {useAuth} from '../App';
 
 export default function LogIn() {
   const navigate = useNavigate();
-  const { sessionInfo, onLogin } = useAuth();
-  if(sessionInfo||localStorage.getItem('token')){
-    navigate('/')
-  }
- 
+  const {sessionInfo, onLogin} = useAuth();
+
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("")
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -34,13 +29,15 @@ export default function LogIn() {
     } catch {
       console.error("could not log in");
     }
-    ;
 
   };
   return (
     <>
 
-      <Container component="main" maxWidth="xs">
+      <Container component="main"
+                 maxWidth="xs"
+                 sx={{
+                 }}>
 
         <Box
           sx={{
