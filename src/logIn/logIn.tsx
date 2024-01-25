@@ -48,7 +48,7 @@ export default function LogIn() {
             alignItems: 'center',
           }}
         >
-          <Logo height={70} width={70}/>
+          <Logo height={40} width={"auto"}/>
           <Typography component="h1" variant="h5">
             Log In
           </Typography>

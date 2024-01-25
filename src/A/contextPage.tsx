@@ -91,7 +91,7 @@ export function LoggedInIcon({userId}: Props) {
             {profile.firstName ?? 'Ola'}
           </Typography>
 
-          <Button style={{textAlign: 'center', height: '50px'}} variant="contained" onClick={onLogout}>
+          <Button style={{textAlign: 'center', height: '50px', width:'auto', color:'white', backgroundColor:'#D5B263'}} variant="contained" onClick={onLogout}>
             Logg ut
           </Button>
         </div>
@@ -99,6 +99,7 @@ export function LoggedInIcon({userId}: Props) {
     )
   }
 }
+
 
 export async function getPosts() {
   const response = await fetch("https://borro.azurewebsites.net/api/Post",);

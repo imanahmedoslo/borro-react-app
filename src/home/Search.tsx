@@ -13,6 +13,9 @@ import {DrawerMenu} from "./Drawer.tsx";
 import {LoggedInIcon} from '../A/contextPage.tsx';
 import {Link} from "react-router-dom";
 import { useAuth } from '../App.tsx';
+import { Navigate,useNavigate } from 'react-router-dom';
+import { Button } from '@mui/material';
+
 
 const Search = styled('div')(({theme}) => ({
   position: 'relative',
@@ -57,6 +60,10 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
 }));
 
 export default function SearchAppBar({setSearchText}: { setSearchText: (text: string) => void }) {
+  const navigate = useNavigate();
+  const handleLogin=()=>{
+    navigate('/login')
+  }
   const { sessionInfo } = useAuth();
   const [state, setState] = useState({
     left: false,
@@ -119,7 +126,9 @@ export default function SearchAppBar({setSearchText}: { setSearchText: (text: st
               onChange={event => setSearchText(event.target.value)} // update search text
             />
           </Search>
-          {isLoggedIn && <LoggedInIcon userId={sessionInfo.id}/>}
+          {isLoggedIn ? <LoggedInIcon userId={sessionInfo.id}/>:<Button style={{textAlign: 'center', height: '50px', width:'auto', color:'white', backgroundColor:'#D5B263'}} variant="contained" onClick={handleLogin}>
+           Logg inn
+         </Button>}
         </Toolbar>
       </AppBar>
 

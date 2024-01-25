@@ -141,7 +141,7 @@ type Library = "geometry";
 const libraries: Library[] = ["geometry"];
 
 function App() {
-  const [sessionInfo, setSessionInfo] = useState(null);
+  //const [sessionInfo, setSessionInfo] = useState(null);
   const [mapsLoaded, setMapsLoaded] = useState(false);
   const [searchText, setSearchText] = useState('');
 
