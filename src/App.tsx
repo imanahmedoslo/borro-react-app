@@ -190,8 +190,11 @@ function App() {
                     </Box>
                   </ProtectedRoute>}/>
 
-                <Route path={"/post/:postId"} element={<ViewPost/>}/>
-                <Route path={"/post/:postId"} element={<ViewPost/>}/>
+                <Route path={"/post/:postId"} element={
+                  <Box sx={{gridArea: 'main'}}>
+                    <ViewPost/>
+                  </Box>
+                }/>
 
                 <Route path={"/posts/:postId"} element={
                   <ProtectedRoute>
