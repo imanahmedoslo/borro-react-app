@@ -88,6 +88,7 @@ export function UserProfile() {
       {/* <Typography variant="h6">{user.email}</Typography> */}
       {/* Add other user details here */}
       <div>
+        
         <Button variant="contained" onClick={() => navigate(`/editUser/${user.id}`)}>
           Rediger profil
         </Button>
