@@ -2,6 +2,7 @@ import {Button, Divider, Drawer, List, ListItem} from "@mui/material";
 import React from "react";
 import {Link} from "react-router-dom";
 import { useAuth } from "../App";
+import { useNavigate,Navigate } from "react-router-dom";
 
 export type DrawerMenuProps = {
   open: boolean;
@@ -10,6 +11,7 @@ export type DrawerMenuProps = {
 
 export function DrawerMenu(props: DrawerMenuProps) {
   const{sessionInfo}=useAuth()
+  const navigate=useNavigate()
 
   return <>
     <Drawer
@@ -30,7 +32,10 @@ export function DrawerMenu(props: DrawerMenuProps) {
         <Divider orientation="horizontal"/>
         <ListItem><Link to="/posts/:postId"><Button>Mine annonser</Button></Link></ListItem>
         <Divider orientation="horizontal"/>
-        <ListItem><Link to="/login"><Button>Meldinger</Button></Link></ListItem>
+        <ListItem><Link to="/"><Button>Meldinger</Button></Link></ListItem>
+        <ListItem><Button style={{backgroundColor:'#FBF7EF', border:'none', color:'#1976D2', boxShadow:'none', textAlign:'start', paddingLeft:'0px'}} variant="contained" onClick={() => navigate(`/createUserInfo/${sessionInfo?.id}`)}>
+        Lag bruker profil
+      </Button></ListItem>
         <Divider orientation="horizontal"/>
 
       </List>
