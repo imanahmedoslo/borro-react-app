@@ -13,10 +13,35 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Link,  useNavigate  } from 'react-router-dom';
 import { useState } from 'react';
 import Logo from '../Logo';
+
+type UserInfoType = {
+  firstName: string,
+  lastName: string,
+  profileImage: string | null,
+  address: string,
+  postCode: string,
+  city: string,
+  phoneNumber: string,
+  birthDate: string | null,
+  about: string | null,
+  userId: number,
+};
+
 export type CreateUserType={
   Email:string,
   Password:string,
 }
+ type CreateAccountType={
+  Email:string,
+  Password:string,
+  FirstName:string,
+}
+type createUserResponseType={
+  userId :number,
+	 userInfoId:number,
+	 FirstName:string,
+}
+
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
@@ -34,24 +59,26 @@ const handlePassword=(password:string,repeatedPassword:string):boolean=>{
     return true;
   } 
  }
- function generateObject(isCorrectEmail:boolean,PasswordsAlign:boolean, email:string,password:string):CreateUserType|null{
+ function generateObject(isCorrectEmail:boolean,PasswordsAlign:boolean, email:string,password:string, firstName:string):CreateAccountType|null{
   if(isCorrectEmail&&PasswordsAlign){
-    var userInfo:CreateUserType={Email:email,Password:password}
+    var userInfo:CreateAccountType={Email:email,Password:password,FirstName:firstName}
     return userInfo
   }
   else return null;
  }
+ 
 
  
 
 
-async function CreateUser(userInfo:CreateUserType):Promise<number>{
+async function CreateUser(userInfo:CreateAccountType):Promise<number>{
   const response= await fetch(`https://borro.azurewebsites.net/api/User`, {
     method:'POST', 
     headers:{'Content-Type':'application/json'},
     body:JSON.stringify(userInfo)
   });
   const statusCode= await response.status
+  const responeJson:createUserResponseType= await response.json()
 return statusCode;
 }
 
@@ -63,13 +90,14 @@ export default function Register() {
  const [emailFormat,setEmailFormat]=useState<boolean>(true)
  const[passwordAligned,setPasswordAligned]=useState<boolean>(true)
  const[showPassword,setShowPassword]=useState<boolean>(false);
+ const[firstName,setFristName]=useState<string>("")
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const isPasswordsEqual = handlePassword(password,repeatedPassword);
     setPasswordAligned(isPasswordsEqual);
     const EmailIsValid= ValidateEmail(email)
     setEmailFormat(EmailIsValid);
-    const userInfo=generateObject(isPasswordsEqual,EmailIsValid,email,password)
+    const userInfo=generateObject(isPasswordsEqual,EmailIsValid,email,password,firstName)
     if (userInfo!=null) {
       CreateUser(userInfo).then(code=> code<300?navigate('/login'):navigate('/error'));
       //this space here
@@ -101,9 +129,19 @@ export default function Register() {
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  label="Email Addresse"
                   name="email"
                   autoComplete="email"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField onChange={e=>setFristName(e.target.value)}
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="Fornavn"
+                  name="firstName"
+                  autoComplete="firstName"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -111,7 +149,7 @@ export default function Register() {
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  label="Passord"
                   type={showPassword ? "text" : "password"}
                   id="password"
                   autoComplete="new-password"
@@ -122,7 +160,7 @@ export default function Register() {
                   required
                   fullWidth
                   name="RepeatPassword"
-                  label="RepeatPassword"
+                  label="Gjenta Passord"
                   type={showPassword ? "text" : "password"}
                   id="RepeatPassword"
                   autoComplete="rpeated-password"
