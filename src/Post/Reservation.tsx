@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material";
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { useAuth } from '../App';
 type ReservationProps = {
   postId: number,
+  price: number,
 };
 
 type UserInfoType = {
@@ -37,39 +38,37 @@ export default function Reservation({ postId }: ReservationProps) {
     const [dateFrom, setDateFrom] = useState<string>('');
     const [dateTo, setDateTo] = useState<string>('');
     const [user, setUser] = useState<UserInfoType | null>(null);
-
-    const fetchUser = async () => {
-        try {
-          console.log(`Fetching user info for ID: ${user?.id}`);
-          const response = await fetch(`https://borro.azurewebsites.net/api/User/${id}`, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${localStorage.getItem('token')}`,
-            },
-          });
-    
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-          }
-          const userData = await response.json();
-          setUser(userData);
-          console.log("userData: ", userData)
-        } catch (error) {
-          console.error("Fetching user failed", error);
-        //   navigate('/error');
-        }
-      };
-
-      useEffect(() => {
-        if (user?.id) {
-          fetchUser();
-        }
-      }, [user?.id]);
+    const [price, setPrice] = useState<ReservationProps | null>(null);
+    const {sessionInfo} = useAuth();
+    const token = localStorage.getItem('token');
+    const userId = sessionInfo?.id;
   
-    const handleOpen = () => {
+     const handleOpen = async () => {
       setOpen(true);
-    };
+      if(!user){
+      try{
+            if (!token) {
+                console.log("Please log in to make a reservation.");
+                return;
+            }
+            const response = await fetch(`https://borro.azurewebsites.net/api/User/${userId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const userData = await response.json();
+            setUser(userData);
+        } catch (error) {
+            console.error("Fetching user failed", error);
+        }
+    }
+};
   
     const handleClose = () => {
       setOpen(false);
@@ -84,19 +83,17 @@ export default function Reservation({ postId }: ReservationProps) {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              userId: user?.id, // Use the context or state where the user's ID is stored
+              userId: user?.id,
               postId: postId,
               dateFrom: new Date(dateFrom).toISOString(),
               dateTo: new Date(dateTo).toISOString(),
-              // Include other fields as required by your backend
+              price: price,
             }),
           });
   
           if (response.ok) {
-            // Handle successful reservation
             handleClose();
           } else {
-            // Handle error in reservation
             const errorData = await response.json();
             console.error('Reservation error:', errorData);
           }
@@ -104,7 +101,6 @@ export default function Reservation({ postId }: ReservationProps) {
           console.error('Network error:', error);
         }
       } else {
-        // Handle validation error (dates not selected)
         console.error('Please select both start and end dates.');
       }
     };
