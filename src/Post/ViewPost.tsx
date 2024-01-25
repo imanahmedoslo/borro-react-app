@@ -3,8 +3,7 @@ import {Button, Card, CardContent, CardMedia, Typography} from "@mui/material";
 import {useParams} from "react-router-dom";
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
-//import { useAuth } from "../App";
-
+import { Reservation } from "./Reservation";
 
 export type postProps = {
   id: number,
@@ -60,7 +59,6 @@ export function ViewPost() {
     if(post!=null||post!=undefined){
       FetchUserByPostId(post?.id).then(result=> setContacts(result))
     }
-    //FetchUserByPostId(post?.id).then(result=> setContacts(result))
   },[post])
   const handleOpen = () => {
     setOpen(true); 
@@ -103,8 +101,7 @@ export function ViewPost() {
             Pris: {post?.price},-
           </Typography>
           <div className="button-spacing">
-            <Button variant="contained">Reserver</Button>
-            
+            <Reservation postId={post.id}/>
             <Button onClick={handleOpen} variant="contained">Kontakt</Button>
           <dialog open={open} onClose={handleClose}>
           <DialogContent>   
