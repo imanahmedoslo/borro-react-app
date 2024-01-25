@@ -4,11 +4,10 @@ export function Footer() {
 
   return (
     <Box sx={{
+      gridArea:"footer",
       textAlign: "center",
       backgroundColor: "#293040",
-      minHeight: "10em",
       boxShadow:4,
-      gridArea:"footer"
     }}>
       <Typography sx={{
         color: "white"

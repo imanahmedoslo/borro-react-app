@@ -16,6 +16,7 @@ import Select from 'react-select'
 import { Navigate,useNavigate } from 'react-router-dom';
 import { postProps } from './ViewPost';
 import { UploadPicture } from './UploadPicture';
+import { Box } from '@mui/material';
 
 const token= localStorage.getItem('token');
 const LogedInId= localStorage.getItem('id');
@@ -101,6 +102,10 @@ export default function PostCreate() {
     id:category.id
   }));
   return (
+    <Box sx={{
+      gridArea: 'main',
+
+    }}>
     <form style={{display:'flex',flexDirection:'column', alignItems:'center', overflowX:'hidden' }}  onSubmit={e=>handleSubmit(e)}>
 
     
@@ -221,7 +226,7 @@ export default function PostCreate() {
       </Grid>
       <Button variant='outlined' type='submit' style={{width:'200px', height:'50px',marginTop:'30px', marginRight:'21px', marginBottom:'20px'}}>Lagre endringer</Button>
       </form>
-    
+    </Box>
   );
 }
 

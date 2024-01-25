@@ -73,7 +73,7 @@ export default function SearchAppBar({setSearchText}: { setSearchText: (text: st
   // const isLoggedIn: boolean = localStorage.getItem('logInStatus') === 'true' ? true : false
 
   return (
-    <Box sx={{flexGrow: 1}}>
+    <Box sx={{gridArea:"header"}}>
       <DrawerMenu open={state.left} onClose={onClose}/>
       <AppBar position="static" sx={{backgroundColor: "#293040"}}>
         <Toolbar>

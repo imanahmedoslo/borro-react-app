@@ -37,6 +37,7 @@ export default function LogIn() {
       <Container component="main"
                  maxWidth="xs"
                  sx={{
+                   gridArea: 'main',
                  }}>
 
         <Box

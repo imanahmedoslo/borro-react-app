@@ -124,7 +124,6 @@ const AuthProvider = ({children}: AuthProviderProps) => {
   )
 }
 
-
 type ProtectedRouteProps = {
   children?: JSX.Element;
 
@@ -138,7 +137,6 @@ export const SearchContext = React.createContext<{
   },
 });
 
-
 type Library = "geometry";
 const libraries: Library[] = ["geometry"];
 
@@ -146,7 +144,6 @@ function App() {
   const [sessionInfo, setSessionInfo] = useState(null);
   const [mapsLoaded, setMapsLoaded] = useState(false);
   const [searchText, setSearchText] = useState('');
-
 
   function ProtectedRoute(props: ProtectedRouteProps) {
     const {sessionInfo} = useAuth()
@@ -158,13 +155,18 @@ function App() {
     </>
   }
 
-
   return (
     <Box sx={{
+      display: "grid",
+      gridTemplateAreas:
+        `"header"
+        "."
+         "main"
+         "."
+         "footer"`,
+      gridTemplateRows: 'auto 1fr 50fr 1fr auto',
       minHeight: "100vh",
-      gridTemplateAreas: "header main footer",
-      display: "flex",
-      flexDirection: "column",
+
     }}>
       <LoadScript
         googleMapsApiKey="AIzaSyBRA8VU6f0Ciqy3aa5-JCQlS4TEqliQECs"
@@ -177,46 +179,58 @@ function App() {
             <>
               <SearchAppBar setSearchText={setSearchText}/>
               <Routes>
-                <Route path={"/"} element={<Home/>}></Route>
-                <Route path={"/login"} element={<LogIn/>}>
-                </Route>
-                <Route path={"/register"} element={<Register/>}></Route>
+                <Route path={"/"} element={<Home/>}/>
+                <Route path={"/login"} element={<LogIn/>}/>
+                <Route path={"/register"} element={<Register/>}/>
+
                 <Route path={"/postCreate"} element={
                   <ProtectedRoute>
-                    <PostCreate/>
-                  </ProtectedRoute>}>
-                </Route>
-                <Route path={"/post/:postId"} element={<ViewPost/>}></Route>
-                <Route path={"/post/:postId"} element={<ViewPost/>}></Route>
+                    <Box sx={{gridArea: 'main'}}>
+                      <PostCreate/>
+                    </Box>
+                  </ProtectedRoute>}/>
+
+                <Route path={"/post/:postId"} element={<ViewPost/>}/>
+                <Route path={"/post/:postId"} element={<ViewPost/>}/>
+
                 <Route path={"/posts/:postId"} element={
                   <ProtectedRoute>
-                    <MyPosts/>
-                  </ProtectedRoute>
-                }></Route>
+                    <Box sx={{gridArea: 'main'}}>
+                      <MyPosts/>
+                    </Box>
+                  </ProtectedRoute>}/>
+
                 <Route path={"/createUserInfo/:userId"} element={
                   <ProtectedRoute>
-                    <UserInfoForm/>
-                  </ProtectedRoute>}>
-                </Route>
+                    <Box sx={{gridArea: 'main'}}>
+                      <UserInfoForm/>
+                    </Box>
+                  </ProtectedRoute>}/>
+
                 <Route path={"/userProfile/:id"} element={
                   <ProtectedRoute>
-                    <UserProfile/>
-                  </ProtectedRoute>}>
-                </Route>
+                    <Box sx={{gridArea: 'main'}}>
+                      <UserProfile/>
+                    </Box>
+                  </ProtectedRoute>}/>
+
                 <Route path={"/editUser/:id"} element={
                   <ProtectedRoute>
-                    <EditUserProfile/>
-                  </ProtectedRoute>}>
-                </Route>
+                    <Box sx={{gridArea: 'main'}}>
+                      <EditUserProfile/>
+                    </Box>
+                  </ProtectedRoute>}/>
+
                 <Route path={"/changePassword/:id"} element={
                   <ProtectedRoute>
-                    <ChangePassword/>
-                  </ProtectedRoute>}>
-                </Route>
+                    <Box sx={{gridArea: 'main'}}>
+                      <ChangePassword/>
+                    </Box>
+                  </ProtectedRoute>}/>
+
               </Routes>
             </>
           </AuthProvider>
-
         </BrowserRouter>
       </SearchContext.Provider>
       <Footer/>

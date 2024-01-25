@@ -94,7 +94,9 @@ export function Home() {
 
   return (
     <>
-      <Box>
+      <Box sx={{
+        gridArea: 'main',
+      }}>
         <Box>
           <Filter sliderValue={sliderValue}
                   setSliderValue={setSliderValue}/>
