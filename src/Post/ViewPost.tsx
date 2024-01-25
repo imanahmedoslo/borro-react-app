@@ -107,9 +107,10 @@ export function ViewPost() {
 					". ."`,
 					gridTemplateColumns: "1fr auto",
 					gridTemplateRows: "3fr auto 2fr",
+
 					gap: 0,
 				}}
-				     marginX={20}>
+				marginX={20}>
 					<Typography variant="h4"
 					            sx={{
 						            gridArea: "title",
@@ -144,18 +145,17 @@ export function ViewPost() {
 					display: "flex",
 					justifyContent: "center",
 					gap: 4,
-
 				}}
 				>
-					<Reservation postId={post.id}/>
+					<Reservation postId={post.id} price={post.price}/>
 					<Button onClick={handleOpen} variant="contained">Kontakt</Button>
 				</Box>
 				<dialog open={open} onClose={handleClose}>
 					<DialogContent>
-						<Typography>Kontakt detaljer</Typography>
-						<Typography>{contacts?.firstName} {contacts?.lastName}</Typography>
-						<Typography> epost {contacts?.eMail}</Typography>
-						<Typography> telefon nummber {contacts?.phoneNumber}</Typography>
+						<p>Kontakt detaljer</p>
+						<p>{contacts?.firstName} {contacts?.lastName}</p>
+						<p> epost {contacts?.eMail}</p>
+						<p> telefon nummber {contacts?.phoneNumber}</p>
 						<Button onClick={handleClose} color="primary">
 							lukk vindu
 						</Button>
