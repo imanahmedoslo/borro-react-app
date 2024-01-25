@@ -110,7 +110,7 @@ export function ViewPost() {
 
 					gap: 0,
 				}}
-				marginX={20}>
+				     marginX={20}>
 					<Typography variant="h4"
 					            sx={{
 						            gridArea: "title",
@@ -137,7 +137,7 @@ export function ViewPost() {
 						            alignSelf: "end",
 					            }}
 					>
-						Pris: {post?.price <= 0 ? "Gratis": post?.price + ",-"}
+						Pris: {post?.price <= 0 ? "Gratis" : post?.price + ",-"}
 					</Typography>
 
 				</Box>
