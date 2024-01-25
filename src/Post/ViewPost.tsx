@@ -1,89 +1,86 @@
 import {useEffect, useState} from "react";
 import {Box, Button, Card, CardContent, CardMedia, Typography} from "@mui/material";
 import {useParams} from "react-router-dom";
+import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 //import { useAuth } from "../App";
 
 
 export type postProps = {
-	id: number,
-	title: string,
-	image: string,
-	price: number,
-	dateFrom: Date,
-	dateTo: Date,
-	description: string,
-	location: string,
-	categoryId: number,
-	userId: number
+  id: number,
+  title: string,
+  image: string,
+  price: number,
+  dateFrom: Date,
+  dateTo: Date,
+  description: string,
+  location: string,
+  categoryId: number,
+  userId: number
 }
-type ownerContacts = {
-	firstName: string,
-	lastName: string,
-	phoneNumber: string,
-	eMail: string,
+type ownerContacts={
+  firstName:string,
+	lastName:string,
+	phoneNumber:string,
+	eMail:string,
 }
 
 async function FetchPost(id: number) {
-	const res = await fetch(`https://borro.azurewebsites.net/api/Post/${id}`);
-	try {
-		if (!res.ok) {
-			throw new Error(`Http error status code ${res.status}`);
-		}
+  const res = await fetch(`https://borro.azurewebsites.net/api/Post/${id}`);
+  try {
+    if (!res.ok) {
+      throw new Error(`Http error status code ${res.status}`);
+    }
 
-		const resObject = await res.json();
-		return resObject;
-	} catch (error) {
-		console.log(error);
-		return Error("Could not find find this post.");
-	}
+    const resObject = await res.json();
+    return resObject;
+  } catch (error) {
+    console.log(error);
+    return Error("Could not find find this post.");
+  }
 }
-
-async function FetchUserByPostId(id: number) {
-	const res = await fetch(`https://borro.azurewebsites.net/api/UserInfo/postOwner/${id}?postId=${id}`, {
-		method: 'GET',
-		headers: {'Content-Type': 'application/json'}
-	});
-	const responseJson: ownerContacts = await res.json();
-	return responseJson;
-
+async function FetchUserByPostId(id:number){
+  const res = await fetch(`https://borro.azurewebsites.net/api/UserInfo/postOwner/${id}?postId=${id}`,{method: 'GET', headers: {'Content-Type': 'application/json'}});
+  const responseJson:ownerContacts=await res.json();
+  return responseJson;
+  
 }
 
 
 type ViewPostParams = {
-	postId: string;
+  postId: string;
 }
 
 export function ViewPost() {
-	const [post, setPost] = useState<postProps>();
-	const {postId} = useParams<keyof ViewPostParams>() as ViewPostParams;
-	const [contacts, setContacts] = useState<ownerContacts | null>(null)
-	const [open, setOpen] = useState(false);
-	useEffect(() => {
-		if (post != null || post != undefined) {
-			FetchUserByPostId(post?.id).then(result => setContacts(result))
-		}
-		//FetchUserByPostId(post?.id).then(result=> setContacts(result))
-	}, [post])
-	const handleOpen = () => {
-		setOpen(true);
-	};
-	const handleClose = () => {
-		setOpen(false);
-	};
+  const [post, setPost] = useState<postProps>();
+  const {postId} = useParams<keyof ViewPostParams>() as ViewPostParams;
+  const [contacts,setContacts]=useState<ownerContacts|null>(null)
+  const [open, setOpen] = useState(false);
+  useEffect(()=>{
+    if(post!=null||post!=undefined){
+      FetchUserByPostId(post?.id).then(result=> setContacts(result))
+    }
+    //FetchUserByPostId(post?.id).then(result=> setContacts(result))
+  },[post])
+  const handleOpen = () => {
+    setOpen(true); 
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
-	useEffect(() => {
-		if (postId) {
-			FetchPost(parseInt(postId))
-				.then(p => setPost(p))
-		}
+  useEffect(() => {
+    if (postId) {
+      FetchPost(parseInt(postId))
+        .then(p => setPost(p))
+    }
+    
+  }, []);
 
-	}, []);
 
-
-	if (!post) {
-		return <>Loading...</>
-	}
+  if (!post) {
+    return <>Loading...</>
+  }
 
 	return (
 		<Card sx={{
@@ -122,7 +119,6 @@ export function ViewPost() {
 					<DialogContent>
 						<p>Kontakt detaljer</p>
 						<p>{contacts?.firstName} {contacts?.lastName}</p>
-						<p></p>
 						<p> epost {contacts?.eMail}</p>
 						<p> telefon nummber {contacts?.phoneNumber}</p>
 						<Button onClick={handleClose} color="primary">
