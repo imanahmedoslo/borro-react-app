@@ -33,6 +33,7 @@ export function DrawerMenu(props: DrawerMenuProps) {
         <ListItem><Link to="/posts/:postId"><Button>Mine annonser</Button></Link></ListItem>
         <Divider orientation="horizontal"/>
         <ListItem><Link to="/"><Button>Meldinger</Button></Link></ListItem>
+        <Divider orientation="horizontal"/>
         <ListItem><Button style={{backgroundColor:'#FBF7EF', border:'none', color:'#1976D2', boxShadow:'none', textAlign:'start', paddingLeft:'0px'}} variant="contained" onClick={() => navigate(`/createUserInfo/${sessionInfo?.id}`)}>
         Lag bruker profil
       </Button></ListItem>
