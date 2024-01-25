@@ -72,7 +72,7 @@ type Props = {
 }
 
 export function LoggedInIcon({userId}: Props) {
-  const { onLogout } = useAuth();
+  const { onLogout,onLogin } = useAuth();
   const navigate = useNavigate();
   const [profile, setProfile] = useState<ProfileType | null>()
 
@@ -98,6 +98,13 @@ export function LoggedInIcon({userId}: Props) {
       </>
     )
   }
+  /*else{
+    return(<>
+     <Button style={{textAlign: 'center', height: '40px', width:'auto', color:'white', backgroundColor:'#D5B263'}} variant="contained" onClick={onLogin}>
+            Logg ut
+          </Button>
+    </>)
+  }*/
 }
 
 export async function getPosts() {
