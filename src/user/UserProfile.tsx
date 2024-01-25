@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
-import {Avatar, Button, Container, Typography} from '@mui/material';
+import {Avatar, Box, Button, Container, Typography} from '@mui/material';
 import { UploadPicture } from '../Post/UploadPicture';
 import { UserInfoForm } from '../Register/UserInfoForm';
 
@@ -75,11 +75,19 @@ export function UserProfile() {
 
 
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth="sm"
+      sx={{
+        display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: 'flex', // Adjust as needed
+}}>
       <Typography variant="h4" gutterBottom>
         Din bruker
       </Typography>
       <Avatar
+      
         alt="User Avatar"
         src={user.userInfo.profileImage}
         sx={{width: 100, height: 100}}
@@ -87,7 +95,7 @@ export function UserProfile() {
       <UploadPicture Type={"userInfo"} Id={id} onPictureUploaded={onPictureUploaded} />
       {/* <Typography variant="h6">{user.email}</Typography> */}
       {/* Add other user details here */}
-      <div>
+      <Box>
         
         <Button variant="contained" onClick={() => navigate(`/editUser/${user.id}`)}>
           Rediger profil
@@ -95,15 +103,15 @@ export function UserProfile() {
         <Button variant="contained" onClick={() => navigate(`/changePassword/${user.id}`)}>
           Endre passord
         </Button>
-      </div>
-      <Typography variant='h5' gutterBottom>
+      </Box>
+      <Typography variant='h5' gutterBottom sx={{ fontSize: '1.2rem', fontWeight: 'bold' }}>
         Navn: {user.userInfo.firstName} {user.userInfo.lastName}
       </Typography>
       <Typography variant='h5' gutterBottom>
         Telefon: {user.userInfo.phoneNumber}
       </Typography>
-      <Typography variant='h5' gutterBottom>
-        Adresse: {user.userInfo.address}, {user.userInfo.postCode} {user.userInfo.city}
+      <Typography variant='h5'> <span style={{fontSize:'h2', fontWeight:'bold'}}> Adresse:</span>
+        {user.userInfo.address}, {user.userInfo.postCode} {user.userInfo.city}
       </Typography>
       <Typography variant='h5' gutterBottom>
         Fødselsdato: {
