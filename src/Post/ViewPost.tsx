@@ -109,8 +109,7 @@ export function ViewPost() {
           <dialog open={open} onClose={handleClose}>
           <DialogContent>   
             <p>Kontakt detaljer</p>
-            <p>{contacts?.firstName} {contacts?.lastName}</p>
-            <p></p>
+            <p>Navn {contacts?.firstName}{contacts?.lastName}</p>
            <p> epost {contacts?.eMail}</p>
            <p> telefon nummber {contacts?.phoneNumber}</p>
           

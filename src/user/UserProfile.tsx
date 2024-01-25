@@ -93,7 +93,7 @@ export function UserProfile() {
       <Button variant="contained" onClick={() => navigate(`/changePassword/${user.id}`)}>
         Endre passord
       </Button>
-      <Typography variant='h5' gutterBottom>
+            <Typography variant='h5' gutterBottom>
         Navn: {user.userInfo.firstName} {user.userInfo.lastName}
       </Typography>
       <Typography variant='h5' gutterBottom>
