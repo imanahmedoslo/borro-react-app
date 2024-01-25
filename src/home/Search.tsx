@@ -15,6 +15,7 @@ import {Link} from "react-router-dom";
 import { useAuth } from '../App.tsx';
 import { Navigate,useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
+import Logo from '../Logo.tsx';
 
 
 const Search = styled('div')(({theme}) => ({
@@ -99,16 +100,7 @@ export default function SearchAppBar({setSearchText}: { setSearchText: (text: st
             <MenuIcon/>
           </IconButton>
           <Link to="/">
-            <Box component={"img"}
-                 sx={{
-                   height: "40px",
-                   display: {xs: 'none', sm: 'none', md: 'block'},
-                   objectFit: "contain"
-                 }}
-                 src={"src/assets/borro-nobg.png"}
-                 alt={"logo"}
-
-            />
+           <Logo height={40} width={'auto'}/>
           </Link>
           <Typography
             variant="h6"
