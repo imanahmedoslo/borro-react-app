@@ -2,8 +2,7 @@ import {useEffect, useState} from "react";
 import {Box, Button, Card, CardContent, CardMedia, Typography} from "@mui/material";
 import {useParams} from "react-router-dom";
 import DialogContent from '@mui/material/DialogContent';
-//import { useAuth } from "../App";
-
+import Reservation from "./Reservation";
 
 export type postProps = {
 	id: number,
@@ -63,7 +62,6 @@ export function ViewPost() {
 		if (post != null || post != undefined) {
 			FetchUserByPostId(post?.id).then(result => setContacts(result))
 		}
-		//FetchUserByPostId(post?.id).then(result=> setContacts(result))
 	}, [post])
 	const handleOpen = () => {
 		setOpen(true);
@@ -149,7 +147,7 @@ export function ViewPost() {
 
 				}}
 				>
-					<Button variant="contained">Reserver</Button>
+					<Reservation postId={post.id}/>
 					<Button onClick={handleOpen} variant="contained">Kontakt</Button>
 				</Box>
 				<dialog open={open} onClose={handleClose}>
