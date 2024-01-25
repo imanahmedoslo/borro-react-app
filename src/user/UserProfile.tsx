@@ -87,12 +87,14 @@ export function UserProfile() {
       <UploadPicture Type={"userInfo"} Id={id} onPictureUploaded={onPictureUploaded} />
       {/* <Typography variant="h6">{user.email}</Typography> */}
       {/* Add other user details here */}
-      <Button variant="contained" onClick={() => navigate(`/editUser/${user.id}`)}>
-        Rediger profil
-      </Button>
-      <Button variant="contained" onClick={() => navigate(`/changePassword/${user.id}`)}>
-        Endre passord
-      </Button>
+      <div>
+        <Button variant="contained" onClick={() => navigate(`/editUser/${user.id}`)}>
+          Rediger profil
+        </Button>
+        <Button variant="contained" onClick={() => navigate(`/changePassword/${user.id}`)}>
+          Endre passord
+        </Button>
+      </div>
       <Typography variant='h5' gutterBottom>
         Navn: {user.userInfo.firstName} {user.userInfo.lastName}
       </Typography>
