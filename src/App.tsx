@@ -108,7 +108,9 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 	}
 
 	const handleLogout = () => {
-		localStorage.clear();
+		localStorage.removeItem('token');
+		localStorage.removeItem('expiresAt');
+		//localStorage.clear();
 		setSessionInfo(null);
 		navigate('/');
 	}
