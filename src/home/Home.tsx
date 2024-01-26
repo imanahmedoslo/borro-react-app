@@ -34,7 +34,6 @@ export function Home() {
   const {sessionInfo}= useAuth();
 
 
-  console.log(sliderValue);
 
   async function getPosts(): Promise<postProps[]> {
     const response = await fetch("https://borro.azurewebsites.net/api/Post");
