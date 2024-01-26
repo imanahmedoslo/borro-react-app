@@ -148,7 +148,7 @@ export function ViewPost() {
 				}}
 				>
 					<Reservation postId={post.id} price={post.price}/>
-					<Button onClick={handleOpen} variant="contained">Kontakt</Button>
+					<Button onClick={handleOpen} variant="contained" style={{backgroundColor:'#D5B263', color:'white'}}>Kontakt</Button>
 				</Box>
 				<dialog open={open} onClose={handleClose}>
 					<DialogContent>
@@ -156,7 +156,7 @@ export function ViewPost() {
 						<p>{contacts?.firstName} {contacts?.lastName}</p>
 						<p> epost {contacts?.eMail}</p>
 						<p> telefon nummber {contacts?.phoneNumber}</p>
-						<Button onClick={handleClose} color="primary">
+						<Button onClick={handleClose} style={{backgroundColor:'#D5B263', color:'white'}}>
 							lukk vindu
 						</Button>
 					</DialogContent>
