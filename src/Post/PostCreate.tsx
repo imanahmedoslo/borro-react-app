@@ -142,8 +142,9 @@ export default function PostCreate() {
             label="Kryss av for å angi kategori"
           />
         </Grid>
-        
+        <Grid item xs={24} sm={12} >
           <TextField
+          
             required
             id="description"
             name="description"
@@ -154,6 +155,7 @@ export default function PostCreate() {
             value={description}
             onChange={e=>setDescription(e.currentTarget.value)}
           />
+          </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             required
@@ -224,7 +226,7 @@ export default function PostCreate() {
             </div>
           </Grid>
       </Grid>
-      <Button variant='outlined' type='submit' style={{width:'200px', height:'50px',marginTop:'30px', marginRight:'21px', marginBottom:'20px'}}>Lagre endringer</Button>
+      <Button variant='outlined' type='submit' style={{width:'200px', height:'50px',marginTop:'30px', marginRight:'21px', marginBottom:'20px', backgroundColor:'#D5B263', color:'white' }}>Lagre endringer</Button>
       </form>
     </Box>
   );
