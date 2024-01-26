@@ -7,7 +7,7 @@ export function Footer() {
 			gridArea: "footer",
 			textAlign: "center",
 			backgroundColor: "#293040",
-			boxShadow: 4,
+			boxShadow: 9,
 		}}>
 			<Typography gutterBottom variant="body2" color={"beige"}>
 				Graduation Project 2024
