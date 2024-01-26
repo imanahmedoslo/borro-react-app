@@ -131,6 +131,8 @@ export function ChangePassword() {
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
+                  style={{backgroundColor:"#D5B263", color:'white'}}
+                
                 >
                   Bytt Passord
                 </Button>
