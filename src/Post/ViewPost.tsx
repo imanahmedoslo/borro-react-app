@@ -1,6 +1,9 @@
 import {useEffect, useState} from "react";
-import {Box, Button, Card, CardContent, CardMedia, Typography} from "@mui/material";
+import {Avatar, Box, Button, Card, CardContent, CardMedia, Container, Divider, Grid, TextField, Typography} from "@mui/material";
 import {useParams} from "react-router-dom";
+import borroNobg from "C:/Users/ImanAhmed/source/repos/borro-react-app/src/assets/borro-nobg.png"
+import img from "C:/Users/ImanAhmed/source/repos/borro-react-app/src/assets/img_1.png"
+import logoPng from "C:/Users/ImanAhmed/source/repos/borro-react-app/src/assets/Logo.png"
 import DialogContent from '@mui/material/DialogContent';
 import Reservation from "./Reservation";
 
@@ -78,12 +81,154 @@ export function ViewPost() {
 
 	}, []);
 
+	const customTheme = {
+		display: 'flex',
+		padding: "10px 0 10px 10px",
+		flexDirection: 'row',
+
+		justifyContent: 'left',
+	};
+	const customTheme3 = {
+		display: 'flex',
+		padding: "10px 0 10px 10px",
+		flexDirection: 'column',
+		justifyContent: '',
+		height:'100px'
+
+	};
+	const customTheme1 = {
+		display: 'flex',
+		padding: "10px 0 10px 10px",
+		flexDirection: 'row',
+
+		justifyContent: 'left',
+	};
+	const customTheme2 = {
+		display: 'flex',
+		padding: "10px 0 10px 10px",
+		flexDirection: 'row',
+		justifyContent: 'end',
+		marginRight:'30px',
+		height:'30px',
+		
+	}; 
 
 	if (!post) {
 		return <>Loading...</>
 	}
+	return(
+		
+	<Container component="main" maxWidth="xl" style={{border: '3px solid #ffffff',
+	marginTop:'10px',
+	marginBottom:'10px',
+	display:'flex',
+	flexDirection:'row',
+	borderRadius:'15px',
+	justifyContent:'space-around',
+	width:'100vw',
+	flexWrap:'wrap',
+	}}>
+			
+	
+	{/*<UploadPicture Type={"userInfo"} Id={id} onPictureUploaded={onPictureUploaded}/>
+	 <Typography variant="inherit">{user.email}</Typography>
+		Add other user details here
+		<Avatar
+		alt="User Avatar"
+		src={logoPng}
+		sx={{ borderRadius:'15px', margin: 'auto', imageOrientation: "center"}}
+		style={{width:'auto', height: '100px' borderRadius:'15px', margin: 'auto', imageOrientation: "center"}}
+	/>
+		 */}
+		 <Box sx={{maxWidth: '20rem', margin: 'auto'}}>
+		 <h1 style={{fontSize:'40px'}}>Tittel</h1>	
+			<img src={logoPng} style={{
+                    width: '100%',
+                    height: 'auto',
+                    borderRadius: '15px',
+                    display: 'block',
+                    imageOrientation: 'center'
+                }}/>
+			<Divider textAlign={"left"}>
+		</Divider>
 
-	return (
+		<Box sx={customTheme1}>
+
+			<Typography variant='body1' gutterBottom textAlign={'left'}>
+			Addresse: Addresse her
+			</Typography>
+		</Box>
+
+
+		<Divider textAlign={"left"}>
+		</Divider>
+		<Box sx={customTheme2}>
+
+			<Typography variant='inherit' gutterBottom textAlign={'end'}>
+			{true?'pris'+',-':'Gratis'}
+			</Typography>
+		</Box>
+			</Box>
+	<Box sx={{
+		borderRadius: 2,
+		display:'flex',
+		flexDirection:'column',
+		justifyContent:'space-evenly',
+		minWidth:'40vw'
+		}}
+		>
+		<Divider  textAlign={"left"}>
+		Beskrivelse:
+		</Divider>
+		<Box sx={customTheme}>
+
+			<Typography variant='inherit' gutterBottom>
+				Beskrivelse her
+			</Typography>
+		</Box>
+		<Divider textAlign={"left"}>
+			Kategori:
+		</Divider>
+		<Box sx={customTheme}>
+
+			<Typography variant='inherit' gutterBottom>
+				{true
+					? 'Kategori her'
+					: 'Ikke tilgjengelig'}
+			</Typography>
+		</Box>
+		<Divider textAlign={"left"}>
+		Kontaktinformasjon
+		</Divider>
+		<Box sx={customTheme3}>
+
+			<Typography variant='inherit' gutterBottom>
+				Navn:
+			</Typography>
+			<Divider></Divider>
+			<Typography style={{fontWeight:'bold'}} variant='inherit'  gutterBottom>
+				Email:
+			</Typography>
+			<Divider></Divider>
+			<Typography variant='inherit' gutterBottom>
+				Telefonnummer:
+			</Typography>
+		</Box>
+		<Box display={'grid'}>
+		<Button variant="contained"
+				onClick={() =>{}}
+				size="large"
+		style={{backgroundColor:  '#D5B263', marginLeft:'20px', color: 'white', justifySelf:'center', width:'200px', marginBottom:'10px'}}>
+		
+			Reserver
+		</Button>
+		</Box>
+	</Box>
+	<Divider/>
+</Container>)
+
+
+	/*return (
 		<Card sx={{
 			maxWidth: 700,
 			maxHeight: 1000,
@@ -130,7 +275,7 @@ export function ViewPost() {
 						{post?.description}
 					</Typography>
 
-					<Typography variant="h5"
+					<Typography variant="inherit"
 					            color="text.secondary"
 					            sx={{
 						            gridArea: "price",
@@ -163,5 +308,5 @@ export function ViewPost() {
 				</dialog>
 			</CardContent>
 		</Card>
-	)
+	)*/
 }

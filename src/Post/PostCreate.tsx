@@ -20,8 +20,8 @@ import { Box } from '@mui/material';
 import { useAuth } from '../App';
 //import borroFaviconColor from './assets/borro-favicon-color.png';
 
-const token= localStorage.getItem('token');
-const LogedInId= localStorage.getItem('id');
+//const token= localStorage.getItem('token');
+//const LogedInId= localStorage.getItem('id');
 type categoryProps={
     id: number,
     type: string,
@@ -91,7 +91,7 @@ export default function PostCreate() {
       title:title,
       userId:sessionInfo?.id!,
     }
-    PostPosts(Post).then(respons=>(navigate(`/posts/${LogedInId}`)))
+    PostPosts(Post).then(respons=>(navigate(`/posts/${sessionInfo?.id}`)))
 
    }
   
