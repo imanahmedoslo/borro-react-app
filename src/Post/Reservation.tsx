@@ -120,10 +120,10 @@ export default function Reservation({ postId }: ReservationProps) {
                 autoFocus
                 margin="dense"
                 id="dateFrom"
-                label="Date From"
+                label="Fra dato"
                 type="date"
                 fullWidth
-                onChange={(event) => setDateFrom(new Date(event.target.value))}
+                onChange={(event) => setDateFrom(event.target.value)}
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -131,10 +131,10 @@ export default function Reservation({ postId }: ReservationProps) {
               <TextField
                 margin="dense"
                 id="dateTo"
-                label="Date To"
+                label="Til dato"
                 type="date"
                 fullWidth
-                onChange={(event) => setDateTo(new Date(event.target.value))}
+                onChange={(event) => setDateTo(event.target.value)}
                 InputLabelProps={{
                   shrink: true,
                 }}

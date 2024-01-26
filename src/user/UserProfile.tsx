@@ -3,21 +3,22 @@ import {useNavigate, useParams} from 'react-router-dom';
 import {Avatar, Button, Container, Typography} from '@mui/material';
 import { UploadPicture } from '../Post/UploadPicture';
 import { UserInfoForm } from '../Register/UserInfoForm';
+//import axios from 'axios';
 
 type UserInfoType = {
-  firstName: string,
-  lastName: string,
-  address: string,
-  postCode: string,
-  city: string,
-  phoneNumber: string,
-  birthDate: Date;
-  about: string,
-  id: number,
-  userInfo: UserInfo
+	firstName: string,
+	lastName: string,
+	address: string,
+	postCode: string,
+	city: string,
+	phoneNumber: string,
+	birthDate: Date;
+	about: string,
+	id: number,
+	userInfo: UserInfo
 };
 
-type UserInfo = {
+export type UserInfo = {
   profileImage: string,
   firstName: string,
   lastName: string,
@@ -27,13 +28,19 @@ type UserInfo = {
   phoneNumber: string,
   birthDate: Date;
   about: string,
+  id:number
 }
 
 
 export function UserProfile() {
+
   const [user, setUser] = useState<UserInfoType | null>(null);
+  //const[img, setImg] = useState<string>();
   const navigate = useNavigate();
   const {id} = useParams();
+
+  
+  
 
   const fetchUser = async () => {
     try {
@@ -57,7 +64,7 @@ export function UserProfile() {
       navigate('/error');
     }
   };
-
+  
   useEffect(() => {
     if (id) {
       fetchUser();
@@ -66,14 +73,23 @@ export function UserProfile() {
 
   const onPictureUploaded = () => {
     fetchUser();
+    console.log("on picture uplaoded implemented")
   }
 
 
-  if (!user) {
-    return <div>Loading...</div>;
-  }
+	if (!user) {
+		return <div>Loading...</div>;
+	}
 
+	const customTheme = {
+		display: 'flex',
+		padding: "20px 0 10px 80px",
+		flexDirection: 'row',
 
+		justifyContent: 'left',
+	};
+
+  
   return (
     <Container maxWidth="sm">
       <Typography variant="h4" gutterBottom>
@@ -84,7 +100,8 @@ export function UserProfile() {
         src={user.userInfo.profileImage}
         sx={{width: 100, height: 100}}
       />
-      <UploadPicture Type={"userInfo"} Id={id} onPictureUploaded={onPictureUploaded} />
+      
+      {/*<UploadPicture file={file}  setFile={setFile} />*/}
       {/* <Typography variant="h6">{user.email}</Typography> */}
       {/* Add other user details here */}
       <div>
@@ -119,4 +136,3 @@ export function UserProfile() {
     </Container>
   );
 };
-  

@@ -1,37 +1,43 @@
-import {useState} from "react";
-import axios from "axios";
+import { useEffect, useState } from "react";
+import Box from '@mui/material/Box';
+import { Typography } from "@mui/material";
+type uploadPictureProps = {
+	file: File | string,
+	setFile: React.Dispatch<React.SetStateAction<File | string>>,
+	currentImage: string,
+	userId:number
+}
 
-export function UploadPicture({Type, Id, onPictureUploaded}:any) {
-	const [file, setFile] = useState();
-	const [fileName, setFileName] = useState();
-
-	const saveFile = (e:any) => {
-		console.log(e.target.files[0]);
+export function UploadPicture({ file, setFile, currentImage,userId }: uploadPictureProps) {
+	const [fileName, setFileName] = useState<string>("");
+	const [img, setImg] = useState<string>(currentImage);
+	
+	const saveFile = (e: any) => {
 		setFile(e.target.files[0]);
-		setFileName(e.target.files[0].name);
+		setFileName(`${e.target.files[0].name} ${userId}`);
+		handleimgInput(e);
 	}
-
-	const uploadFile = async () => {
-		console.log(file);
-		const formData = new FormData();
-		formData.append("Picture", file!);
-		formData.append("Type", Type!);
-		formData.append("Id", Id);
-
-
-		try {
-			const res = await axios.post("https://borro.azurewebsites.net/api/FileUpload", formData);
-			onPictureUploaded();
-		} catch (ex) {
-			console.log(ex);
-
+	const handleimgInput = (e: React.ChangeEvent<HTMLInputElement> | any) => {
+		const filetoSimulate = e?.target?.files[0];
+		if (e.target.files[0]) {
+			const reader = new FileReader();
+			reader.onloadend = () => {
+				const result = reader.result?.toString() ?? "";
+				setImg(result);
+			};
+			reader.readAsDataURL(filetoSimulate);
+		} else {
+			setImg(currentImage);
 		}
-	};
 
+	}
+	useEffect(() => { setImg(currentImage) }, [currentImage])
 	return (
 		<>
-			<input type="file" onChange={saveFile}/>
-			<input type="button" value="upload" onClick={uploadFile}/>
+			<Box component="img" src={img} sx={{ height: '50px', width: 'auto' }} />
+			<input type="file" onChange={saveFile} />
+			<Typography>{fileName}</Typography>
+
 		</>
 	)
 }
