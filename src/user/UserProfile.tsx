@@ -1,9 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
-import {Avatar, Button, Container, Typography} from '@mui/material';
-import { UploadPicture } from '../Post/UploadPicture';
-import { UserInfoForm } from '../Register/UserInfoForm';
-//import axios from 'axios';
+import {Avatar, Box, Button, Container, Divider, Typography} from '@mui/material';
 
 type UserInfoType = {
 	firstName: string,
@@ -19,28 +16,24 @@ type UserInfoType = {
 };
 
 export type UserInfo = {
-  profileImage: string,
-  firstName: string,
-  lastName: string,
-  address: string,
-  postCode: string,
-  city: string,
-  phoneNumber: string,
-  birthDate: Date;
-  about: string,
-  id:number
+	profileImage: string,
+	firstName: string,
+	lastName: string,
+	address: string,
+	postCode: string,
+	city: string,
+	phoneNumber: string,
+	birthDate: Date;
+	about: string,
+	id: number
 }
 
 
 export function UserProfile() {
-
-  const [user, setUser] = useState<UserInfoType | null>(null);
-  //const[img, setImg] = useState<string>();
-  const navigate = useNavigate();
-  const {id} = useParams();
-
-  
-  
+	const [user, setUser] = useState<UserInfoType | null>(null);
+	//const[img, setImg] = useState<string>();
+	const navigate = useNavigate();
+	const {id} = useParams();
 
 	const fetchUser = async () => {
 		try {
@@ -53,28 +46,28 @@ export function UserProfile() {
 				},
 			});
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      const userData = await response.json();
-      setUser(userData);
-      console.log("userData: ", userData)
-    } catch (error) {
-      console.error("Fetching user failed", error);
-      navigate('/error');
-    }
-  };
-  
-  useEffect(() => {
-    if (id) {
-      fetchUser();
-    }
-  }, [id]);
+			if (!response.ok) {
+				throw new Error(`HTTP error! Status: ${response.status}`);
+			}
+			const userData = await response.json();
+			setUser(userData);
+			console.log("userData: ", userData)
+		} catch (error) {
+			console.error("Fetching user failed", error);
+			navigate('/error');
+		}
+	};
 
-  const onPictureUploaded = () => {
-    fetchUser();
-    console.log("on picture uplaoded implemented")
-  }
+	useEffect(() => {
+		if (id) {
+			fetchUser();
+		}
+	}, [id]);
+
+	const onPictureUploaded = () => {
+		fetchUser();
+		console.log("on picture uplaoded implemented")
+	}
 
 
 	if (!user) {
@@ -92,51 +85,109 @@ export function UserProfile() {
 		justifyContent: 'left',
 	};
 
-  
-  return (
-    <Container maxWidth="sm">
-      <Typography variant="h4" gutterBottom>
-        Din bruker
-      </Typography>
-      <Avatar
-        alt="User Avatar"
-        src={user.userInfo.profileImage}
-        sx={{width: 100, height: 100}}
-      />
-      
-      {/*<UploadPicture file={file}  setFile={setFile} />*/}
-      {/* <Typography variant="h6">{user.email}</Typography> */}
-      {/* Add other user details here */}
-      <div>
-        
-        <Button variant="contained" onClick={() => navigate(`/editUser/${user.id}`)}>
-          Rediger profil
-        </Button>
-        <Button variant="contained" onClick={() => navigate(`/changePassword/${user.id}`)}>
-          Endre passord
-        </Button>
-      </div>
-      <Typography variant='h5' gutterBottom>
-        Navn: {user.userInfo.firstName} {user.userInfo.lastName}
-      </Typography>
-      <Typography variant='h5' gutterBottom>
-        Telefon: {user.userInfo.phoneNumber}
-      </Typography>
-      <Typography variant='h5' gutterBottom>
-        Adresse: {user.userInfo.address}, {user.userInfo.postCode} {user.userInfo.city}
-      </Typography>
-      <Typography variant='h5' gutterBottom>
-        Fødselsdato: {
-          user.userInfo.birthDate 
-          ? `${String(new Date(user.userInfo.birthDate).getDate()).padStart(2, '0')}-${
-            String(new Date(user.userInfo.birthDate).getMonth() + 1).padStart(2, '0')}-${
-            new Date(user.userInfo.birthDate).getFullYear()}`
-          : 'Ikke tilgjengelig'
-          }</Typography>
-      <Typography variant='h5' gutterBottom>
-        Bio: {user.userInfo.about}
-      </Typography>
-    </Container>
-  );
-};
 
+	return (
+		<Container component="main" maxWidth="sm">
+			<Typography variant="h4" sx={{textAlign: "center"}}>
+				Din bruker
+			</Typography>
+			<Avatar
+				alt="User Avatar"
+				src={user.userInfo.profileImage}
+				sx={{width: 100, height: 100}}
+			/>
+			{/*<UploadPicture Type={"userInfo"} Id={id} onPictureUploaded={onPictureUploaded}/>
+			 <Typography variant="h6">{user.email}</Typography>
+				Add other user details here */}
+
+			<Box sx={{
+				borderRadius: 2,
+				border: '1px solid #ffffff',
+				margin: "50px 0 0 0",
+
+				padding: 2,
+			}}>
+
+				<Divider textAlign={"left"}>
+					Navn
+				</Divider>
+				<Box sx={customTheme}>
+					<Typography variant='h5' gutterBottom>
+						{user.userInfo.firstName} {user.userInfo.lastName}
+					</Typography>
+
+				</Box>
+
+
+				<Divider textAlign={"left"}>
+					Telefon
+				</Divider>
+
+				<Box sx={customTheme}>
+
+					<Typography variant='h5' gutterBottom>
+						{user.userInfo.phoneNumber}
+					</Typography>
+				</Box>
+
+
+				<Divider textAlign={"left"}>
+					Adresse
+				</Divider>
+				<Box sx={customTheme}>
+
+					<Typography variant='h5' gutterBottom>
+						{user.userInfo.address}, {user.userInfo.postCode} {user.userInfo.city}
+					</Typography>
+				</Box>
+
+
+				<Divider textAlign={"left"}>
+					Fødselsdato
+				</Divider>
+				<Box sx={customTheme}>
+
+					<Typography variant='h5' gutterBottom>
+						{user.userInfo.birthDate
+							? `${String(new Date(user.userInfo.birthDate).getDate()).padStart(2, '0')}-${
+								String(new Date(user.userInfo.birthDate).getMonth() + 1).padStart(2, '0')}-${
+								new Date(user.userInfo.birthDate).getFullYear()}`
+							: 'Ikke tilgjengelig'}
+					</Typography>
+				</Box>
+
+				<Divider textAlign={"left"}>
+					Navn
+				</Divider>
+				<Box sx={customTheme}>
+
+					<Typography variant='h5' gutterBottom>
+						{user.userInfo.about}
+					</Typography>
+				</Box>
+			</Box>
+			<Divider/>
+			<Box sx={{
+				display: 'flex',
+				padding: "50px 0 10px 0",
+				flexDirection: 'row',
+				justifyContent: 'space-evenly',
+			}}>
+				<Button variant="contained"
+				        onClick={() => navigate(`/editUser/${user.id}`)}
+				        size="large"
+				>
+					Rediger profil
+				</Button>
+
+				<Button variant="contained"
+				        onClick={() => navigate(`/changePassword/${user.id}`)}
+				        size="large"
+				>
+					Endre passord
+				</Button>
+
+			</Box>
+		</Container>
+	);
+}
