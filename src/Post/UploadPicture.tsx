@@ -45,7 +45,7 @@ export function UploadPicture({ file, setFile, currentImage, userId }: uploadPic
 		<>
 			<Box component="img" src={img} sx={{ height: '50px', width: 'auto' }} />
 			<Button onClick={handleCustomClick}
-				style={{ width: '200px', height: '50px', border: '0.5px solid grey', marginTop: '10px', alignSelf: 'center' }}>
+				style={{ width: '200px', height: '50px', border: '0.5px solid grey', marginTop: '10px', alignSelf: 'center', backgroundColor:'#D5B263', color:'white' }}>
 				Velg et bilde:<input type="file"  ref={fileInputRef} style={{display:'none'}} onChange={saveFile} />
 			</Button>
 			{/*<input type="file" onChange={saveFile} />*/}
