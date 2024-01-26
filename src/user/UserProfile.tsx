@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {Avatar, Box, Button, Container, Divider, Typography} from '@mui/material';
-import {UploadPicture} from '../Post/UploadPicture';
-//aae
+
 type UserInfoType = {
 	firstName: string,
 	lastName: string,
@@ -16,7 +15,7 @@ type UserInfoType = {
 	userInfo: UserInfo
 };
 
-type UserInfo = {
+export type UserInfo = {
 	profileImage: string,
 	firstName: string,
 	lastName: string,
@@ -26,11 +25,13 @@ type UserInfo = {
 	phoneNumber: string,
 	birthDate: Date;
 	about: string,
+	id: number
 }
 
 
 export function UserProfile() {
 	const [user, setUser] = useState<UserInfoType | null>(null);
+	//const[img, setImg] = useState<string>();
 	const navigate = useNavigate();
 	const {id} = useParams();
 
@@ -65,9 +66,13 @@ export function UserProfile() {
 
 	const onPictureUploaded = () => {
 		fetchUser();
+		console.log("on picture uplaoded implemented")
 	}
 
 
+	if (!user) {
+		return <div>Loading...</div>;
+	}
 	if (!user) {
 		return <div>Loading...</div>;
 	}
@@ -91,9 +96,9 @@ export function UserProfile() {
 				src={user.userInfo.profileImage}
 				sx={{width: 100, height: 100}}
 			/>
-			<UploadPicture Type={"userInfo"} Id={id} onPictureUploaded={onPictureUploaded}/>
-			{/* <Typography variant="h6">{user.email}</Typography> */}
-			{/* Add other user details here */}
+			{/*<UploadPicture Type={"userInfo"} Id={id} onPictureUploaded={onPictureUploaded}/>
+			 <Typography variant="h6">{user.email}</Typography>
+				Add other user details here */}
 
 			<Box sx={{
 				borderRadius: 2,
@@ -185,4 +190,4 @@ export function UserProfile() {
 			</Box>
 		</Container>
 	);
-}
+};

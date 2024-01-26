@@ -142,8 +142,9 @@ export default function PostCreate() {
             label="Kryss av for å angi kategori"
           />
         </Grid>
-        
+        <Grid item xs={24} sm={12} >
           <TextField
+          
             required
             id="description"
             name="description"
@@ -154,6 +155,7 @@ export default function PostCreate() {
             value={description}
             onChange={e=>setDescription(e.currentTarget.value)}
           />
+          </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             required
@@ -214,17 +216,17 @@ export default function PostCreate() {
           <Grid item xs={12} sm={6} style={{gap:'5px'}}>
           <div>
             <label htmlFor="stratDate" >StartsDato:</label>
-            <input type="date" name="stratDate" form='yyyy-MM-dd' value={selectedStartDate} onChange={e=>setSelectedStartDate(e.currentTarget.value)}/>
+            <input type="date" name="stratDate" form='yyyy-MM-dd' value={selectedStartDate} onChange={e=>setSelectedStartDate(e.currentTarget.value)} color="secondary"/>
             </div>
           </Grid>
           <Grid item xs={12} sm={6}>
           <div>
           <label htmlFor="endDate">SluttsDato:</label>
-          <input type="date" name="endDate"  value={selectedEndDate} onChange={e=>setSelectedEndDate(e.currentTarget.value)}/>
+          <input type="date" name="endDate"  value={selectedEndDate} onChange={e=>setSelectedEndDate(e.currentTarget.value)} color="secondary"/>
             </div>
           </Grid>
       </Grid>
-      <Button variant='outlined' type='submit' style={{width:'200px', height:'50px',marginTop:'30px', marginRight:'21px', marginBottom:'20px'}}>Lagre endringer</Button>
+      <Button variant='outlined' type='submit' style={{width:'200px', height:'50px',marginTop:'30px', marginRight:'21px', marginBottom:'20px', backgroundColor:'#D5B263', color:'white' }}>Lagre endringer</Button>
       </form>
     </Box>
   );
