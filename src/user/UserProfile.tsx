@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
 import {Avatar, Box, Button, Container, Divider, Typography} from '@mui/material';
 import {UploadPicture} from '../Post/UploadPicture';
-
+//aae
 type UserInfoType = {
 	firstName: string,
 	lastName: string,
@@ -185,4 +185,4 @@ export function UserProfile() {
 			</Box>
 		</Container>
 	);
-};
+}
