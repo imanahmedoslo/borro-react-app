@@ -4,8 +4,8 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import {  styled,  } from '@mui/material/styles';
-import Logo from '../Logo';
+//import {  styled,  } from '@mui/material/styles';
+//import Logo from '../Logo';
 import Checkbox from '@mui/material/Checkbox';
 import { useEffect, useState } from 'react';
 import 'react-date-range/dist/styles.css';
@@ -52,7 +52,6 @@ else return responseJson;
 export default function PostCreate() { 
   const navigate=useNavigate();
   const {sessionInfo}= useAuth();
-  const userId= localStorage.getItem('id')??"";
   const[categories,setCategories]=useState<categoryProps[]>([])
   useEffect(()=>{
     GetCategories().then(categories=>setCategories(categories))
@@ -95,7 +94,7 @@ export default function PostCreate() {
       description:description,
       price:parseInt(price??0),
       title:title,
-      userId:parseInt(userId),
+      userId:sessionInfo?.id!,
     }
     PostPosts(Post).then(respons=>(navigate(`/posts/${LogedInId}`)))
 
