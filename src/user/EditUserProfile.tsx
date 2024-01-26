@@ -141,8 +141,8 @@ export function EditUserProfile() {
 	};
 	return (
 		<Container component="main" maxWidth="sm">
-			<Typography component="h1" variant="h5">
-				Edit User Information
+			<Typography component="h1" variant="h5" style={{textAlign:'center'}}>
+				Rediger Bruker Profil
 			</Typography>
 			<Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
 				<UploadPicture file={file} setFile={setFile} currentImage={userInfo?.profileImage ?? ""} userId={userId} />

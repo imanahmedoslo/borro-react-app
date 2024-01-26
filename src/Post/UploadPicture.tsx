@@ -1,17 +1,26 @@
 import { useEffect, useState } from "react";
 import Box from '@mui/material/Box';
 import { Typography } from "@mui/material";
+import React, { useRef } from 'react';
+import { Button } from "@mui/base";
+
 type uploadPictureProps = {
 	file: File | string,
 	setFile: React.Dispatch<React.SetStateAction<File | string>>,
 	currentImage: string,
-	userId:number
+	userId: number
 }
 
-export function UploadPicture({ file, setFile, currentImage,userId }: uploadPictureProps) {
+export function UploadPicture({ file, setFile, currentImage, userId }: uploadPictureProps) {
 	const [fileName, setFileName] = useState<string>("");
 	const [img, setImg] = useState<string>(currentImage);
-	
+	const fileInputRef = useRef<HTMLInputElement>(null);
+	const handleCustomClick = () => {
+		if (fileInputRef.current) {
+			fileInputRef.current.click();
+		}
+	}
+
 	const saveFile = (e: any) => {
 		setFile(e.target.files[0]);
 		setFileName(`${e.target.files[0].name} ${userId}`);
@@ -35,9 +44,23 @@ export function UploadPicture({ file, setFile, currentImage,userId }: uploadPict
 	return (
 		<>
 			<Box component="img" src={img} sx={{ height: '50px', width: 'auto' }} />
-			<input type="file" onChange={saveFile} />
+			<Button onClick={handleCustomClick}
+				style={{ width: '200px', height: '50px', border: '0.5px solid grey', marginTop: '10px', alignSelf: 'center' }}>
+				Velg et bilde:<input type="file"  ref={fileInputRef} style={{display:'none'}} onChange={saveFile} />
+			</Button>
+			{/*<input type="file" onChange={saveFile} />*/}
 			<Typography>{fileName}</Typography>
 
 		</>
 	)
 }
+
+// <Button onClick={handleCutsomClick}
+//style={{width:'200px', height:'50px', border:'0.5px solid grey', marginTop:'10px', alignSelf:'center'}}>
+//Velg et bilde:<input type="file" onChange={saveFile} />
+//</Button>
+/*
+<Button onClick={handleCutsomClick} style={{width:'200px', height:'50px', border:'0.5px solid grey', marginTop:'10px', alignSelf:'center'}}>Velg et bilde:
+<input type='file' ref={fileInputRef} style={{display:'none'}} onChange={e=>handleimgInput(e)}/></Button>
+*/
+// 
