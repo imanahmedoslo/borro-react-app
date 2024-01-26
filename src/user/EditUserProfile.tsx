@@ -227,6 +227,7 @@ export function EditUserProfile() {
 					fullWidth
 					variant="contained"
 					sx={{ mt: 3, mb: 2 }}
+					style={{backgroundColor: '#D5B263', color: 'white'}}
 				>
 					Save Changes
 				</Button>
