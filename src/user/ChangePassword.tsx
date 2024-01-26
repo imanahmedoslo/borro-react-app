@@ -121,7 +121,7 @@ export function ChangePassword() {
                   </Grid>
                   <Grid item xs={12}>
                     <FormControlLabel
-                      control={<Checkbox value="allowExtraEmails" color="primary" onChange={(e) => setShowPassword(e.target.checked ? true : false)} />}
+                      control={<Checkbox value="allowExtraEmails" color="secondary" onChange={(e) => setShowPassword(e.target.checked ? true : false)} />}
                       label="Vis passord"
                     />
                   </Grid>
