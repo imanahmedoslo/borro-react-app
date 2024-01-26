@@ -141,7 +141,7 @@ export function EditUserProfile() {
 	};
 	return (
 		<Container component="main" maxWidth="sm">
-			<Typography component="h1" variant="h5" style={{display: 'flex',textAlign:'center'}}>
+			<Typography component="h1" variant="h5" style={{display: 'flex',justifyContent:'center'}}>
 				Rediger Bruker Profil
 			</Typography>
 			<Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
