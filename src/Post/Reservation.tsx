@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from "@mui/material";
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Typography } from "@mui/material";
 import { useAuth } from '../App';
 import { MobileDatePicker } from '@mui/x-date-pickers';
 import { Dayjs } from 'dayjs';
+import { useNavigate } from 'react-router-dom';
+import { id } from 'date-fns/locale';
 
 
 type ReservationProps = {
@@ -97,7 +99,6 @@ export default function Reservation({ postId, price }: ReservationProps) {
 };
 
 const isDateDisabled = (date: Date) => {
-    console.log(date, disabledDates);
     return disabledDates.some(disabledDate => 
         date >= disabledDate.fromDate && date <= disabledDate.toDate
     );
@@ -106,7 +107,7 @@ const isDateDisabled = (date: Date) => {
     const handleClose = () => {
       setOpen(false);
     };
-  
+    const navigate = useNavigate();
     const handleReserve = async () => {
         const token = localStorage.getItem('token');
       if (dateFrom && dateTo) {
@@ -132,6 +133,9 @@ const isDateDisabled = (date: Date) => {
           });
   
           if (response.ok) {
+            const reservationData = await response.json();
+            const reservationId = reservationData.id;
+            navigate(`/reservationConfirmation/${reservationId}`);
             handleClose();
           } else {
             const errorData = await response.json();
@@ -157,8 +161,8 @@ const isDateDisabled = (date: Date) => {
               <DialogContentText>
                 Velg dato du ønsker å reservere.
               </DialogContentText>
-              <MobileDatePicker onChange={(dayJs) => setDateFrom(dayJs?.toDate())} disablePast shouldDisableDate={(dayJSObject: Dayjs) => isDateDisabled(dayJSObject.toDate())} />
-              <MobileDatePicker onChange={(dayJs) => setDateTo(dayJs?.toDate())} disablePast shouldDisableDate={(dayJSObject: Dayjs) => isDateDisabled(dayJSObject.toDate())} />
+              <MobileDatePicker label="Fra dato" onChange={(dayJs) => setDateFrom(dayJs?.toDate())} disablePast shouldDisableDate={(dayJSObject: Dayjs) => isDateDisabled(dayJSObject.toDate())} />
+              <MobileDatePicker label="Til dato" onChange={(dayJs) => setDateTo(dayJs?.toDate())} disablePast shouldDisableDate={(dayJSObject: Dayjs) => isDateDisabled(dayJSObject.toDate())} />
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleReserve} style={{backgroundColor:'#D5B263', color:'white'}}>Reserver</Button>
