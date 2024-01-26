@@ -43,10 +43,10 @@ export function UploadPicture({ file, setFile, currentImage, userId }: uploadPic
 	useEffect(() => { setImg(currentImage) }, [currentImage])
 	return (
 		<>
-			<Box component="img" src={img} sx={{ height: '50px', width: 'auto' }} />
+			<Box component="img" src={img} sx={{ height: '100px', width: 'auto'}} />
 			<Button onClick={handleCustomClick}
-				style={{ width: '200px', height: '50px', border: '0.5px solid grey', marginTop: '10px', alignSelf: 'center', backgroundColor:'#D5B263', color:'white' }}>
-				Velg et bilde:<input type="file"  ref={fileInputRef} style={{display:'none'}} onChange={saveFile} />
+				style={{ width: 'auto', height: '35px', border: '0.5px solid grey', marginTop: '10px', alignSelf: 'center', backgroundColor:'#D5B263', color:'white' }}>
+				Velg et bilde:<input type="file"  ref={fileInputRef} style={{width: 'auto', height:'400' ,display:'none', alignContent: 'center'}} onChange={saveFile} />
 			</Button>
 			{/*<input type="file" onChange={saveFile} />*/}
 			<Typography>{fileName}</Typography>

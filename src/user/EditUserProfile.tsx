@@ -145,7 +145,9 @@ export function EditUserProfile() {
 				Rediger Bruker Profil
 			</Typography>
 			<Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
+				<Box style={{ display: "flex", justifyContent: "center" }}> 
 				<UploadPicture file={file} setFile={setFile} currentImage={userInfo?.profileImage ?? ""} userId={userId} />
+				</Box>
 				<TextField
 					margin="normal"
 					fullWidth
