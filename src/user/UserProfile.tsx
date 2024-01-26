@@ -16,16 +16,6 @@ type UserInfoType = {
 	about: string,
 	id: number,
 	userInfo: UserInfo
-	firstName: string,
-	lastName: string,
-	address: string,
-	postCode: string,
-	city: string,
-	phoneNumber: string,
-	birthDate: Date;
-	about: string,
-	id: number,
-	userInfo: UserInfo
 };
 
 export type UserInfo = {
