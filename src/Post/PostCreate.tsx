@@ -17,6 +17,7 @@ import { Navigate,useNavigate } from 'react-router-dom';
 import { postProps } from './ViewPost';
 import { UploadPicture } from './UploadPicture';
 import { Box } from '@mui/material';
+import { useAuth } from '../App';
 
 const token= localStorage.getItem('token');
 const LogedInId= localStorage.getItem('id');
@@ -35,12 +36,7 @@ type CreatePostProps={
 	categoryId: number,
 	userId: number
 }
-async function PostPosts(postInfo:CreatePostProps){
-  
-  const response= await fetch(`https://borro.azurewebsites.net/api/Post`,{method: 'POST', headers: {'Content-Type': 'application/json','Authorization': `Bearer ${token}`}, body:JSON.stringify(postInfo)});
-  const responseJson:postProps= await response.json();
-  return responseJson;
-  }
+
 
 async function GetCategories(){
   
@@ -55,6 +51,7 @@ else return responseJson;
 }
 export default function PostCreate() { 
   const navigate=useNavigate();
+  const {sessionInfo}= useAuth();
   const userId= localStorage.getItem('id')??"";
   const[categories,setCategories]=useState<categoryProps[]>([])
   useEffect(()=>{
@@ -72,6 +69,14 @@ export default function PostCreate() {
   const [isFree,setIsFree]=useState<boolean>(false);
   const[categoryId,setCategoryId]=useState<number>(0);
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    async function PostPosts(postInfo:CreatePostProps){
+  
+      const response= await fetch(`https://borro.azurewebsites.net/api/Post`,{method: 'POST', headers: {'Content-Type': 'application/json','Authorization': `Bearer ${sessionInfo?.accessToken}`}, body:JSON.stringify(postInfo)});
+      const responseJson:postProps= await response.json();
+      return responseJson;
+      }
+
     const handleCutsomClick = () => {
       if (fileInputRef.current) {
         fileInputRef.current.click();
