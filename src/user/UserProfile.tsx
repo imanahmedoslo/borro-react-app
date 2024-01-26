@@ -16,7 +16,6 @@ type UserInfoType = {
 	about: string,
 	id: number,
 	userInfo: UserInfo
-	
 };
 
 export type UserInfo = {
