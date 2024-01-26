@@ -92,7 +92,7 @@ export function UserProfile() {
 			<Avatar
 				alt="User Avatar"
 				src={user.userInfo.profileImage}
-				sx={{width: 100, height: 100, margin: 'auto', imageOrientation: "center"}}
+				sx={{width: 180, height: 180, borderRadius:'15px', margin: 'auto', imageOrientation: "center"}}
 			/>
 			{/*<UploadPicture Type={"userInfo"} Id={id} onPictureUploaded={onPictureUploaded}/>
 			 <Typography variant="h6">{user.email}</Typography>
