@@ -1,23 +1,24 @@
 import './App.css'
-import {Home} from "./home/Home.tsx";
+import { Home } from "./home/Home.tsx";
 import LogIn from './logIn/logIn.tsx'
-import {BrowserRouter, Navigate, Route, Routes, useNavigate} from "react-router-dom";
-import React, {useEffect, useState} from "react";
+import { BrowserRouter, Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import SearchAppBar from "./home/Search.tsx";
-import Register, {CreateUserType} from './Register/Register.tsx';
+import Register, { CreateUserType } from './Register/Register.tsx';
 import PostCreate from './Post/PostCreate.tsx';
-import {ViewPost} from './Post/ViewPost.tsx';
-import {UserInfoForm} from './Register/UserInfoForm.tsx';
-import {TokenAndId} from './A/contextPage.tsx';
-import {LoadScript} from "@react-google-maps/api";
-import {UserProfile} from "./user/UserProfile.tsx";
-import {EditUserProfile} from "./user/EditUserProfile.tsx";
-import {ChangePassword} from "./user/ChangePassword.tsx";
-import {MyPosts} from './Post/MyPosts.tsx';
-import {jwtDecode} from 'jwt-decode'
-import {Footer} from "./Footer/Footer.tsx";
-import {Box} from "@mui/material";
-
+import { ViewPost } from './Post/ViewPost.tsx';
+import { UserInfoForm } from './Register/UserInfoForm.tsx';
+import { TokenAndId } from './A/contextPage.tsx';
+import { LoadScript } from "@react-google-maps/api";
+import { UserProfile } from "./user/UserProfile.tsx";
+import { EditUserProfile } from "./user/EditUserProfile.tsx";
+import { ChangePassword } from "./user/ChangePassword.tsx";
+import { MyPosts } from './Post/MyPosts.tsx';
+import { jwtDecode } from 'jwt-decode'
+import { Footer } from "./Footer/Footer.tsx";
+import { Box } from "@mui/material";
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 
 type LoginResponse = {
 	accessToken: string,
@@ -65,7 +66,7 @@ function DecodeToken(): decodedInfo {
 }
 
 
-const AuthProvider = ({children}: AuthProviderProps) => {
+const AuthProvider = ({ children }: AuthProviderProps) => {
 	const [sessionInfo, setSessionInfo] = useState<TokenAndId | null>(null);
 	const [decoded, setDecoded] = useState<decodedInfo | null>(null)
 	const navigate = useNavigate();
@@ -89,7 +90,7 @@ const AuthProvider = ({children}: AuthProviderProps) => {
 
 	const handleLogin = async (userInfo: CreateUserType) => {
 		const response = await fetch(`https://borro.azurewebsites.net/api/Login
-`, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(userInfo)});
+`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(userInfo) });
 		if (!response.ok) {
 			throw new Error(`HTTP error! Status: ${response.status}`);
 		}
@@ -146,9 +147,9 @@ function App() {
 	const [searchText, setSearchText] = useState('');
 
 	function ProtectedRoute(props: ProtectedRouteProps) {
-		const {sessionInfo} = useAuth()
+		const { sessionInfo } = useAuth()
 		if (!sessionInfo?.accessToken && !localStorage.getItem('token')) {
-			return <Navigate to="/login"/>
+			return <Navigate to="/login" />
 		}
 		return <>
 			{props.children}
@@ -171,78 +172,81 @@ function App() {
 			<LoadScript
 				googleMapsApiKey="AIzaSyBRA8VU6f0Ciqy3aa5-JCQlS4TEqliQECs"
 				libraries={libraries}
-				onLoad={() => setMapsLoaded(true)}/>
+				onLoad={() => setMapsLoaded(true)} />
 
-			<SearchContext.Provider value={{searchText, setSearchText}}>
+			<SearchContext.Provider value={{ searchText, setSearchText }}>
 				<BrowserRouter>
-					<AuthProvider>
-						<>
-							<SearchAppBar setSearchText={setSearchText}/>
-							<Routes>
+					<LocalizationProvider dateAdapter={AdapterDayjs}>
 
-								<Route path={"/"} element={<Home/>}/>
+						<AuthProvider>
+							<>
+								<SearchAppBar setSearchText={setSearchText} />
+								<Routes>
 
-								<Route path={"/login"} element={<LogIn/>}/>
+									<Route path={"/"} element={<Home />} />
 
-								<Route path={"/register"} element={<Register/>}/>
+									<Route path={"/login"} element={<LogIn />} />
 
-								<Route path={"/postCreate"} element={
-									<ProtectedRoute>
-										<Box sx={{gridArea: 'main'}}>
-											<PostCreate/>
+									<Route path={"/register"} element={<Register />} />
+
+									<Route path={"/postCreate"} element={
+										<ProtectedRoute>
+											<Box sx={{ gridArea: 'main' }}>
+												<PostCreate />
+											</Box>
+										</ProtectedRoute>} />
+
+									<Route path={"/post/:postId"} element={
+										<Box sx={{
+											gridArea: 'main',
+										}}
+											marginY={"auto"}>
+											<ViewPost />
 										</Box>
-									</ProtectedRoute>}/>
+									} />
 
-								<Route path={"/post/:postId"} element={
-									<Box sx={{
-                                      gridArea: 'main',
-                                    }}
-                                    marginY={"auto"}>
-										<ViewPost/>
-									</Box>
-								}/>
+									<Route path={"/posts/:postId"} element={
+										<ProtectedRoute>
+											<Box sx={{ gridArea: 'main' }}>
+												<MyPosts />
+											</Box>
+										</ProtectedRoute>} />
 
-								<Route path={"/posts/:postId"} element={
-									<ProtectedRoute>
-										<Box sx={{gridArea: 'main'}}>
-											<MyPosts/>
-										</Box>
-									</ProtectedRoute>}/>
+									<Route path={"/createUserInfo/:userId"} element={
+										<ProtectedRoute>
+											<Box sx={{ gridArea: 'main' }}>
+												<UserInfoForm />
+											</Box>
+										</ProtectedRoute>} />
 
-								<Route path={"/createUserInfo/:userId"} element={
-									<ProtectedRoute>
-										<Box sx={{gridArea: 'main'}}>
-											<UserInfoForm/>
-										</Box>
-									</ProtectedRoute>}/>
+									<Route path={"/userProfile/:id"} element={
+										<ProtectedRoute>
+											<Box sx={{ gridArea: 'main' }}>
+												<UserProfile />
+											</Box>
+										</ProtectedRoute>} />
 
-								<Route path={"/userProfile/:id"} element={
-									<ProtectedRoute>
-										<Box sx={{gridArea: 'main'}}>
-											<UserProfile/>
-										</Box>
-									</ProtectedRoute>}/>
+									<Route path={"/editUser/:id"} element={
+										<ProtectedRoute>
+											<Box sx={{ gridArea: 'main' }}>
+												<EditUserProfile />
+											</Box>
+										</ProtectedRoute>} />
 
-								<Route path={"/editUser/:id"} element={
-									<ProtectedRoute>
-										<Box sx={{gridArea: 'main'}}>
-											<EditUserProfile/>
-										</Box>
-									</ProtectedRoute>}/>
+									<Route path={"/changePassword/:id"} element={
+										<ProtectedRoute>
+											<Box sx={{ gridArea: 'main' }}>
+												<ChangePassword />
+											</Box>
+										</ProtectedRoute>} />
 
-								<Route path={"/changePassword/:id"} element={
-									<ProtectedRoute>
-										<Box sx={{gridArea: 'main'}}>
-											<ChangePassword/>
-										</Box>
-									</ProtectedRoute>}/>
-
-							</Routes>
-						</>
-					</AuthProvider>
+								</Routes>
+							</>
+						</AuthProvider>
+					</LocalizationProvider>
 				</BrowserRouter>
 			</SearchContext.Provider>
-			<Footer/>
+			<Footer />
 		</Box>
 	)
 }

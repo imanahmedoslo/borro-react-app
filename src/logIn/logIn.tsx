@@ -78,7 +78,7 @@ export default function LogIn() {
 
             <Grid item xs={12}>
               <FormControlLabel
-                control={<Checkbox value="" color="primary"
+                control={<Checkbox value="" color="secondary"
                                    onChange={e => setShowPassword(e.target.checked ? true : false)}/>
 
                 }

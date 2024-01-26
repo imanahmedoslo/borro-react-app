@@ -16,6 +16,16 @@ type UserInfoType = {
 	about: string,
 	id: number,
 	userInfo: UserInfo
+	firstName: string,
+	lastName: string,
+	address: string,
+	postCode: string,
+	city: string,
+	phoneNumber: string,
+	birthDate: Date;
+	about: string,
+	id: number,
+	userInfo: UserInfo
 };
 
 export type UserInfo = {
@@ -42,16 +52,16 @@ export function UserProfile() {
   
   
 
-  const fetchUser = async () => {
-    try {
-      console.log(`Fetching user info for ID: ${id}`);
-      const response = await fetch(`https://borro.azurewebsites.net/api/User/${id}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
+	const fetchUser = async () => {
+		try {
+			console.log(`Fetching user info for ID: ${id}`);
+			const response = await fetch(`https://borro.azurewebsites.net/api/User/${id}`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': `Bearer ${localStorage.getItem('token')}`,
+				},
+			});
 
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -77,6 +87,9 @@ export function UserProfile() {
   }
 
 
+	if (!user) {
+		return <div>Loading...</div>;
+	}
 	if (!user) {
 		return <div>Loading...</div>;
 	}
@@ -136,3 +149,4 @@ export function UserProfile() {
     </Container>
   );
 };
+
