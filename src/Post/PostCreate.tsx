@@ -11,13 +11,14 @@ import { useEffect, useState } from 'react';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import React, { useRef } from 'react';
+import React  from 'react';
 import Select from 'react-select'
-import { Navigate,useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { postProps } from './ViewPost';
 import { UploadPicture } from './UploadPicture';
 import { Box } from '@mui/material';
 import { useAuth } from '../App';
+//import borroFaviconColor from './assets/borro-favicon-color.png';
 
 const token= localStorage.getItem('token');
 const LogedInId= localStorage.getItem('id');
@@ -27,7 +28,7 @@ type categoryProps={
 }
 type CreatePostProps={
 	title: string,
-	image: string,
+	image?: string,
 	price: number,
 	dateFrom: Date,
 	dateTo: Date,
@@ -63,11 +64,11 @@ export default function PostCreate() {
   //const [postnumber,setPostnumber]=useState<string>("");
   const[zipCode,setZipCode]=useState<string>("");
   const[city,setCity]=useState<string>("");
-  const[img, setImg] = useState<string>("");
+  const[img, setImg] = useState<string|File>("");
   const [price,setPrice]=useState<string>("");
   const [isFree,setIsFree]=useState<boolean>(false);
   const[categoryId,setCategoryId]=useState<number>(0);
-    const fileInputRef = useRef<HTMLInputElement>(null);
+  
 
     async function PostPosts(postInfo:CreatePostProps){
   
@@ -76,18 +77,12 @@ export default function PostCreate() {
       return responseJson;
       }
 
-    const handleCutsomClick = () => {
-      if (fileInputRef.current) {
-        fileInputRef.current.click();
-      }
-    };
     const [selectedStartDate, setSelectedStartDate] = useState<string>("");
     const [selectedEndDate, setSelectedEndDate] = useState<string>("");
    const handleSubmit=(e:React.FormEvent<HTMLFormElement>)=>{
     e.preventDefault();
     const Post:CreatePostProps={
       categoryId:categoryId,
-      image:img,
       dateFrom: new Date(selectedStartDate),
       dateTo:new Date(selectedEndDate),
       location:`${address} ${zipCode} ${city}`,
@@ -117,13 +112,9 @@ export default function PostCreate() {
         Lag en ny annonse
       </Typography>
       <Grid container spacing={3} style={{display: 'flex',flexDirection: 'row',justifyContent: 'center', alignContent: "center",width: '70vw'}}>
-        <div style={{display:'flex', flexWrap:'wrap' ,justifyContent:'space-around',flexDirection:'row', width:'100vw'}}>
-        <div style={{display:'flex', flexDirection:'column'}}>
-        <Grid >
-          <div style={{display:'flex', flexDirection:'column', paddingTop:'7px'}}></div>
+        <Grid item xs={12} sm={6}>
+          <UploadPicture currentImage={""} file={img} setFile={setImg} userId={sessionInfo?.id!} />
         </Grid>
-        </div>
-        </div>
         <Grid item xs={12} sm={6}>
 
           <TextField
