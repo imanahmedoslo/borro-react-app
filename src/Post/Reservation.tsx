@@ -148,7 +148,7 @@ const isDateDisabled = (date: Date) => {
   
     return (
         <div>
-          <Button variant="contained" onClick={handleOpen}>
+          <Button variant="contained" onClick={handleOpen} style={{backgroundColor:'#D5B263', color:'white'}}>
             Reserver
           </Button>
           <Dialog open={open} onClose={handleClose}>
@@ -161,8 +161,8 @@ const isDateDisabled = (date: Date) => {
               <MobileDatePicker onChange={(dayJs) => setDateTo(dayJs?.toDate())} disablePast shouldDisableDate={(dayJSObject: Dayjs) => isDateDisabled(dayJSObject.toDate())} />
             </DialogContent>
             <DialogActions>
-                <Button onClick={handleReserve}>Reserver</Button>
-                <Button onClick={handleClose}>Avbryt</Button>
+                <Button onClick={handleReserve} style={{backgroundColor:'#D5B263', color:'white'}}>Reserver</Button>
+                <Button onClick={handleClose}style={{backgroundColor:'#D5B263', color:'white'}}>Avbryt</Button>
             </DialogActions>
           </Dialog>
         </div>
