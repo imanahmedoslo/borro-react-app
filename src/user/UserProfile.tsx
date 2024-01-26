@@ -176,6 +176,7 @@ export function UserProfile() {
 				<Button variant="contained"
 				        onClick={() => navigate(`/editUser/${user.id}`)}
 				        size="large"
+                style={{backgroundColor: '#D5B263', color: 'white'}}
 				>
 					Rediger profil
 				</Button>
@@ -183,6 +184,7 @@ export function UserProfile() {
 				<Button variant="contained"
 				        onClick={() => navigate(`/changePassword/${user.id}`)}
 				        size="large"
+                style={{backgroundColor: '#D5B263', color: 'white'}}
 				>
 					Endre passord
 				</Button>
