@@ -71,6 +71,8 @@ export default function Reservation({ postId, price }: ReservationProps) {
     };
   
      const handleOpen = async () => {
+      console.log("testetstet:", sessionInfo); 
+      console.log("testetstet:", sessionInfo?.id); 
       setOpen(true);
       fetchReservedDates();
       if(!user){
@@ -83,7 +85,7 @@ export default function Reservation({ postId, price }: ReservationProps) {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
+                    'Authorization': `Bearer ${sessionInfo?.accessToken}`,
                 },
             });
 
