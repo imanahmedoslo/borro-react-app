@@ -19,7 +19,6 @@ import { Footer } from "./Footer/Footer.tsx";
 import { Box } from "@mui/material";
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { ReservationConfirmation } from './Post/ReservationConfirmation.tsx';
 
 type LoginResponse = {
 	accessToken: string,
@@ -221,8 +220,6 @@ function App() {
 												<UserInfoForm />
 											</Box>
 										</ProtectedRoute>} />
-
-									<Route path={'/reservationConfirmation/:Id'} element={<ReservationConfirmation />} />
 
 									<Route path={"/userProfile/:id"} element={
 										<ProtectedRoute>

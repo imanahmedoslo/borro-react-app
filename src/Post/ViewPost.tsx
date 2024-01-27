@@ -3,7 +3,7 @@ import {Avatar, Box, Button, Card, CardContent, CardMedia, Container, Divider, G
 import {useParams} from "react-router-dom";
 import borroNobg from "C:/Users/ImanAhmed/source/repos/borro-react-app/src/assets/borro-nobg.png"
 import img from "C:/Users/ImanAhmed/source/repos/borro-react-app/src/assets/img_1.png"
-import logoPng from "C:/Users/ImanAhmed/source/repos/borro-react-app/src/assets/Logo.png"
+//import logoPng from "C:/Users/ImanAhmed/source/repos/borro-react-app/src/assets/Logo.png"
 import DialogContent from '@mui/material/DialogContent';
 import Reservation from "./Reservation";
 
@@ -141,14 +141,14 @@ export function ViewPost() {
 	/>
 		 */}
 		 <Box sx={{maxWidth: '20rem', margin: 'auto'}}>
-		 <h1 style={{fontSize:'40px'}}>Tittel</h1>	
+		 {/* <h1 style={{fontSize:'40px'}}>Tittel</h1>	
 			<img src={logoPng} style={{
                     width: '100%',
                     height: 'auto',
                     borderRadius: '15px',
                     display: 'block',
                     imageOrientation: 'center'
-                }}/>
+                }}/> */}
 			<Divider textAlign={"left"}>
 		</Divider>
 
@@ -215,6 +215,7 @@ export function ViewPost() {
 			</Typography>
 		</Box>
 		<Box display={'grid'}>
+		<Reservation postId={post.id} price={post.price}/>
 		<Button variant="contained"
 				onClick={() =>{}}
 				size="large"
