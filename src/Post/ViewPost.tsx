@@ -135,7 +135,7 @@ export function ViewPost() {
 	return(
 		<div className={ViewPostCss.container}>
 			<div className={ViewPostCss.innerContainer}>
-        		<img className={ViewPostCss.postImage} src={post.image??'https://www.svgrepo.com/show/508699/landscape-placeholder.svg'} alt="My Image" />
+        		<img className={ViewPostCss.postImage} src={post.image==""||post.image==undefined||post.image==null?'https://www.svgrepo.com/show/508699/landscape-placeholder.svg':post.image} alt="My Image" />
 				<div className={ViewPostCss.titleContainer}>
 					<p className={ViewPostCss.headerText}>{post.title}</p>
 					<p className={ViewPostCss.label}>{post.price==0?'Gratis':post.price+'-;'}</p>
