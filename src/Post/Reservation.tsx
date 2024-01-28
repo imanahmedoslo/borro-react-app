@@ -1,11 +1,10 @@
 import { useState } from 'react';
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField, Typography } from "@mui/material";
+import { Button, Box, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Modal, Typography } from "@mui/material";
 import { useAuth } from '../App';
 import { MobileDatePicker } from '@mui/x-date-pickers';
 import { Dayjs } from 'dayjs';
 import { useNavigate } from 'react-router-dom';
-import { id } from 'date-fns/locale';
-
+import format from 'date-fns/format';
 
 type ReservationProps = {
   postId: number,
@@ -52,6 +51,8 @@ export default function Reservation({ postId, price }: ReservationProps) {
     const token = localStorage.getItem('token');
     const userId = sessionInfo?.id;
     const [disabledDates, setDisabledDates] = useState<DisabledDateRange[]>([]);
+    const [showModal, setShowModal] = useState(false);
+    const [reservationMessage, setReservationMessage] = useState('');
 
     
     const fetchReservedDates = async () => {
@@ -71,6 +72,8 @@ export default function Reservation({ postId, price }: ReservationProps) {
     };
   
      const handleOpen = async () => {
+      console.log("testetstet:", sessionInfo); 
+      console.log("testetstet:", sessionInfo?.id); 
       setOpen(true);
       fetchReservedDates();
       if(!user){
@@ -83,7 +86,7 @@ export default function Reservation({ postId, price }: ReservationProps) {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
+                    'Authorization': `Bearer ${sessionInfo?.accessToken}`,
                 },
             });
 
@@ -133,10 +136,11 @@ const isDateDisabled = (date: Date) => {
           });
   
           if (response.ok) {
-            const reservationData = await response.json();
-            const reservationId = reservationData.id;
-            navigate(`/reservationConfirmation/${reservationId}`);
             handleClose();
+            const dateObj = new Date(dateTo);
+            const formattedDateTo = dateObj instanceof Date && !isNaN(dateObj.getTime()) ? format(dateObj, 'dd.MM.yyyy') : '';
+            setReservationMessage(`Takk for din reservasjon, husk å gi tilbake utstyret senest ${formattedDateTo}.`);
+            setShowModal(true);
           } else {
             const errorData = await response.json();
             console.error('Reservation error:', errorData);
@@ -149,26 +153,66 @@ const isDateDisabled = (date: Date) => {
         console.error('Please select both start and end dates.');
       }
     };
+
+    const handleCloseModal = () => {
+      setShowModal(false);
+    };
+
+    const modalStyle = {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      width: 400,
+      bgcolor: 'background.paper',
+      border: '2px solid #000',
+      boxShadow: 24,
+      p: 4,
+    };
   
     return (
-        <div>
+        <Box>
           <Button variant="contained" onClick={handleOpen} style={{backgroundColor:'#D5B263', color:'white'}}>
             Reserver
           </Button>
           <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>Reserver denne</DialogTitle>
+            <DialogTitle>Velg periode du ønsker å reservere</DialogTitle>
             <DialogContent>
-              <DialogContentText>
-                Velg dato du ønsker å reservere.
-              </DialogContentText>
-              <MobileDatePicker label="Fra dato" onChange={(dayJs) => setDateFrom(dayJs?.toDate())} disablePast shouldDisableDate={(dayJSObject: Dayjs) => isDateDisabled(dayJSObject.toDate())} />
-              <MobileDatePicker label="Til dato" onChange={(dayJs) => setDateTo(dayJs?.toDate())} disablePast shouldDisableDate={(dayJSObject: Dayjs) => isDateDisabled(dayJSObject.toDate())} />
+              <MobileDatePicker 
+              label="Fra dato" 
+              onChange={(dayJs) => 
+              setDateFrom(dayJs?.toDate())} 
+              disablePast shouldDisableDate={(dayJSObject: Dayjs) => 
+              isDateDisabled(dayJSObject.toDate())} 
+              />
+              <MobileDatePicker 
+              label="Til dato" onChange={(dayJs) => 
+              setDateTo(dayJs?.toDate())} 
+              disablePast shouldDisableDate={(dayJSObject: Dayjs) => 
+              isDateDisabled(dayJSObject.toDate())} 
+              />
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleReserve} style={{backgroundColor:'#D5B263', color:'white'}}>Reserver</Button>
                 <Button onClick={handleClose}style={{backgroundColor:'#D5B263', color:'white'}}>Avbryt</Button>
             </DialogActions>
           </Dialog>
-        </div>
+          <Modal
+        open={showModal}
+        onClose={handleCloseModal}
+        aria-labelledby="reservation-modal-title"
+        aria-describedby="reservation-modal-description"
+      >
+        <Box sx={modalStyle}>
+          <Typography id="reservation-modal-title" variant="h6" component="h2">
+            Reservasjon bekreftet
+          </Typography>
+          <Typography id="reservation-modal-description" sx={{ mt: 2 }}>
+            {reservationMessage}
+          </Typography>
+          <Button onClick={handleCloseModal}>Lukk</Button>
+        </Box>
+      </Modal>
+        </Box>
       );
     };

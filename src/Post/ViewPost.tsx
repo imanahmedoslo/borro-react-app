@@ -152,6 +152,7 @@ export function ViewPost() {
 				</div>
 
 					</div>
+					<Reservation postId={post.id} price={post.price}/>
 					<button className={ViewPostCss.btn}>Reserver</button>
 				</div>
       		</div>
