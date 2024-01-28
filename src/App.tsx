@@ -168,7 +168,7 @@ function App() {
          "main"
          "."
          "footer"`,
-			gridTemplateRows: 'auto 1fr 100fr 1fr auto',
+			gridTemplateRows: 'auto 0fr 100fr 1fr auto',
 			minHeight: "100vh",
 
 		}}>

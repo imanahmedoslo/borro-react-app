@@ -88,11 +88,18 @@ export function UserProfile() {
 
 	return (
 		<Container component="main" maxWidth="sm">
-			
+
 			<Avatar
 				alt="User Avatar"
 				src={user.userInfo.profileImage}
-				sx={{width: 180, height: 180, borderRadius:'15px', margin: 'auto', imageOrientation: "center"}}
+				sx={{
+					width: 180,
+					height: 180,
+					borderRadius: '15px',
+					margin: 'auto',
+					marginTop: '3em',
+					imageOrientation: "center"
+				}}
 			/>
 			{/*<UploadPicture Type={"userInfo"} Id={id} onPictureUploaded={onPictureUploaded}/>
 			 <Typography variant="h6">{user.email}</Typography>
@@ -100,7 +107,7 @@ export function UserProfile() {
 
 			<Box sx={{
 				borderRadius: 2,
-				border: '1px solid #ffffff',
+				border: '1px solid #e9e5de',
 				margin: "50px 0 0 0",
 
 				padding: 2,
@@ -164,7 +171,7 @@ export function UserProfile() {
 					</Typography>
 				</Box>
 			</Box>
-			<Divider/>
+
 			<Box sx={{
 				display: 'flex',
 				padding: "50px 0 10px 0",
@@ -174,7 +181,7 @@ export function UserProfile() {
 				<Button variant="contained"
 				        onClick={() => navigate(`/editUser/${user.id}`)}
 				        size="large"
-                style={{backgroundColor: '#D5B263', color: 'white'}}
+				        style={{backgroundColor: '#D5B263', color: 'white'}}
 				>
 					Rediger profil
 				</Button>
@@ -182,7 +189,7 @@ export function UserProfile() {
 				<Button variant="contained"
 				        onClick={() => navigate(`/changePassword/${user.id}`)}
 				        size="large"
-                style={{backgroundColor: '#D5B263', color: 'white'}}
+				        style={{backgroundColor: '#D5B263', color: 'white'}}
 				>
 					Endre passord
 				</Button>

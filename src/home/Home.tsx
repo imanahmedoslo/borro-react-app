@@ -96,16 +96,17 @@ export function Home() {
       <Box sx={{
         gridArea: 'main',
       }}>
-        <Typography style={{textAlign:'center'}} variant="h3">Annonser</Typography>
         <Box>
           <Filter sliderValue={sliderValue}
                   setSliderValue={setSliderValue}/>
         </Box>
+
         <Box sx={{
           display: 'flex',
           flexWrap: 'wrap',
           justifyContent: 'flex-start',
-          margin: '5% auto',
+          margin: '2rem auto',
+          marginBottom: '1rem',
           maxWidth: {
             xs:'95%',
             sm:'80%',
@@ -113,6 +114,11 @@ export function Home() {
           },
           boxSizing: 'border-box',
         }}>
+          <Typography sx={{
+            textAlign:'center',
+            width:'100%',
+            marginBottom:'1rem',
+          }} variant="h3">Annonser</Typography>
           {filteredPosts.map(post =>
             <ActionAreaCard
               key={post.id}
@@ -121,6 +127,7 @@ export function Home() {
               title={post.title}
               description={post.description}
               location={post.location}
+              price={post.price}
             />)}
         </Box>
       </Box>

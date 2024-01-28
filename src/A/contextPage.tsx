@@ -1,31 +1,31 @@
-import {Button} from "@mui/material";
+import {Box, Button} from "@mui/material";
 import {CreateUserType} from "../Register/Register";
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import {useEffect, useState} from "react";
 import Typography from '@mui/material/Typography';
 import '@fontsource/roboto/300.css';
 import {useNavigate} from "react-router-dom";
-import { useAuth } from "../App";
+import {useAuth} from "../App";
 
 export type TokenAndId = {
-  accessToken: string,
-  id: number,
-  expiresAt: string,
-  address:string,
-  // isLoggedIn: boolean
+	accessToken: string,
+	id: number,
+	expiresAt: string,
+	address: string,
+	// isLoggedIn: boolean
 }
 export type ProfileType = {
-  Id: number,
-  firstName: string,
-  LastName: string,
-  ProfileImage: string,
-  Address: string,
-  PostCode: number,
-  City: string
-  PhoneNumber: string
-  BirthDate: Date
-  About: string,
-  UserId: number
+	Id: number,
+	firstName: string,
+	LastName: string,
+	ProfileImage: string,
+	Address: string,
+	PostCode: number,
+	City: string
+	PhoneNumber: string
+	BirthDate: Date
+	About: string,
+	UserId: number
 }
 
 
@@ -50,58 +50,95 @@ export async function LoginFunctionality(userInfo: CreateUserType) {
 
 
 // const sessionInfo: TokenAndId = {
-  //   accessToken: localStorage.getItem('token') ?? "",
-  //   id: parseInt(localStorage.getItem('id') ?? ""),
-    // IsLoggedIn: localStorage.getItem('logInStatus') === 'true' ? true : false,
-  //   expiresAt: localStorage.getItem('expiresAt') ?? ""
-  // };
+	//   accessToken: localStorage.getItem('token') ?? "",
+	//   id: parseInt(localStorage.getItem('id') ?? ""),
+	// IsLoggedIn: localStorage.getItem('logInStatus') === 'true' ? true : false,
+	//   expiresAt: localStorage.getItem('expiresAt') ?? ""
+	// };
 }
 
 export async function getUser(userId: number) {
-  const response = await fetch(`https://borro.azurewebsites.net/api/UserInfo/${userId}`, {
-    method: 'GET',
-    headers: {'Content-Type': 'application/json',
-              'Authorization': `Bearer ${localStorage.getItem('token')}`}
-  });
-  const object = await response.json();
-  return object;
+	const response = await fetch(`https://borro.azurewebsites.net/api/UserInfo/${userId}`, {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': `Bearer ${localStorage.getItem('token')}`
+		}
+	});
+	const object = await response.json();
+	return object;
 }
 
 type Props = {
-  userId: number
+	userId: number
 }
 
 export function LoggedInIcon({userId}: Props) {
-  const { onLogout } = useAuth();
-  const navigate = useNavigate();
-  const [profile, setProfile] = useState<ProfileType | null>()
+	const {onLogout} = useAuth();
+	const navigate = useNavigate();
+	const [profile, setProfile] = useState<ProfileType | null>()
 
-  useEffect(() => {
-    getUser(userId).then(res => setProfile(res));
-  }, [])
+	useEffect(() => {
+		getUser(userId).then(res => setProfile(res));
+	}, [])
 
-  if (profile) {
-    return (
-      <>
-        <div style={{display: 'flex', flexDirection: 'row'}}>
-          <AccountBoxIcon style={{color: '#F3E7CB', height: '50px', width: '50px'}}
-                          onClick={() => navigate(`/userProfile/${userId}`)}/>
+	if (profile) {
+		return (
+			<>
+				<div style={{display: 'flex', flexDirection: 'row'}}>
+					<AccountBoxIcon
+						sx={{
+							color: '#ffe3a9',
+							height: '50px',
+							width: '50px',
+							transition: 'color 0.2s ease',
+							"&:hover": {
+								color: '#d5b263'
+							}
+						}}
+						onClick={() => navigate(`/userProfile/${userId}`)}
+					/>
 
-          <Typography gutterBottom variant="h4" component="div" marginY={"auto"} mr={2}>
-            {profile.firstName ?? 'Ola'}
-          </Typography>
 
-          <Button style={{textAlign: 'center', height: '50px', width:'auto', color:'white', backgroundColor:'#D5B263'}} variant="contained" onClick={onLogout}>
-            Logg ut
-          </Button>
-        </div>
-      </>
-    )
-  }
+					<Typography
+						gutterBottom
+						variant="h6"
+						component="div"
+						marginY={"auto"}
+						mr={2}
+					sx={{
+						display: {xs: 'none', sm: 'block'},
+
+					}}>
+						{profile.firstName ?? 'Ola'}
+					</Typography>
+
+
+					<Button sx={{
+						textAlign: 'center',
+						height: '36px',
+						margin: 'auto',
+						padding: '0 5px',
+						width: 'auto',
+						minWidth: '80px',
+						color: 'white',
+						backgroundColor: '#d5b263',
+						transition: 'background-color 0.2s ease',
+						"&:hover": {
+							backgroundColor: '#a2874b'
+						}
+					}} variant="contained" onClick={onLogout}>
+						Logg ut
+					</Button>
+
+				</div>
+			</>
+		)
+	}
 }
 
 
 export async function getPosts() {
-  const response = await fetch("https://borro.azurewebsites.net/api/Post",);
-  return await response.json();
+	const response = await fetch("https://borro.azurewebsites.net/api/Post",);
+	return await response.json();
 }
