@@ -74,7 +74,7 @@ export function ChangePassword() {
                 alignItems: 'center',
               }}
             >
-              <Logo height={70} width={70} />
+              <Logo height={70} width={'auto'} />
               <Typography component="h1" variant="h5">
                 Endre passord
               </Typography>
