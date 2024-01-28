@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {postProps} from "./ViewPost";
 import {useAuth} from "../App";
 import ActionAreaCard from "../home/Card";
-import {Box, Typography} from "@mui/material";
+import {Box, Grid, Typography} from "@mui/material";
 
 
 export function MyPosts() {
@@ -24,16 +24,12 @@ export function MyPosts() {
     return responseJson;
   }
 
-  return (<>
-      <Typography variant={"h3"} sx={{
-        textAlign: 'center',
-      }}>
-        Dine annonser
+  return (
+    <>
+      <Typography variant={"h3"} sx={{ textAlign: 'center' }}>
+        Mine annonser
       </Typography>
-      <Box sx={{
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'flex-start',
+      <Grid container spacing={2} sx={{
         margin: '0 auto',
         maxWidth: {
           xs: '95%',
@@ -43,14 +39,17 @@ export function MyPosts() {
         boxSizing: 'border-box',
       }}>
         {posts?.map((post, index) => (
-          <ActionAreaCard location={post.location}
-                          key={index}
-                          description={post.description}
-                          title={post.title}
-                          id={post.id}
-                          img={post.image}/>))}
-      </Box>
+          <Grid item xs={12} sm={6} md={4} key={index}>
+            <ActionAreaCard 
+              location={post.location}
+              description={post.description}
+              title={post.title}
+              id={post.id}
+              img={post.image}
+            />
+          </Grid>
+        ))}
+      </Grid>
     </>
-
   );
 }

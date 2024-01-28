@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import {CardActionArea} from '@mui/material';
+import {CardActionArea, Divider, styled} from '@mui/material';
 import {useNavigate} from 'react-router-dom';
 import {LocationDistance} from "../GoogleAPI/Maps.tsx";
 //import {getUser} from "../A/contextPage.tsx";
@@ -43,8 +43,12 @@ export default function ActionAreaCard(cardProps: cardProps) {
   const descLimit = 30;
   const addressLimit = 30;
 
+  
+
   return (
     <Card key={cardProps.id} onClick={handleClick} sx={{
+      backgroundColor:'#FFFFFF',
+      borderRadius: 2,
       flexBasis: {
         xs: "100%",
         sm: "50%",
@@ -65,6 +69,7 @@ export default function ActionAreaCard(cardProps: cardProps) {
           outline: 'none',
         },
       }}>
+       
         <CardMedia
           component="img"
           height="210"
@@ -72,15 +77,20 @@ export default function ActionAreaCard(cardProps: cardProps) {
           src={cardProps.img}
           alt="Placeholder"
           sx={{
-            backgroundColor: "#8c8c8c"
+            backgroundColor: "#FFFFFF",
+            objectFit: "contain",
+            width:'100%',
+            marginTop:'10px',
+            marginBottom:'10px',
           }}/>
+         <Divider></Divider>
         <CardContent className={"CardMuiContent"}>
           <Typography variant="h4" color="text.secondary">
             {cardProps.title?.length > titleLimit
               ? `${cardProps.title.substring(0, titleLimit)}...`
               : cardProps.title ?? "No Address"}
           </Typography>
-          <Typography variant="body1" color="text.secondary">
+          <Typography variant="h5" color="text.secondary">
             {cardProps.description?.length > descLimit
               ? `${cardProps.description.substring(0, descLimit)}...`
               : cardProps.description ?? "No description"}

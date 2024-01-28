@@ -78,8 +78,8 @@ export function LocationDistance(props: AddressProps) {
   return (
     <div>
       {distance && distance > 0 ?
-        <Typography>Distance: {distance}km</Typography> :
-        <Typography>Loading</Typography>}
+        <Typography>Avstand fra deg: {distance}km</Typography> :
+        <Typography>laster...</Typography>}
     </div>
   );
 }

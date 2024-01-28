@@ -60,7 +60,8 @@
     display: flex;
     gap: 1rem;
     border: 1px solid #ccc;
-    border-radius: 10px;   
+    border-radius: 10px; 
+    padding: 1rem 10px;  
 }
 
 .label {
@@ -81,7 +82,7 @@
 .postImage {
     height: 20rem; 
     max-width: 20rem; 
-    margin-bottom: 2rem;
+    border-radius: 5px;
 }
 
 .btn {
