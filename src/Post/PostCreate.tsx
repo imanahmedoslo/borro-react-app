@@ -1,233 +1,173 @@
 
-//import * as React from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-//import {  styled,  } from '@mui/material/styles';
-//import Logo from '../Logo';
-import Checkbox from '@mui/material/Checkbox';
 import { useEffect, useState } from 'react';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import React  from 'react';
-import Select from 'react-select'
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { postProps } from './ViewPost';
 import { UploadPicture } from './UploadPicture';
-import { Box } from '@mui/material';
 import { useAuth } from '../App';
-//import borroFaviconColor from './assets/borro-favicon-color.png';
-
-//const token= localStorage.getItem('token');
-//const LogedInId= localStorage.getItem('id');
-type categoryProps={
-    id: number,
-    type: string,
+import PostStyle from './PostStyle.module.css'
+import axios from 'axios';
+import borroFaviconColor from './assets/borro-favicon-color.png';
+type categoryProps = {
+  id: number,
+  type: string,
 }
-type CreatePostProps={
-	title: string,
-	image?: string,
-	price: number,
-	dateFrom: Date,
-	dateTo: Date,
-	description: string,
-	location: string,
-	categoryId: number,
-	userId: number
+type CreatePostProps = {
+  title: string,
+  image?: string,
+  price: number,
+  dateFrom: Date,
+  dateTo: Date,
+  description: string,
+  location: string,
+  categoryId: number,
+  userId: number
 }
 
 
-async function GetCategories(){
-  
-const response= await fetch(`https://borro.azurewebsites.net/api/Category`,{method: 'GET', headers: {'Content-Type': 'application/json'}});
-const responseJson:categoryProps[]= await response.json();
-if (!response.ok) {
-  console.error("annonse ble ikke laget");
-  return[]
-  
-}
-else return responseJson;
-}
-export default function PostCreate() { 
-  const navigate=useNavigate();
-  const {sessionInfo}= useAuth();
-  const[categories,setCategories]=useState<categoryProps[]>([])
-  useEffect(()=>{
-    GetCategories().then(categories=>setCategories(categories))
-  },[])
-  const[hasCategory,setHasCategory]=useState<boolean>(false);
-  const[title,setTitle]=useState<string>("");
-  const[description,setDescription]=useState<string>("");
-  const[address,setAddress]=useState<string>("");
-  //const [postnumber,setPostnumber]=useState<string>("");
-  const[zipCode,setZipCode]=useState<string>("");
-  const[city,setCity]=useState<string>("");
-  const[img, setImg] = useState<string|File>("");
-  const [price,setPrice]=useState<string>("");
-  const [isFree,setIsFree]=useState<boolean>(false);
-  const[categoryId,setCategoryId]=useState<number>(0);
-  
+async function GetCategories() {
 
-    async function PostPosts(postInfo:CreatePostProps){
-  
-      const response= await fetch(`https://borro.azurewebsites.net/api/Post`,{method: 'POST', headers: {'Content-Type': 'application/json','Authorization': `Bearer ${sessionInfo?.accessToken}`}, body:JSON.stringify(postInfo)});
-      const responseJson:postProps= await response.json();
-      return responseJson;
-      }
+  const response = await fetch(`https://borro.azurewebsites.net/api/Category`, { method: 'GET', headers: { 'Content-Type': 'application/json' } });
+  const responseJson: categoryProps[] = await response.json();
+  if (!response.ok) {
+    console.error("annonse ble ikke laget");
+    return []
 
-    const [selectedStartDate, setSelectedStartDate] = useState<string>("");
-    const [selectedEndDate, setSelectedEndDate] = useState<string>("");
-   const handleSubmit=(e:React.FormEvent<HTMLFormElement>)=>{
-    e.preventDefault();
-    const Post:CreatePostProps={
-      categoryId:categoryId,
-      dateFrom: new Date(selectedStartDate),
-      dateTo:new Date(selectedEndDate),
-      location:`${address} ${zipCode} ${city}`,
-      description:description,
-      price:parseInt(price??0),
-      title:title,
-      userId:sessionInfo?.id!,
+  }
+  else return responseJson;
+}
+export default function PostCreate() {
+  const navigate = useNavigate();
+  const { sessionInfo } = useAuth();
+  const [categories, setCategories] = useState<categoryProps[]>([])
+  useEffect(() => {
+    GetCategories().then(categories => setCategories(categories))
+  }, [])
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [address, setAddress] = useState<string>("");
+  const [zipCode, setZipCode] = useState<string>("");
+  const [city, setCity] = useState<string>("");
+  const [file, setFile] = useState<File | null>(null);
+  const [price, setPrice] = useState<string>("");
+  const [categoryId, setCategoryId] = useState<number>(0);
+  const uploadFile = async (id: number) => {
+    if (!file) {
+      // Handle the case when no file is selected
+      console.log("No file selected for upload.");
+      return null; // Or handle this scenario appropriately
     }
-    PostPosts(Post).then(respons=>(navigate(`/posts/${sessionInfo?.id}`)))
+    const formData = new FormData();
+    formData.append("Picture", file);
+    formData.append("Type", 'post');
+    formData.append("Id", `${id}`);
 
-   }
-  
+    try {
+      const res = await axios.post(`https://borro.azurewebsites.net/api/FileUpload/`, formData);
+      return res.status
+    } catch (ex) {
+      console.log(ex);
+      alert("File upload failed");
+      return 500;
+
+    }
+  };
+
+  async function PostPosts(postInfo: CreatePostProps): Promise<postProps> {
+
+    const response = await fetch(`https://borro.azurewebsites.net/api/Post`, { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${sessionInfo?.accessToken}` }, body: JSON.stringify(postInfo) });
+    const responseJson: postProps = await response.json();
+    return responseJson;
+  }
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!title || !description || !address || !zipCode || !city || !categoryId) {
+      console.log(title,description,address,zipCode,city,categoryId)
+      alert("Please fill in all required fields.");
+      return;
+    }
+    const Post: CreatePostProps = {
+      categoryId: categoryId,
+      dateFrom: new Date(),
+      dateTo: new Date(),
+      location: `${address} ${zipCode} ${city}`,
+      description: description,
+      price: parseInt(price ?? 0),
+      title: title,
+      userId: sessionInfo?.id!,
+    }
+    PostPosts(Post).then(response => {
+      if (file) {
+        uploadFile(response.id).then(uploadResponse => {
+          if (uploadResponse && uploadResponse < 300) {
+            navigate(`/posts/${sessionInfo?.id}`);
+          }
+        }).catch(error => {
+          console.log("Error in file upload", error);
+        });
+      } else {
+        navigate(`/error`);
+      }
+    }).catch(error => {
+      console.log("Error in creating post", error);
+    });
+  };
+
+
   const options = categories.map(category => ({
     value: category.type,
     label: category.type,
-    id:category.id
+    id: category.id
   }));
   return (
-    <Box sx={{
-      gridArea: 'main',
-
-    }}>
-    <form style={{display:'flex',flexDirection:'column', alignItems:'center', overflowX:'hidden' }}  onSubmit={e=>handleSubmit(e)}>
-
-    
-      <Typography variant="h6" gutterBottom style={{ paddingBottom:'10p',fontSize:'30px', height:'15vh'}}>
-        Lag en ny annonse
-      </Typography>
-      <Grid container spacing={3} style={{display: 'flex',flexDirection: 'row',justifyContent: 'center', alignContent: "center",width: '70vw'}}>
-        <Grid item xs={12} sm={6}>
-          <UploadPicture currentImage={""} file={img} setFile={setImg} userId={sessionInfo?.id!} />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-
-          <TextField
-          style={{width:'300px', marginLeft:'5px', alignSelf:'start'}}
-            required
-            id="Title"
-            name="title" 
-            label="Skriv inn Tittel:"
-            fullWidth
-            autoComplete="title"
-            variant="standard"
-            value={title}
-            onChange={e=>setTitle(e.currentTarget.value)}
-          />
-          </Grid>
-          <Grid item xs={12} sm={6} style={{ marginTop: "15px", alignSelf:'end'}}>
-        { hasCategory&&<Select onChange={e=>e?setCategoryId(e.id):setCategoryId(0)} options={options}/>}
-          <FormControlLabel
-            control={<Checkbox  onChange={e=>setHasCategory(e.target.checked?true:false)} color="secondary" name="saveAddress" value="yes"  />}
-            label="Kryss av for å angi kategori"
-          />
-        </Grid>
-        <Grid item xs={24} sm={12} >
-          <TextField
-          
-            required
-            id="description"
-            name="description"
-            label="Beskrivelse av produkt"
-            fullWidth
-            autoComplete="description"
-            variant="standard"
-            value={description}
-            onChange={e=>setDescription(e.currentTarget.value)}
-          />
-          </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="addresse"
-            name="addresse"
-            label="Addresse"
-            fullWidth
-            autoComplete='Addresse'
-            variant="standard"
-            value={address}
-            onChange={e=>setAddress(e.currentTarget.value)}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            id="post-sted"
-            name="post-sted"
-            label="Post-sted"
-            autoComplete='Post-sted'
-            fullWidth
-            variant="standard"
-            value={city}
-            onChange={e=>setCity(e.currentTarget.value)}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="zip"
-            name="zip"
-            label="Postnummer"
-            fullWidth
-            autoComplete="shipping postal-code"
-            variant="standard"
-            value={zipCode}
-            onChange={e=>setZipCode(e.currentTarget.value)}
-          />
-        </Grid>
-       <Grid item xs={12} sm={6} style={{alignSelf:'end'}}>
-       { isFree&&<TextField
-            required
-            id="price"
-            name="price"
-            label="Pris per dag"
-            fullWidth
-            autoComplete="price"
-            variant="standard"
-            value={price}
-            onChange={e=>setPrice(e.currentTarget.value)}
-          />}
-          <Grid item xs={12} style={{marginTop: "15px"}}>
-          <FormControlLabel
-            control={<Checkbox  onChange={e=>setIsFree(e.target.checked?true:false)} color="secondary" name="saveAddress" value="yes"  />}
-            label="Kryss av for å angi pris"
-          />
-        </Grid>
-        </Grid>
-          <Grid item xs={12} sm={6} style={{gap:'5px'}}>
-          <div>
-            <label htmlFor="stratDate" >StartsDato:</label>
-            <input type="date" name="stratDate" form='yyyy-MM-dd' value={selectedStartDate} onChange={e=>setSelectedStartDate(e.currentTarget.value)} color="secondary"/>
-            </div>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-          <div>
-          <label htmlFor="endDate">SluttsDato:</label>
-          <input type="date" name="endDate"  value={selectedEndDate} onChange={e=>setSelectedEndDate(e.currentTarget.value)} color="secondary"/>
-            </div>
-          </Grid>
-      </Grid>
-      <Button variant='outlined' type='submit' style={{width:'200px', height:'50px',marginTop:'30px', marginRight:'21px', marginBottom:'20px', backgroundColor:'#D5B263', color:'white' }}>Lagre endringer</Button>
-      </form>
-    </Box>
+    <form onSubmit={handleSubmit} className={PostStyle.container} >
+      <p className={PostStyle.headerText}>Lag en ny annonse</p>
+      <div className={PostStyle.inputContainer}>
+        <div>
+          <UploadPicture userId={sessionInfo?.id ?? 0} file={file} setFile={setFile} currentImage='https://www.svgrepo.com/show/508699/landscape-placeholder.svg' />
+        </div>
+        <div></div>
+        <div>
+          <label className={PostStyle.inputLabel}>Tittel</label>
+          <input className={PostStyle.inputText} type="text" placeholder='Skriv en tittel*' name="title" id="" value={title} onChange={e => setTitle(e.target.value)} />
+        </div>
+        <div>
+          <label className={PostStyle.inputLabel}>Pris pr dag</label>
+          <input className={PostStyle.inputText} type="number" placeholder='0kr' name="price" id="" value={price} onChange={e => setPrice(e.target.value)} />
+        </div>
+        <div>
+          <label className={PostStyle.inputLabel}>Addresse</label>
+          <input className={PostStyle.inputText} type="text" placeholder='Addresse*' name="address" id="address" value={address} onChange={e => setAddress(e.target.value)} />
+        </div>
+        <div>
+          <label className={PostStyle.inputLabel}>Postnummer</label>
+          <input className={PostStyle.inputText} type="text" placeholder='Postnummer*' name="zipcode" id="" value={zipCode} onChange={e => setZipCode(e.target.value)} />
+        </div>
+        <div>
+          <label className={PostStyle.inputLabel}>Post-sted</label>
+          <input className={PostStyle.inputText} type="text" placeholder='Post-sted*' name="city" id="" value={city} onChange={e => setCity(e.target.value)} />
+        </div>
+        <div>
+          <label className={PostStyle.inputLabel}>Kategori:</label>
+          <select className={PostStyle.inputText} onChange={e => setCategoryId(parseInt(e.currentTarget.value))}>
+            {categories.map(category => <option value={category.id} key={category.id}>{category.type}</option>)}
+          </select>
+        </div>
+        <div></div>
+        <div>
+          <label className={PostStyle.inputLabel}>Beskrivelse av Produktet</label>
+          <textarea className={PostStyle.inputText} placeholder='skriv inn her' name="city" id="" value={description} onChange={e => setDescription(e.target.value)} />
+        </div>
+        <div></div>
+        <button type='submit' className={PostStyle.btn}>Opprett annonse</button>
+      </div>
+    </form>
   );
 }
 
 
 
 
-            

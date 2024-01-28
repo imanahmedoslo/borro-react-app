@@ -38,7 +38,7 @@ export function EditUserProfile() {
 		userId: userId,
 		id: 0
 	});
-	const [file, setFile] = useState<File | string>("");
+	const [file, setFile] = useState<File | null>(null);
 	const [userCredentials, setUserCredentials] = useState<UserCredentialsType>({
 		email: ''
 	});
@@ -47,8 +47,13 @@ export function EditUserProfile() {
 
 
 	const uploadFile = async () => {
+		if (!file) {
+			// Handle the case when no file is selected
+			console.log("No file selected for upload.");
+			return null; // Or handle this scenario appropriately
+		}
 		const formData = new FormData();
-		formData.append("Picture", file!);
+		formData.append("Picture", file);
 		formData.append("Type", 'userInfo');
 		formData.append("Id", `${userInfo?.id}`);
 
@@ -141,14 +146,14 @@ export function EditUserProfile() {
 	};
 	return (
 		<Container component="main" maxWidth="sm">
-			<Typography component="h1" variant="h5" style={{display: 'flex',justifyContent:'center'}}>
+			<Typography component="h1" variant="h5" style={{ display: 'flex', justifyContent: 'center' }}>
 				Rediger Bruker Profil
 			</Typography>
 			<Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
 				<Box>
-				<Box style={{ display: "flex", justifyContent: "center" }}> 
-				<UploadPicture file={file} setFile={setFile} currentImage={userInfo?.profileImage ?? ""} userId={userId} />
-				</Box>	
+					<Box style={{ display: "flex", justifyContent: "center" }}>
+						<UploadPicture file={file} setFile={setFile} currentImage={userInfo?.profileImage ?? ""} userId={userId} />
+					</Box>
 				</Box>
 				<TextField
 					margin="normal"
@@ -231,7 +236,7 @@ export function EditUserProfile() {
 					fullWidth
 					variant="contained"
 					sx={{ mt: 3, mb: 2 }}
-					style={{backgroundColor: '#D5B263', color: 'white'}}
+					style={{ backgroundColor: '#D5B263', color: 'white' }}
 				>
 					Save Changes
 				</Button>

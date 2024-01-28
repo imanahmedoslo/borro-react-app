@@ -1,0 +1,126 @@
+.container {
+    background: white;
+    margin: 0 auto; 
+    max-width: 70rem;
+    padding: 1rem;
+    box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    border-radius: 2rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.titleContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.headerText {
+    font-size: 2.25rem; 
+    line-height: 2.5rem;
+    font-weight: 700;
+    margin-top: 0rem;
+    margin-bottom: 0rem;
+}
+
+.userInfo {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 0.5rem;
+}
+
+.detailInfo {
+    margin-top: 1rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.detailInfo div {
+    margin: 1rem;
+    border-bottom: 1px solid black;
+    padding-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.profilImage {
+    height: 3rem;
+    width: 3rem;
+    border-radius: 100%;
+    border: 1px solid black;
+}
+
+.innerContainer {
+    display: flex;
+    gap: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 10px;   
+}
+
+.label {
+    font-size: 1.8rem;
+    line-height: 2rem;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.labelLg {
+    font-size: 1.125rem; /* 18px */
+    line-height: 1.75rem; /* 28px */
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.postImage {
+    height: 20rem; 
+    max-width: 20rem; 
+    margin-bottom: 2rem;
+}
+
+.btn {
+    background: #D5B263;
+    color: white;
+    font-size: 1.5rem; /* 24px */
+    width: 100%;
+    text-align: center; /* Center align the button */
+}
+
+/* Media Queries for Responsive Design */
+
+@media screen and (max-width: 768px) {
+
+    .innerContainer{
+        display: flex;
+        flex-direction: column;
+        height: fit-content;
+        padding: 0.5rem;
+         
+    }
+    .postImage {
+        height: auto; 
+        max-width: 100%; 
+        margin-bottom: 2rem;
+
+    }
+
+    .btn {
+        margin-bottom: 1rem;
+
+    }
+
+    .detailInfo {
+        padding: 0;
+    }
+
+    .profilImage {
+        height: 2rem;
+        width: 2rem;
+    }
+}

@@ -20,6 +20,7 @@ import { Box } from "@mui/material";
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
 import { ReservationConfirmation } from './Post/ReservationConfirmation.tsx';
+import { ErrorPage } from './Register/ErrorPage.tsx';
 
 type LoginResponse = {
 	accessToken: string,
@@ -191,6 +192,7 @@ function App() {
 									<Route path={"/login"} element={<LogIn />} />
 
 									<Route path={"/register"} element={<Register />} />
+									<Route path={"/error"} element={<ErrorPage/>} />
 
 									<Route path={"/postCreate"} element={
 										<ProtectedRoute>

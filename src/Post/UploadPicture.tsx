@@ -5,8 +5,8 @@ import React, { useRef } from 'react';
 import { Button } from "@mui/base";
 
 type uploadPictureProps = {
-	file: File | string,
-	setFile: React.Dispatch<React.SetStateAction<File | string>>,
+	file: File | null,
+	setFile: React.Dispatch<React.SetStateAction<File | null>>,
 	currentImage: string,
 	userId: number
 }
@@ -17,7 +17,7 @@ export function UploadPicture({ file, setFile, currentImage, userId }: uploadPic
 	const fileInputRef = useRef<HTMLInputElement>(null);
 	const handleCustomClick = () => {
 		if (fileInputRef.current) {
-			fileInputRef.current.click();
+			fileInputRef.current?.click();
 		}
 	}
 
@@ -27,31 +27,37 @@ export function UploadPicture({ file, setFile, currentImage, userId }: uploadPic
 		handleimgInput(e);
 	}
 	const handleimgInput = (e: React.ChangeEvent<HTMLInputElement> | any) => {
-		const filetoSimulate = e?.target?.files[0];
-		if (e.target.files[0]) {
-			const reader = new FileReader();
-			reader.onloadend = () => {
-				const result = reader.result?.toString() ?? "";
-				setImg(result);
-			};
-			reader.readAsDataURL(filetoSimulate);
-		} else {
-			setImg(currentImage);
+		if (e.target.files && e.target.files[0]) {
+			const filetoSimulate = e?.target?.files[0];
+			setFile(filetoSimulate);
+			updateImagePreview(filetoSimulate);
 		}
 
 	}
-	useEffect(() => { setImg(currentImage) }, [currentImage])
+	const updateImagePreview = (file: File) => {
+		const reader = new FileReader();
+		reader.onloadend = () => {
+			setImg(reader.result as string);
+		};
+		reader.readAsDataURL(file);
+	}
+	useEffect(() => {
+		if (!file) {
+			setImg(currentImage);
+			setFileName("");
+		}
+	}, [currentImage, file]);
 	return (
 		<>	<Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-			<Box component="img" src={img} sx={{ height: '180px', width: 'auto ', borderRadius:'15px'}} style={{display: "flex", justifyContent: "center"}} />
+			<Box component="img" src={img} sx={{ height: '180px', width: 'auto ', borderRadius: '15px' }} style={{ display: "flex", justifyContent: "center" }} />
 			<Typography>{fileName}</Typography>
 			<Button onClick={handleCustomClick}
-				style={{ width: 'auto', height: '35px', border: '0.5px solid grey', marginTop: '10px', alignSelf: 'center', backgroundColor:'#D5B263', color:'white' }}>
-				Velg et bilde:<input type="file"  ref={fileInputRef} style={{width: 'auto', height:'400' ,display:'none', justifyContent: 'center'}} onChange={saveFile} />
+				style={{ width: 'auto', height: '35px', border: '0.5px solid grey', marginTop: '10px', alignSelf: 'center', backgroundColor: '#D5B263', color: 'white' }}>
+				Velg et bilde:<input type="file" ref={fileInputRef} style={{ width: 'auto', height: '400', display: 'none', justifyContent: 'center' }} onChange={saveFile} />
 			</Button>
-			</Box>
+		</Box>
 			{/*<input type="file" onChange={saveFile} />*/}
-			
+
 
 		</>
 	)
