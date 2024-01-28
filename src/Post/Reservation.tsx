@@ -6,6 +6,7 @@ import { Dayjs } from 'dayjs';
 import { useNavigate } from 'react-router-dom';
 import format from 'date-fns/format';
 
+
 type ReservationProps = {
   postId: number,
   price: number,
@@ -169,10 +170,9 @@ const isDateDisabled = (date: Date) => {
       boxShadow: 24,
       p: 4,
     };
-  
     return (
         <Box>
-          <Button variant="contained" onClick={handleOpen} style={{backgroundColor:'#D5B263', color:'white'}}>
+          <Button variant="contained" onClick={handleOpen} style={{backgroundColor:'#D5B263', color:'white', fontSize: '1.5rem', width: '100%', textAlign: 'center'}}>
             Reserver
           </Button>
           <Dialog open={open} onClose={handleClose}>

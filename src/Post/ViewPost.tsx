@@ -153,7 +153,7 @@ export function ViewPost() {
 
 					</div>
 					<Reservation postId={post.id} price={post.price}/>
-					<button className={ViewPostCss.btn}>Reserver</button>
+					{/*<button className={ViewPostCss.btn}>Reserver</button>*/}
 				</div>
       		</div>
 			<div className={ViewPostCss.detailInfo}>
