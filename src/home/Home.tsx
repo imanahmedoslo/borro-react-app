@@ -4,7 +4,7 @@ import {SearchContext} from "../App.tsx";
 import {Filter} from "./Filter.tsx";
 import {calculateDistance} from "../GoogleAPI/CalculateDistance.tsx";
 import {getUser} from "../A/contextPage.tsx";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 //import {getUser} from "../A/contextPage.tsx";
 import { useAuth } from '../App.tsx';
 
@@ -96,6 +96,7 @@ export function Home() {
       <Box sx={{
         gridArea: 'main',
       }}>
+        <Typography style={{textAlign:'center'}} variant="h3">Annonser</Typography>
         <Box>
           <Filter sliderValue={sliderValue}
                   setSliderValue={setSliderValue}/>

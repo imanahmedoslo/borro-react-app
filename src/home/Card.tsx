@@ -90,11 +90,11 @@ export default function ActionAreaCard(cardProps: cardProps) {
               ? `${cardProps.title.substring(0, titleLimit)}...`
               : cardProps.title ?? "No Address"}
           </Typography>
-          <Typography variant="h5" color="text.secondary">
+         { /*<Typography variant="h5" color="text.secondary">
             {cardProps.description?.length > descLimit
               ? `${cardProps.description.substring(0, descLimit)}...`
               : cardProps.description ?? "No description"}
-          </Typography>
+            </Typography>*/}
           <Typography variant="body1" color="text.secondary">
             {cardProps.location?.length > addressLimit
               ? `${cardProps.location.substring(0, addressLimit)}...`
