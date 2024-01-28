@@ -101,10 +101,10 @@ export function LoggedInIcon({userId}: Props) {
 
 
 					<Typography
-						gutterBottom
-						variant="h6"
+						alignSelf={"flex-end"}
+						my={1}
 						component="div"
-						marginY={"auto"}
+
 						mr={2}
 					sx={{
 						display: {xs: 'none', sm: 'block'},

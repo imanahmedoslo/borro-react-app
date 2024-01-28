@@ -33,6 +33,7 @@ export default function ActionAreaCard(cardProps: cardProps) {
 			//const userData = await getUser();
 			setUserAddress(sessionInfo?.address ?? "");
 		}
+
 		fetchUserAddress();
 	}, [cardProps.location]);
 
@@ -101,14 +102,13 @@ export default function ActionAreaCard(cardProps: cardProps) {
 						flexDirection: 'row',
 						justifyContent: 'space-between',
 						height: '100%',
-
 					}}>
-						<Typography variant="h4" color="text.secondary">
+						<Typography variant="h5" color="text.secondary">
 							{cardProps.title?.length > titleLimit
 								? `${cardProps.title.substring(0, titleLimit)}...`
 								: cardProps.title ?? "No Address"}
 						</Typography>
-						<Typography variant="h6" color="text.secondary">
+						<Typography  color="text.secondary">
 							{cardProps.price == 0 || cardProps.price == null ?
 								"gratis" : cardProps.price + ",-"}
 						</Typography>
