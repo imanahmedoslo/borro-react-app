@@ -58,7 +58,7 @@ export default function LogIn() {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="Epost"
               name="email"
               autoComplete="email"
               autoFocus
@@ -69,7 +69,7 @@ export default function LogIn() {
               required
               fullWidth
               name="password"
-              label="Password"
+              label="Passord"
               type={showPassword ? "text" : "password"}
               id="password"
               autoComplete="current-password"
