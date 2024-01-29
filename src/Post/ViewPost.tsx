@@ -146,7 +146,7 @@ export function ViewPost() {
 						{/* TODO: fiks sånn at labels blir bold */}
 						<p className={ViewPostCss.labelLg}>Navn: <span>{contacts?.firstName} {contacts?.lastName}</span></p>
 						<p className={ViewPostCss.labelLg}>Email: <span>{contacts?.eMail}</span></p>
-						<p className={ViewPostCss.labelLg}>Til: <span>{contacts?.phoneNumber}</span></p>
+						<p className={ViewPostCss.labelLg}>Tlf: <span>{contacts?.phoneNumber}</span></p>
 						<p className={ViewPostCss.labelLg}>Adresse: <span>{post.location}</span></p>
 					</div>
 				</div>

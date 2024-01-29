@@ -53,7 +53,7 @@ export function UploadPicture({ file, setFile, currentImage, userId }: uploadPic
 			<Typography>{fileName}</Typography>
 			<Button onClick={handleCustomClick}
 				style={{ width: 'auto', height: '35px', border: '0.5px solid grey', marginTop: '10px', alignSelf: 'center', backgroundColor: '#D5B263', color: 'white' }}>
-				Velg et bilde:<input type="file" ref={fileInputRef} style={{ width: 'auto', height: '400', display: 'none', justifyContent: 'center' }} onChange={saveFile} />
+				Last opp bilde<input type="file" ref={fileInputRef} style={{ width: 'auto', height: '400', display: 'none', justifyContent: 'center' }} onChange={saveFile} />
 			</Button>
 		</Box>
 			{/*<input type="file" onChange={saveFile} />*/}
