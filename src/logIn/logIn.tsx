@@ -49,7 +49,7 @@ export default function LogIn() {
         >
           <Logo height={40} width={"auto"}/>
           <Typography component="h1" variant="h5">
-            Log In
+            Logg Inn
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 2}}>
             <TextField
