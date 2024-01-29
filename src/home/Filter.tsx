@@ -1,10 +1,10 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import React, {SyntheticEvent, useEffect, useState} from "react";
-import {LocationDistance} from "../GoogleAPI/Maps.tsx";
 import {Button, Slider} from "@mui/material";
 import {getPosts} from "../A/contextPage.tsx";
 import {useAuth} from '../App.tsx';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 
 type FilterProps = {
@@ -44,38 +44,42 @@ export function Filter({sliderValue, setSliderValue}: FilterProps) {
 			objectFit: "contain",
 			width: "310px",
 			zIndex: 1,
-			position: "fixed",
-
+			position: "absolute",
+			left: "2em",
 		}}>
 			<Button
 				onClick={onClick}
+				variant="contained"
 				sx={{
-					backgroundColor: "#c9c9c9",
+					backgroundColor: "#2f374a",
 					'&:hover': {
-						backgroundColor: "#c9c9c9",
+						backgroundColor: "#293040",
 					},
 					'&:focus': {
 						outline: 'none',
 					}
 				}}>
+
 				Filter
-			</Button>
-			<Box
-				sx={vis ? {
-						backgroundColor: "#e7e7e7",
-						padding: "5px",
-						transform: "translateX(-0px) translateY(100px)",
-					} :
-					{display: "none"}}>
-				<LocationDistance userAddress={userAddress}
-				                  postAddress={"oslo nydalen spaces"}
-				/>
-				<DistanceSlider sliderValue={sliderValue}
-				                setSliderValue={setSliderValue}
-				/>
-			</Box>
+				<ExpandMoreIcon sx={{
+					color: "#c9c9c9",
+					transform: vis ? "rotate(180deg)" : "rotate(0deg)",
+					transition: "transform 0.2s ease-in-out",
+				}}/>
+					</Button>
+					<Box
+					sx={vis ? {
+					backgroundColor: "#e7e7e7",
+					padding: "5px",
+				} :
+				{display: "none"}}>
+					<DistanceSlider sliderValue={sliderValue}
+					                setSliderValue={setSliderValue}
+					/>
 		</Box>
-	);
+</Box>
+)
+	;
 }
 
 function DistanceSlider({sliderValue, setSliderValue}: FilterProps) {
