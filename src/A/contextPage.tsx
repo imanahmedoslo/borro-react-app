@@ -1,8 +1,7 @@
-import {Button} from "@mui/material";
+import {Box, Button} from "@mui/material";
 import {CreateUserType} from "../Register/Register";
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import {useEffect, useState} from "react";
-import Typography from '@mui/material/Typography';
 import '@fontsource/roboto/300.css';
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../App";
@@ -86,22 +85,40 @@ export function LoggedInIcon({userId}: Props) {
 	if (profile) {
 		return (
 			<>
-				<div style={{display: 'flex', flexDirection: 'row'}}>
-					{profile.profileImage==null||profile.profileImage==""||profile.profileImage==undefined?<AccountBoxIcon
-						sx={{
-							color: '#ffe3a9',
-							height: '50px',
-							width: '50px',
-							transition: 'color 0.2s ease',
-							"&:hover": {
-								color: '#d5b263'
-							}
-						}}
-						
-						onClick={() => navigate(`/userProfile/${userId}`)}
-					/> :<img onClick={() => navigate(`/userProfile/${userId}`)}style={{height: '36px',margin: 'auto',padding: '0 5px',width: 'auto',transition: 'color 0.2s ease',borderRadius:'15px',}} src={profile.profileImage}/> }
+				<Box style={{
+					display: 'flex',
+					flexDirection: 'row',
+				}}>
+					{profile.profileImage == null ||
+					profile.profileImage == "" ||
+					profile.profileImage == undefined ?
+						<AccountBoxIcon
+							sx={{
+								color: '#ffe3a9',
+								height: '50px',
+								width: '50px',
+								transition: 'color 0.2s ease',
+								"&:hover": {
+									color: '#d5b263'
+								}
+							}}
 
+							onClick={() => navigate(`/userProfile/${userId}`)}
+						/> :
+						<Box onClick={() => navigate(`/userProfile/${userId}`)}
+						     component="img"
+						     sx={{
+								 borderRadius: '4px',
+							     height: '33px',
+							     margin: 'auto',
+							     width: 'auto',
+							     transition: 'transform 0.1s ease',
+							     "&:hover": {
 
+								     transform: 'scale(1.2)',
+							     }
+						     }} src={profile.profileImage}
+						/>}
 
 
 					{/*<Typography
@@ -122,6 +139,7 @@ export function LoggedInIcon({userId}: Props) {
 						textAlign: 'center',
 						height: '36px',
 						margin: 'auto',
+						marginLeft: '10px',
 						padding: '0 5px',
 						width: 'auto',
 						minWidth: '80px',
@@ -135,7 +153,7 @@ export function LoggedInIcon({userId}: Props) {
 						Logg Ut
 					</Button>
 
-				</div>
+				</Box>
 			</>
 		)
 	}
