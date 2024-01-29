@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 import React, {SyntheticEvent, useEffect, useState} from "react";
 import {LocationDistance} from "../GoogleAPI/Maps.tsx";
 import {Button, Slider} from "@mui/material";
-import {getPosts, getUser} from "../A/contextPage.tsx";
+import {getPosts} from "../A/contextPage.tsx";
 import {useAuth} from '../App.tsx';
 
 
@@ -31,11 +31,13 @@ export function Filter({sliderValue, setSliderValue}: FilterProps) {
 		}
 
 		fetchUserAddress();
-	}, []);
+	}, [sessionInfo]);
 
 	const onClick = () => {
 		setVis(!vis);
 	}
+
+	console.log(userAddress);
 
 	return (
 		<Box sx={{

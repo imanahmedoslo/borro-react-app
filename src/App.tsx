@@ -76,6 +76,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 	useEffect(() => {
 		if (localStorage.getItem('token')) {
 			const decodedInfo = DecodeToken();
+			console.log(decodedInfo)
 			const sessionInfoFromLs: TokenAndId = {
 				accessToken: localStorage.getItem('token') ?? "",
 				id: decodedInfo?.id ?? 0,

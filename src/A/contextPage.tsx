@@ -1,4 +1,4 @@
-import {Box, Button} from "@mui/material";
+import {Button} from "@mui/material";
 import {CreateUserType} from "../Register/Register";
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import {useEffect, useState} from "react";
@@ -106,10 +106,10 @@ export function LoggedInIcon({userId}: Props) {
 						component="div"
 
 						mr={2}
-					sx={{
-						display: {xs: 'none', sm: 'block'},
+						sx={{
+							display: {xs: 'none', sm: 'block'},
 
-					}}>
+						}}>
 						{profile.firstName ?? 'Ola'}
 					</Typography>
 

@@ -46,6 +46,7 @@ export function MyPosts() {
               title={post.title}
               id={post.id}
               img={post.image}
+              price={post.price}
             />
           </Grid>
         ))}

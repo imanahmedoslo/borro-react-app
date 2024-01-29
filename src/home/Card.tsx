@@ -10,7 +10,6 @@ import {LocationDistance} from "../GoogleAPI/Maps.tsx";
 //import {getUser} from "../A/contextPage.tsx";
 import {useAuth} from '../App.tsx';
 
-
 type cardProps = {
 	title: string;
 	description: string;
@@ -19,9 +18,8 @@ type cardProps = {
 	location: string,
 	price: number,
 }
+
 export default function ActionAreaCard(cardProps: cardProps) {
-
-
 	const {sessionInfo} = useAuth();
 	const [userAddress, setUserAddress] = useState<string>("");
 	const [distance, setDistance] = useState<number>(0);
@@ -108,7 +106,7 @@ export default function ActionAreaCard(cardProps: cardProps) {
 								? `${cardProps.title.substring(0, titleLimit)}...`
 								: cardProps.title ?? "No Address"}
 						</Typography>
-						<Typography  color="text.secondary">
+						<Typography color="text.secondary">
 							{cardProps.price == 0 || cardProps.price == null ?
 								"gratis" : cardProps.price + ",-"}
 						</Typography>

@@ -51,7 +51,7 @@ export function Home() {
     }
 
     fetchUserAddress();
-  }, []);
+  }, [sessionInfo]);
 
   useEffect(() => {
     async function filterPosts() {
@@ -65,6 +65,7 @@ export function Home() {
       let finalFilteredPosts = [];
 
       // Only proceed if userAddress is non-empty
+        console.log(`address: ${userAddress}`)
       if (userAddress.trim()) {
         for (let post of searchFilteredPosts) {
           // Try-catch block around distance calculation

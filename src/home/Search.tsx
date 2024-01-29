@@ -125,12 +125,19 @@ export default function SearchAppBar({setSearchText}: { setSearchText: (text: st
 							onChange={event => setSearchText(event.target.value)} // update search text
 						/>
 					</Search>
-					{isLoggedIn ? <LoggedInIcon userId={sessionInfo.id}/> : <Button style={{
+					{isLoggedIn ? <LoggedInIcon userId={sessionInfo.id} /> : <Button sx={{
 						textAlign: 'center',
-						height: '50px',
+						height: '36px',
+						margin: 'auto',
+						padding: '0 5px',
 						width: 'auto',
+						minWidth: '80px',
 						color: 'white',
-						backgroundColor: '#D5B263'
+						backgroundColor: '#d5b263',
+						transition: 'background-color 0.2s ease',
+						"&:hover": {
+							backgroundColor: '#a2874b'
+						}
 					}} variant="contained" onClick={handleLogin}>
 						Logg inn
 					</Button>}
