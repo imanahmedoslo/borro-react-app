@@ -128,7 +128,7 @@ export function LoggedInIcon({userId}: Props) {
 							backgroundColor: '#a2874b'
 						}
 					}} variant="contained" onClick={onLogout}>
-						Logg ut
+						Logg Ut
 					</Button>
 
 				</div>

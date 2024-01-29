@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import React, {SyntheticEvent, useEffect, useState} from "react";
-import {Button, Slider} from "@mui/material";
+import {Button, Checkbox, FormControlLabel, FormGroup, Slider} from "@mui/material";
 import {getPosts} from "../A/contextPage.tsx";
 import {useAuth} from '../App.tsx';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -14,7 +14,7 @@ type FilterProps = {
 
 export function Filter({sliderValue, setSliderValue}: FilterProps) {
 	const {sessionInfo} = useAuth();
-	const [vis, setVis] = useState(false);
+	const [vis, setVis] = useState(true);
 	const [userAddress, setUserAddress] = useState<string>("");
 	const [postAddress, setPostAddress] = useState<string>("");
 	const [postDistance, setPostDistance] = useState<number>(0);
@@ -43,43 +43,71 @@ export function Filter({sliderValue, setSliderValue}: FilterProps) {
 		<Box sx={{
 			objectFit: "contain",
 			width: "310px",
-			zIndex: 1,
 			position: "absolute",
 			left: "2em",
+			zIndex: 1,
 		}}>
 			<Button
 				onClick={onClick}
 				variant="contained"
 				sx={{
+					padding: "8px",
 					backgroundColor: "#2f374a",
 					'&:hover': {
 						backgroundColor: "#293040",
 					},
 					'&:focus': {
 						outline: 'none',
-					}
-				}}>
+					},
+					transition: "border-radius 0.2s ease",
+					borderRadius: vis ? "0px 0px 0px 0px" : "0px 0px 5px 5px",
+				}}
+			>
+				<Box sx={{
+					display: "flex",
+					justifyContent: "space-evenly",
+					width: "100%",
+					alignItems: "center",
 
-				Filter
-				<ExpandMoreIcon sx={{
-					color: "#c9c9c9",
-					transform: vis ? "rotate(180deg)" : "rotate(0deg)",
-					transition: "transform 0.2s ease-in-out",
-				}}/>
-					</Button>
-					<Box
-					sx={vis ? {
-					backgroundColor: "#e7e7e7",
-					padding: "5px",
-				} :
-				{display: "none"}}>
-					<DistanceSlider sliderValue={sliderValue}
-					                setSliderValue={setSliderValue}
+				}}>
+					<Typography sx={{
+						marginLeft: "5px",
+					}}>
+						Filter
+					</Typography>
+					<ExpandMoreIcon
+						sx={{
+							color: "#c9c9c9",
+							transform: vis ? "rotate(180deg)" : "rotate(0deg)",
+							transition: "transform 0.2s ease-in-out",
+
+						}}
 					/>
+				</Box>
+			</Button>
+			<Box
+				sx={vis ?
+					{
+						backgroundColor: "#f6f6f6",
+						border: "1px solid #c9c9c9",
+						padding: "10px",
+						borderRadius: "0px 5px 5px 5px",
+					} :
+					{
+						display: "none"
+					}
+				}
+			>
+				<DistanceSlider sliderValue={sliderValue}
+				                setSliderValue={setSliderValue}
+				/>
+				<Typography>
+					Kategori
+				</Typography>
+				<CategoryFilter />
+			</Box>
 		</Box>
-</Box>
-)
-	;
+	);
 }
 
 function DistanceSlider({sliderValue, setSliderValue}: FilterProps) {
@@ -98,8 +126,6 @@ function DistanceSlider({sliderValue, setSliderValue}: FilterProps) {
 
 	return (
 		<Box sx={{
-			width: 300,
-
 		}}>
 			<Typography id="range-slider" gutterBottom>
 				Distance {value} km
@@ -113,4 +139,24 @@ function DistanceSlider({sliderValue, setSliderValue}: FilterProps) {
 			/>
 		</Box>
 	);
+}
+
+export function CategoryFilter() {
+
+	return (
+		<Box ml={3}>
+			<FormGroup>
+				<FormControlLabel control={<Checkbox />} label="Bygg" />
+				<FormControlLabel control={<Checkbox />} label="Hage" />
+				<FormControlLabel control={<Checkbox />} label="Flytting" />
+				<FormControlLabel control={<Checkbox />} label="Fritid" />
+				<FormControlLabel control={<Checkbox />} label="Hus" />
+				<FormControlLabel control={<Checkbox />} label="Elektronikk" />
+				<FormControlLabel control={<Checkbox />} label="Bil" />
+				<FormControlLabel control={<Checkbox />} label="Verktøy" />
+				<FormControlLabel control={<Checkbox />} label="Lokaler" />
+				<FormControlLabel control={<Checkbox />} label="Kjøkken" />
+			</FormGroup>
+		</Box>
+	)
 }
