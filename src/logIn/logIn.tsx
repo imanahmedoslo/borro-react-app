@@ -47,11 +47,10 @@ export default function LogIn() {
             alignItems: 'center',
           }}
         >
+          <Box paddingTop="4em"></Box>
           <Logo height={40} width={"auto"}/>
-          <Typography component="h1" variant="h5">
-            Logg Inn
-          </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 2}}>
+
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 2}} paddingTop="1em">
             <TextField
               margin="normal"
               onChange={e => setEmail(e.target.value)}
