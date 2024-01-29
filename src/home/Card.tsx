@@ -61,7 +61,7 @@ export default function ActionAreaCard(cardProps: cardProps) {
 		      sx={{
 				  border: "1px solid #d9d9d9",
 			      backgroundColor: '#FFFFFF',
-			      borderRadius: 1,
+			      borderRadius: 0,
 			      flexBasis: {
 				      xs: "100%",
 				      sm: "50%",
@@ -74,7 +74,7 @@ export default function ActionAreaCard(cardProps: cardProps) {
 			      boxSizing: 'border-box',
 			      boxShadow: 0,
 			      "&:hover": {
-				      boxShadow: 1,
+				      boxShadow: 0,
 			      }
 		      }}>
 			<CardActionArea sx={{

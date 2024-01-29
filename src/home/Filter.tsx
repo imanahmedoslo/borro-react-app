@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import React, {SyntheticEvent, useEffect, useState} from "react";
-import {Divider, Button, Checkbox, FormControlLabel, FormGroup, Slider} from "@mui/material";
+import {Button, Checkbox, Divider, FormControlLabel, FormGroup, Grow, Slider} from "@mui/material";
 import {getPosts} from "../A/contextPage.tsx";
 import {useAuth} from '../App.tsx';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -37,8 +37,6 @@ export function Filter({sliderValue, setSliderValue}: FilterProps) {
 		setVis(!vis);
 	}
 
-	console.log(userAddress);
-
 	return (
 		<Box sx={{
 			objectFit: "contain",
@@ -53,7 +51,9 @@ export function Filter({sliderValue, setSliderValue}: FilterProps) {
 				sx={{
 					padding: "8px",
 					backgroundColor: "#2f374a",
+					boxShadow: 1,
 					'&:hover': {
+						boxShadow: 1,
 						backgroundColor: "#293040",
 					},
 					'&:focus': {
@@ -85,30 +85,29 @@ export function Filter({sliderValue, setSliderValue}: FilterProps) {
 					/>
 				</Box>
 			</Button>
-			<Box
-				sx={vis ?
-					{
-						backgroundColor: "#f6f6f6",
-						border: "1px solid #c9c9c9",
-						padding: "10px",
-						borderRadius: "0px 5px 5px 5px",
-						display:"block",
-						transition: "display 1s ease",
-					} :
-					{
-						display: "none"
+
+			<Grow in={vis} style={{ transformOrigin: '0 0 0' }}>
+				<Box
+					sx={{
+							backgroundColor: "#f6f6f6",
+							border: "1px solid #c9c9c9",
+							padding: "10px",
+							borderRadius: "0px 5px 5px 5px",
+							display: "block",
+							transition: "display 1s ease",
+						}
 					}
-				}
-			>
-				<DistanceSlider sliderValue={sliderValue}
-				                setSliderValue={setSliderValue}
-				/>
-				<Divider/>
-				<Typography>
-					Kategori
-				</Typography>
-				<CategoryFilter />
-			</Box>
+				>
+					<DistanceSlider sliderValue={sliderValue}
+					                setSliderValue={setSliderValue}
+					/>
+					<Divider/>
+					<Typography>
+						Kategori
+					</Typography>
+					<CategoryFilter/>
+				</Box>
+			</Grow>
 		</Box>
 	);
 }
@@ -128,8 +127,8 @@ function DistanceSlider({sliderValue, setSliderValue}: FilterProps) {
 	}
 
 	return (
-		<Box sx={{
-		}}>
+
+		<Box sx={{}}>
 			<Typography id="range-slider" gutterBottom>
 				Distance {value} km
 			</Typography>
@@ -149,16 +148,16 @@ export function CategoryFilter() {
 	return (
 		<Box ml={3}>
 			<FormGroup>
-				<FormControlLabel control={<Checkbox />} label="Bygg" />
-				<FormControlLabel control={<Checkbox />} label="Hage" />
-				<FormControlLabel control={<Checkbox />} label="Flytting" />
-				<FormControlLabel control={<Checkbox />} label="Fritid" />
-				<FormControlLabel control={<Checkbox />} label="Hus" />
-				<FormControlLabel control={<Checkbox />} label="Elektronikk" />
-				<FormControlLabel control={<Checkbox />} label="Bil" />
-				<FormControlLabel control={<Checkbox />} label="Verktøy" />
-				<FormControlLabel control={<Checkbox />} label="Lokaler" />
-				<FormControlLabel control={<Checkbox />} label="Kjøkken" />
+				<FormControlLabel control={<Checkbox/>} label="Bygg"/>
+				<FormControlLabel control={<Checkbox/>} label="Hage"/>
+				<FormControlLabel control={<Checkbox/>} label="Flytting"/>
+				<FormControlLabel control={<Checkbox/>} label="Fritid"/>
+				<FormControlLabel control={<Checkbox/>} label="Hus"/>
+				<FormControlLabel control={<Checkbox/>} label="Elektronikk"/>
+				<FormControlLabel control={<Checkbox/>} label="Bil"/>
+				<FormControlLabel control={<Checkbox/>} label="Verktøy"/>
+				<FormControlLabel control={<Checkbox/>} label="Lokaler"/>
+				<FormControlLabel control={<Checkbox/>} label="Kjøkken"/>
 			</FormGroup>
 		</Box>
 	)

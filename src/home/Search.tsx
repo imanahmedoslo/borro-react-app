@@ -11,9 +11,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import {DrawerMenu} from "./Drawer.tsx";
 import {LoggedInIcon} from '../A/contextPage.tsx';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useAuth} from '../App.tsx';
-import {Navigate, useNavigate} from 'react-router-dom';
 import {Button} from '@mui/material';
 import Logo from '../Logo.tsx';
 
@@ -81,9 +80,16 @@ export default function SearchAppBar({setSearchText}: { setSearchText: (text: st
 	// const isLoggedIn: boolean = localStorage.getItem('logInStatus') === 'true' ? true : false
 
 	return (
-		<Box sx={{gridArea: "header"}}>
+		<Box sx={{
+			gridArea: "header"
+		}}>
 			<DrawerMenu open={state.left} onClose={onClose}/>
-			<AppBar position="static" sx={{backgroundColor: "#293040"}}>
+			<AppBar position="static"
+			        sx={{
+						backgroundColor: "#293040",
+				        boxShadow: 2,
+			}}
+			>
 				<Toolbar>
 					<IconButton
 						onClick={openDrawer}
@@ -125,7 +131,7 @@ export default function SearchAppBar({setSearchText}: { setSearchText: (text: st
 							onChange={event => setSearchText(event.target.value)} // update search text
 						/>
 					</Search>
-					{isLoggedIn ? <LoggedInIcon userId={sessionInfo.id} /> : <Button sx={{
+					{isLoggedIn ? <LoggedInIcon userId={sessionInfo.id}/> : <Button sx={{
 						textAlign: 'center',
 						height: '36px',
 						margin: 'auto',
