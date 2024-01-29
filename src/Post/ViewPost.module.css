@@ -124,5 +124,7 @@
     .profilImage {
         height: 2rem;
         width: 2rem;
+        object-fit: cover;
+        border-radius: 20%;
     }
 }
