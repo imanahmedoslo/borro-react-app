@@ -51,8 +51,9 @@
 
 .profilImage {
     height: 3rem;
-    width: 3rem;
-    border-radius: 100%;
+    min-width: 3rem;
+    object-fit: cover;
+    border-radius: 20%;
     border: 1px solid black;
 }
 
