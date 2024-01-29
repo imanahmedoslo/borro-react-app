@@ -238,7 +238,7 @@ export function EditUserProfile() {
 					sx={{ mt: 3, mb: 2 }}
 					style={{ backgroundColor: '#D5B263', color: 'white' }}
 				>
-					Save Changes
+					Lagre endringer
 				</Button>
 			</Box>
 		</Container>
