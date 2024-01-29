@@ -14,7 +14,7 @@ type FilterProps = {
 
 export function Filter({sliderValue, setSliderValue}: FilterProps) {
 	const {sessionInfo} = useAuth();
-	const [vis, setVis] = useState(true);
+	const [vis, setVis] = useState(false);
 	const [userAddress, setUserAddress] = useState<string>("");
 	const [postAddress, setPostAddress] = useState<string>("");
 	const [postDistance, setPostDistance] = useState<number>(0);
