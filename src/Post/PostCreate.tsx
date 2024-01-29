@@ -148,7 +148,7 @@ export default function PostCreate() {
         </div>
         <div>
           <label className={PostStyle.inputLabel}>Poststed</label>
-          <input className={PostStyle.inputText} type="text" placeholder='Post-sted*' name="city" id="" value={city} onChange={e => setCity(e.target.value)} />
+          <input className={PostStyle.inputText} type="text" placeholder='Poststed*' name="city" id="" value={city} onChange={e => setCity(e.target.value)} />
         </div>
         <div>
           <label className={PostStyle.inputLabel}>Kategori:</label>
