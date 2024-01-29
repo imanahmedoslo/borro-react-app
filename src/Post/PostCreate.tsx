@@ -147,7 +147,7 @@ export default function PostCreate() {
           <input className={PostStyle.inputText} type="text" placeholder='Postnummer*' name="zipcode" id="" value={zipCode} onChange={e => setZipCode(e.target.value)} />
         </div>
         <div>
-          <label className={PostStyle.inputLabel}>Post-sted</label>
+          <label className={PostStyle.inputLabel}>Poststed</label>
           <input className={PostStyle.inputText} type="text" placeholder='Post-sted*' name="city" id="" value={city} onChange={e => setCity(e.target.value)} />
         </div>
         <div>

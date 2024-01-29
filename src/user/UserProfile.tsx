@@ -162,7 +162,7 @@ export function UserProfile() {
 				</Box>
 
 				<Divider textAlign={"left"}>
-					Navn
+					Om meg:
 				</Divider>
 				<Box sx={customTheme}>
 
