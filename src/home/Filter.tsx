@@ -86,22 +86,24 @@ export function Filter({sliderValue, setSliderValue}: FilterProps) {
 				</Box>
 			</Button>
 
-			<Grow in={vis} style={{ transformOrigin: '0 0 0' }}>
+			<Grow in={vis} style={{transformOrigin: '0 0 0'}}>
 				<Box
 					sx={{
-							backgroundColor: "#f6f6f6",
-							border: "1px solid #c9c9c9",
-							padding: "10px",
-							borderRadius: "0px 5px 5px 5px",
-							display: "block",
-							transition: "display 1s ease",
-						}
-					}
+						backgroundColor: "#f6f6f6",
+						border: "1px solid #c9c9c9",
+						padding: "10px",
+						borderRadius: "0px 5px 5px 5px",
+						display: "block",
+						transition: "display 1s ease",
+					}}
 				>
 					<DistanceSlider sliderValue={sliderValue}
 					                setSliderValue={setSliderValue}
 					/>
-					<Divider/>
+					<Box mt={1}
+					     mb={2}>
+						<Divider/>
+					</Box>
 					<Typography>
 						Kategori
 					</Typography>
