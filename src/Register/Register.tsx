@@ -129,7 +129,7 @@ export default function Register() {
                   required
                   fullWidth
                   id="email"
-                  label="Email Addresse"
+                  label="Epost"
                   name="email"
                   autoComplete="email"
                 />
