@@ -119,7 +119,7 @@ export default function Register() {
           }}
         >
          <Logo height={40} width={'auto'}/>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" paddingTop="1em">
             Registrer Bruker
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
