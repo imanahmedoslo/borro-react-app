@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import Box from '@mui/material/Box';
-import { Typography } from "@mui/material";
-import React, { useRef } from 'react';
-import { Button } from "@mui/base";
+import {Typography} from "@mui/material";
+import React, {useRef} from 'react';
+import {Button} from "@mui/base";
 
 type uploadPictureProps = {
 	file: File | null,
@@ -11,7 +11,7 @@ type uploadPictureProps = {
 	userId: number
 }
 
-export function UploadPicture({ file, setFile, currentImage, userId }: uploadPictureProps) {
+export function UploadPicture({file, setFile, currentImage, userId}: uploadPictureProps) {
 	const [fileName, setFileName] = useState<string>("");
 	const [img, setImg] = useState<string>(currentImage);
 	const fileInputRef = useRef<HTMLInputElement>(null);
@@ -48,12 +48,32 @@ export function UploadPicture({ file, setFile, currentImage, userId }: uploadPic
 		}
 	}, [currentImage, file]);
 	return (
-		<>	<Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-			<Box component="img" src={img} sx={{ height: '180px', width: 'auto ', borderRadius: '15px' }} style={{ display: "flex", justifyContent: "center" }} />
+		<>    <Box sx={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+			<Box component="img" src={img} sx={{height: '180px', width: 'auto ', borderRadius: '15px'}}
+			     style={{display: "flex", justifyContent: "center"}}/>
 			<Typography>{fileName}</Typography>
 			<Button onClick={handleCustomClick}
-				style={{ width: 'auto', height: '35px', border: '0.5px solid grey', marginTop: '10px', alignSelf: 'center', backgroundColor: '#D5B263', color: 'white' }}>
-				Last opp bilde<input type="file" ref={fileInputRef} style={{ width: 'auto', height: '400', display: 'none', justifyContent: 'center' }} onChange={saveFile} />
+			        style={{
+						padding: 'auto',
+
+				        width: 'auto',
+				        height: '35px',
+				        border: '0.5px solid grey',
+				        marginTop: '10px',
+				        alignSelf: 'center',
+				        backgroundColor: '#D5B263',
+				        color: 'white'
+			        }}>
+				Last opp bilde
+				<input type="file"
+				       ref={fileInputRef}
+				       style={{
+					       width: 'auto',
+					       height: '400',
+					       display: 'none',
+					       justifyContent: 'center'
+				       }}
+				       onChange={saveFile}/>
 			</Button>
 		</Box>
 			{/*<input type="file" onChange={saveFile} />*/}
