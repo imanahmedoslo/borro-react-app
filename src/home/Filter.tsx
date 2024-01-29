@@ -86,7 +86,7 @@ export function Filter({sliderValue, setSliderValue}: FilterProps) {
 				</Box>
 			</Button>
 
-			<Grow in={vis} style={{transformOrigin: '0 0 0'}} mountOnEnter unmountOnExit click>
+			<Grow in={vis} style={{transformOrigin: '0 0 0'}} mountOnEnter unmountOnExit >
 				<Box
 					sx={{
 						backgroundColor: "#f6f6f6",
