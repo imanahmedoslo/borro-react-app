@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import {Box, CardActionArea, Divider, styled, useMediaQuery, useTheme} from '@mui/material';
+import {Box, CardActionArea, Divider} from '@mui/material';
 import {useNavigate} from 'react-router-dom';
 import {LocationDistance} from "../GoogleAPI/Maps.tsx";
 //import {getUser} from "../A/contextPage.tsx";
@@ -56,24 +56,27 @@ export default function ActionAreaCard(cardProps: cardProps) {
 
 
 	return (
-		<Card key={cardProps.id} onClick={handleClick} sx={{
-			backgroundColor: '#FFFFFF',
-			borderRadius: 1,
-			flexBasis: {
-				xs: "100%",
-				sm: "50%",
-				md: "40%",
-				lg: "30%",
-			},
-			flexGrow: 1,
-			maxHeight: 370,
-			margin: 2,
-			boxSizing: 'border-box',
-			boxShadow: 0,
-			"&:hover": {
-				boxShadow: 1,
-			}
-		}}>
+		<Card key={cardProps.id}
+		      onClick={handleClick}
+		      sx={{
+				  border: "1px solid #d9d9d9",
+			      backgroundColor: '#FFFFFF',
+			      borderRadius: 1,
+			      flexBasis: {
+				      xs: "100%",
+				      sm: "50%",
+				      md: "40%",
+				      lg: "30%",
+			      },
+			      flexGrow: 1,
+			      maxHeight: 370,
+			      margin: 2,
+			      boxSizing: 'border-box',
+			      boxShadow: 0,
+			      "&:hover": {
+				      boxShadow: 1,
+			      }
+		      }}>
 			<CardActionArea sx={{
 				"&:focus": {
 					outline: 'none',
