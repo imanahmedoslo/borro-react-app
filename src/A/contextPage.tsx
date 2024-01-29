@@ -17,15 +17,15 @@ export type TokenAndId = {
 export type ProfileType = {
 	Id: number,
 	firstName: string,
-	LastName: string,
-	ProfileImage: string,
-	Address: string,
-	PostCode: number,
-	City: string
-	PhoneNumber: string
-	BirthDate: Date
-	About: string,
-	UserId: number
+	lastName: string,
+	profileImage: string,
+	address: string,
+	postCode: number,
+	city: string
+	phoneNumber: string
+	birthDate: Date
+	about: string,
+	userId: number
 }
 
 
@@ -81,12 +81,13 @@ export function LoggedInIcon({userId}: Props) {
 	useEffect(() => {
 		getUser(userId).then(res => setProfile(res));
 	}, [])
+	console.log(profile)
 
 	if (profile) {
 		return (
 			<>
 				<div style={{display: 'flex', flexDirection: 'row'}}>
-					<AccountBoxIcon
+					{profile.profileImage==null||profile.profileImage==""||profile.profileImage==undefined?<AccountBoxIcon
 						sx={{
 							color: '#ffe3a9',
 							height: '50px',
@@ -96,11 +97,14 @@ export function LoggedInIcon({userId}: Props) {
 								color: '#d5b263'
 							}
 						}}
+						
 						onClick={() => navigate(`/userProfile/${userId}`)}
-					/>
+					/> :<img onClick={() => navigate(`/userProfile/${userId}`)}style={{height: '36px',margin: 'auto',padding: '0 5px',width: 'auto',transition: 'color 0.2s ease',borderRadius:'15px',}} src={profile.profileImage}/> }
 
 
-					<Typography
+
+
+					{/*<Typography
 						alignSelf={"flex-end"}
 						my={1}
 						component="div"
@@ -111,7 +115,7 @@ export function LoggedInIcon({userId}: Props) {
 
 						}}>
 						{profile.firstName ?? 'Ola'}
-					</Typography>
+					</Typography>*/}
 
 
 					<Button sx={{
