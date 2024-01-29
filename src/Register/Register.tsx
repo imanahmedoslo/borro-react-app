@@ -188,7 +188,7 @@ export default function Register() {
               </Grid>
               <Grid item xs={12} sm={6}>
               <Link to={"/login"} style={{ flexGrow: 1 }}>
-                 <p style={{color:"blue"}}> Har du allerede en bruker? Log in!</p>
+                 <p style={{color:"blue"}}> Har du allerede en bruker? Logg inn!</p>
                 </Link>
               </Grid>
           </Box>
