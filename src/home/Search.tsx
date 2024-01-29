@@ -120,7 +120,7 @@ export default function SearchAppBar({setSearchText}: { setSearchText: (text: st
 							<SearchIcon/>
 						</SearchIconWrapper>
 						<StyledInputBase
-							placeholder="Search…"
+							placeholder="Søk…"
 							inputProps={{'aria-label': 'search'}}
 							onChange={event => setSearchText(event.target.value)} // update search text
 						/>
