@@ -102,7 +102,8 @@ export function Home() {
                   setSliderValue={setSliderValue}/>
         </Box>
 
-        <Box sx={{
+        <Box
+            sx={{
           display: 'flex',
           flexWrap: 'wrap',
           justifyContent: 'flex-start',

@@ -92,6 +92,8 @@ export function Filter({sliderValue, setSliderValue}: FilterProps) {
 						border: "1px solid #c9c9c9",
 						padding: "10px",
 						borderRadius: "0px 5px 5px 5px",
+						display:"block",
+						transition: "display 1s ease",
 					} :
 					{
 						display: "none"
