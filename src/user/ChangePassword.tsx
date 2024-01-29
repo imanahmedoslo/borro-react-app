@@ -100,7 +100,7 @@ export function ChangePassword() {
                       required
                       fullWidth
                       name="newPassord"
-                      label="nytt Passord"
+                      label="nytt passord"
                       type={showPassword ? "text" : "Password"}
                       id="newPassord"
                       autoComplete="newPassord"
@@ -113,7 +113,7 @@ export function ChangePassword() {
                       required
                       fullWidth
                       name="repeatedPassord"
-                      label="gjenta Passord"
+                      label="gjenta passord"
                       type={showPassword ? "text" : "Password"}
                       id="repeatedPassord"
                       autoComplete="repeatedPassord"
