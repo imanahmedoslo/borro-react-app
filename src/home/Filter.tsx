@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import React, {SyntheticEvent, useEffect, useState} from "react";
-import {Button, Checkbox, FormControlLabel, FormGroup, Slider} from "@mui/material";
+import {Divider, Button, Checkbox, FormControlLabel, FormGroup, Slider} from "@mui/material";
 import {getPosts} from "../A/contextPage.tsx";
 import {useAuth} from '../App.tsx';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -101,6 +101,7 @@ export function Filter({sliderValue, setSliderValue}: FilterProps) {
 				<DistanceSlider sliderValue={sliderValue}
 				                setSliderValue={setSliderValue}
 				/>
+				<Divider/>
 				<Typography>
 					Kategori
 				</Typography>
