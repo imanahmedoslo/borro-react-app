@@ -70,10 +70,15 @@ export default function Reservation({ postId, price }: ReservationProps) {
       );
       if (response.ok) {
         const dates = await response.json();
-        const disabled = dates.map((d) => ({
-          fromDate: new Date(d.dateFrom),
-          toDate: new Date(d.dateTo),
-        }));
+        const disabled = dates.map(
+          (d: {
+            dateFrom: string | number | Date;
+            dateTo: string | number | Date;
+          }) => ({
+            fromDate: new Date(d.dateFrom),
+            toDate: new Date(d.dateTo),
+          }),
+        );
         setDisabledDates(disabled);
       }
     } catch (error) {
