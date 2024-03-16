@@ -3,10 +3,20 @@ import { useParams } from "react-router-dom";
 import { useAuth } from "../App";
 import { useEffect, useState } from "react";
 
+export type Reservation = {
+  dateFrom: string;
+  dateTo: string;
+  status: number;
+  price: number;
+  userId: number;
+  postId: number;
+};
+
 export function ReservationConfirmation() {
-  const { reservationId, setReservationId } = useParams();
+  const { reservationId } = useParams();
   const { sessionInfo } = useAuth();
-  const [reservation, setReservation] = useState(null);
+  const [reservation, setReservation] = useState<Reservation | null>(null);
+
   const [error, setError] = useState("");
   console.log("reservationId: ", reservationId);
 

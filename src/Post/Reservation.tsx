@@ -14,6 +14,7 @@ import { MobileDatePicker } from "@mui/x-date-pickers";
 import { Dayjs } from "dayjs";
 import { useNavigate } from "react-router-dom";
 import format from "date-fns/format";
+import { Reservation } from "./ReservationConfirmation.tsx";
 
 type ReservationProps = {
   postId: number;
@@ -52,8 +53,8 @@ type DisabledDateRange = {
 
 export default function Reservation({ postId, price }: ReservationProps) {
   const [open, setOpen] = useState(false);
-  const [dateFrom, setDateFrom] = useState<string>("");
-  const [dateTo, setDateTo] = useState<string>("");
+  const [dateFrom, setDateFrom] = useState<string | undefined>("");
+  const [dateTo, setDateTo] = useState<string | undefined>("");
   const [user, setUser] = useState<UserInfoType | null>(null);
   const [priceState, setPriceState] = useState<number | null>(price);
   const { sessionInfo } = useAuth();
@@ -70,15 +71,10 @@ export default function Reservation({ postId, price }: ReservationProps) {
       );
       if (response.ok) {
         const dates = await response.json();
-        const disabled = dates.map(
-          (d: {
-            dateFrom: string | number | Date;
-            dateTo: string | number | Date;
-          }) => ({
-            fromDate: new Date(d.dateFrom),
-            toDate: new Date(d.dateTo),
-          }),
-        );
+        const disabled = dates.map((d: Reservation) => ({
+          fromDate: new Date(d.dateFrom),
+          toDate: new Date(d.dateTo),
+        }));
         setDisabledDates(disabled);
       }
     } catch (error) {
@@ -221,7 +217,7 @@ export default function Reservation({ postId, price }: ReservationProps) {
         <DialogContent>
           <MobileDatePicker
             label="Fra dato"
-            onChange={(dayJs) => setDateFrom(dayJs?.toDate())}
+            onChange={(dayJs) => setDateFrom(dayJs?.toDate().toISOString())}
             disablePast
             shouldDisableDate={(dayJSObject: Dayjs) =>
               isDateDisabled(dayJSObject.toDate())
@@ -229,7 +225,7 @@ export default function Reservation({ postId, price }: ReservationProps) {
           />
           <MobileDatePicker
             label="Til dato"
-            onChange={(dayJs) => setDateTo(dayJs?.toDate())}
+            onChange={(dayJs) => setDateTo(dayJs?.toDate().toISOString())}
             disablePast
             shouldDisableDate={(dayJSObject: Dayjs) =>
               isDateDisabled(dayJSObject.toDate())

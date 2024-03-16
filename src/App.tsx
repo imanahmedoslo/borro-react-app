@@ -74,7 +74,7 @@ function DecodeToken(): decodedInfo {
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
   const [sessionInfo, setSessionInfo] = useState<TokenAndId | null>(null);
-  // const [decoded, setDecoded] = useState<decodedInfo | null>(null);
+  const [decoded, setDecoded] = useState<decodedInfo | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
