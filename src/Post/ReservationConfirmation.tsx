@@ -1,22 +1,12 @@
 import { Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../App";
-import { ReactNode, useEffect, useState } from "react";
-
-type Reservation = {
-  dateFrom: ReactNode;
-  dateTo: ReactNode;
-  status: number;
-  price: number;
-  userId: number;
-  postId: number;
-};
+import { useEffect, useState } from "react";
 
 export function ReservationConfirmation() {
-  const { reservationId } = useParams();
+  const { reservationId, setReservationId } = useParams();
   const { sessionInfo } = useAuth();
-  const [reservation, setReservation] = useState<Reservation | null>(null);
-
+  const [reservation, setReservation] = useState(null);
   const [error, setError] = useState("");
   console.log("reservationId: ", reservationId);
 
