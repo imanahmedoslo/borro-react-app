@@ -16,7 +16,7 @@ export function MyPosts() {
       return [];
     }
     const response = await fetch(
-      `https://borro.azurewebsites.net/api/Post/posts/${sessionInfo?.id}?userId=${sessionInfo?.id}`,
+      `https://borroapi.azurewebsites.net/api/Post/posts/${sessionInfo?.id}?userId=${sessionInfo?.id}`,
       {
         method: "GET",
         headers: {

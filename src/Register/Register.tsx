@@ -83,7 +83,7 @@ function generateObject(
 }
 
 async function CreateUser(userInfo: CreateAccountType): Promise<number> {
-  const response = await fetch(`https://borro.azurewebsites.net/api/User`, {
+  const response = await fetch(`https://borroapi.azurewebsites.net/api/User`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(userInfo),

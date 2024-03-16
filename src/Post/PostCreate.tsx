@@ -25,10 +25,13 @@ type CreatePostProps = {
 };
 
 async function GetCategories() {
-  const response = await fetch(`https://borro.azurewebsites.net/api/Category`, {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-  });
+  const response = await fetch(
+    `https://borroapi.azurewebsites.net/api/Category`,
+    {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    },
+  );
   const responseJson: categoryProps[] = await response.json();
   if (!response.ok) {
     console.error("annonse ble ikke laget");
@@ -66,7 +69,7 @@ export default function PostCreate() {
 
     try {
       const res = await axios.post(
-        `https://borro.azurewebsites.net/api/FileUpload/`,
+        `https://borroapi.azurewebsites.net/api/FileUpload/`,
         formData,
       );
       return res.status;
@@ -78,14 +81,17 @@ export default function PostCreate() {
   };
 
   async function PostPosts(postInfo: CreatePostProps): Promise<postProps> {
-    const response = await fetch(`https://borro.azurewebsites.net/api/Post`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionInfo?.accessToken}`,
+    const response = await fetch(
+      `https://borroapi.azurewebsites.net/api/Post`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionInfo?.accessToken}`,
+        },
+        body: JSON.stringify(postInfo),
       },
-      body: JSON.stringify(postInfo),
-    });
+    );
     const responseJson: postProps = await response.json();
     return responseJson;
   }

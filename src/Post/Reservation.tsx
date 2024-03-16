@@ -67,7 +67,7 @@ export default function Reservation({ postId, price }: ReservationProps) {
   const fetchReservedDates = async () => {
     try {
       const response = await fetch(
-        `https://borro.azurewebsites.net/api/Reservation/availability/${postId}`,
+        `https://borroapi.azurewebsites.net/api/Reservation/availability/${postId}`,
       );
       if (response.ok) {
         const dates = await response.json();
@@ -96,7 +96,7 @@ export default function Reservation({ postId, price }: ReservationProps) {
           return;
         }
         const response = await fetch(
-          `https://borro.azurewebsites.net/api/User/${userId}`,
+          `https://borroapi.azurewebsites.net/api/User/${userId}`,
           {
             method: "GET",
             headers: {
@@ -140,7 +140,7 @@ export default function Reservation({ postId, price }: ReservationProps) {
       } else {
         try {
           const response = await fetch(
-            `https://borro.azurewebsites.net/api/Reservation`,
+            `https://borroapi.azurewebsites.net/api/Reservation`,
             {
               method: "POST",
               headers: {

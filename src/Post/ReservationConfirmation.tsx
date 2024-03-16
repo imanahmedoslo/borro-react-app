@@ -27,7 +27,7 @@ export function ReservationConfirmation() {
   async function fetchReservation() {
     try {
       const response = await fetch(
-        `https://borro.azurewebsites.net/api/Reservation/${reservationId}`,
+        `https://borroapi.azurewebsites.net/api/Reservation/${reservationId}`,
         {
           method: "GET",
           headers: {

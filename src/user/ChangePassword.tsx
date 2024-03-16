@@ -43,7 +43,7 @@ export function ChangePassword() {
   const handleIdSubmit = async () => {
     try {
       const response = await fetch(
-        `https://borro.azurewebsites.net/api/User/changePassword/${userId}`,
+        `https://borroapi.azurewebsites.net/api/User/changePassword/${userId}`,
         {
           method: "PUT",
           headers: {

@@ -28,7 +28,7 @@ type Category = {
 
 async function fetchCategory(id: number): Promise<Category> {
   const res = await fetch(
-    `https://borro.azurewebsites.net/api/Category/${id}`,
+    `https://borroapi.azurewebsites.net/api/Category/${id}`,
     {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -39,7 +39,7 @@ async function fetchCategory(id: number): Promise<Category> {
 }
 
 async function FetchPost(id: number) {
-  const res = await fetch(`https://borro.azurewebsites.net/api/Post/${id}`);
+  const res = await fetch(`https://borroapi.azurewebsites.net/api/Post/${id}`);
   try {
     if (!res.ok) {
       throw new Error(`Http error status code ${res.status}`);
@@ -55,7 +55,7 @@ async function FetchPost(id: number) {
 
 async function FetchUserByPostId(id: number) {
   const res = await fetch(
-    `https://borro.azurewebsites.net/api/UserInfo/postOwner/${id}?postId=${id}`,
+    `https://borroapi.azurewebsites.net/api/UserInfo/postOwner/${id}?postId=${id}`,
     {
       method: "GET",
       headers: { "Content-Type": "application/json" },

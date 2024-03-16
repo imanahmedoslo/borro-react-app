@@ -45,7 +45,7 @@ export function UserProfile() {
     try {
       console.log(`Fetching user info for ID: ${id}`);
       const response = await fetch(
-        `https://borro.azurewebsites.net/api/User/${id}`,
+        `https://borroapi.azurewebsites.net/api/User/${id}`,
         {
           method: "GET",
           headers: {
