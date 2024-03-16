@@ -1,62 +1,64 @@
-import React, {useState} from 'react';
-import {useNavigate, useParams} from 'react-router-dom';
-import {Box, Button, Container, TextField, Typography} from '@mui/material';
-import {ErrorPage} from './ErrorPage';
-import { UploadPicture } from '../Post/UploadPicture';
-import { useAuth } from '../App';
+import React, { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Box, Button, Container, TextField, Typography } from "@mui/material";
+import { ErrorPage } from "./ErrorPage";
+import { useAuth } from "../App";
 
 type UserInfoType = {
-  firstName: string,
-  lastName: string,
-  profileImage: string,
-  address: string,
-  postCode: number,
-  city: string,
-  phoneNumber: string,
-  birthDate: string,
-  about: string,
-  userId: number,
+  firstName: string;
+  lastName: string;
+  profileImage: string;
+  address: string;
+  postCode: number;
+  city: string;
+  phoneNumber: string;
+  birthDate: string;
+  about: string;
+  userId: number;
 };
-
-
 
 export function UserInfoForm() {
   const navigate = useNavigate();
   const params = useParams();
-  const {sessionInfo} = useAuth();
+  const { sessionInfo } = useAuth();
 
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [profileImage, setProfileImage] = useState('');
-  const [address, setAddress] = useState('');
-  const [postCode, setPostCode] = useState('');
-  const [city, setCity] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [birthDate, setBirthDate] = useState('');
-  const [about, setAbout] = useState('');
-  const [userId, setUserId] = useState(params.userId ? parseInt(params.userId, 10) : 0);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [profileImage, setProfileImage] = useState("");
+  const [address, setAddress] = useState("");
+  const [postCode, setPostCode] = useState("");
+  const [city, setCity] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [birthDate, setBirthDate] = useState("");
+  const [about, setAbout] = useState("");
+  const [userId, setUserId] = useState(
+    params.userId ? parseInt(params.userId, 10) : 0,
+  );
 
   async function CreateUserInfo(userInfo: UserInfoType): Promise<number> {
-    const response = await fetch('https://borro.azurewebsites.net/api/UserInfo', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${sessionInfo?.accessToken}`,
+    const response = await fetch(
+      "https://borro.azurewebsites.net/api/UserInfo",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionInfo?.accessToken}`,
+        },
+        body: JSON.stringify({
+          firstName: userInfo.firstName,
+          lastName: userInfo.lastName,
+          profileImage: userInfo.profileImage,
+          address: userInfo.address,
+          postCode: userInfo.postCode,
+          city: userInfo.city,
+          phoneNumber: userInfo.phoneNumber,
+          birthDate: userInfo.birthDate,
+          about: userInfo.about,
+          userId: userInfo.userId,
+        }),
       },
-      body: JSON.stringify({
-        firstName: userInfo.firstName,
-        lastName: userInfo.lastName,
-        profileImage: userInfo.profileImage,
-        address: userInfo.address,
-        postCode: userInfo.postCode,
-        city: userInfo.city,
-        phoneNumber: userInfo.phoneNumber,
-        birthDate: userInfo.birthDate,
-        about: userInfo.about,
-        userId: userInfo.userId
-      })
-    });
-  
+    );
+
     return response.status;
   }
 
@@ -77,7 +79,7 @@ export function UserInfoForm() {
 
     const statusCode = await CreateUserInfo(userInfo);
     if (statusCode === 201) {
-      navigate('/');
+      navigate("/");
     } else {
       ErrorPage();
     }
@@ -88,15 +90,15 @@ export function UserInfoForm() {
       <Typography component="h1" variant="h5">
         Vennligst legg til mer informasjon.
       </Typography>
-      <Box component="form" onSubmit={handleSubmit} noValidate sx={{mt: 3}}>
-      <Typography component="h3">Last opp profilbilde</Typography>
+      <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
+        <Typography component="h3">Last opp profilbilde</Typography>
         <TextField
           margin="normal"
           required
           fullWidth
           label="Fornavn"
           autoFocus
-          name='firstName'
+          name="firstName"
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
         />
@@ -105,7 +107,7 @@ export function UserInfoForm() {
           required
           fullWidth
           label="Etternavn"
-          name='lastName'
+          name="lastName"
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
         />
@@ -115,7 +117,7 @@ export function UserInfoForm() {
           required
           fullWidth
           label="Adresse"
-          name='address'
+          name="address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
         />
@@ -124,7 +126,7 @@ export function UserInfoForm() {
           required
           fullWidth
           label="Postnummer"
-          name='postCode'
+          name="postCode"
           value={postCode}
           onChange={(e) => setPostCode(e.target.value)}
           type="number"
@@ -134,7 +136,7 @@ export function UserInfoForm() {
           required
           fullWidth
           label="Poststed"
-          name='city'
+          name="city"
           value={city}
           onChange={(e) => setCity(e.target.value)}
         />
@@ -143,7 +145,7 @@ export function UserInfoForm() {
           required
           fullWidth
           label="Telefonnummer"
-          name='phoneNumber'
+          name="phoneNumber"
           value={phoneNumber}
           onChange={(e) => setPhoneNumber(e.target.value)}
         />
@@ -153,17 +155,17 @@ export function UserInfoForm() {
           fullWidth
           label="Fødselsdato"
           type="date"
-          name='birthDate'
+          name="birthDate"
           value={birthDate?.split("T")[0] ?? ""}
           onChange={(e) => setBirthDate(e.target.value)}
-          InputLabelProps={{shrink: true}}
+          InputLabelProps={{ shrink: true }}
         />
         <TextField
           margin="normal"
           fullWidth
           label="Bio"
           value={about}
-          name='about'
+          name="about"
           onChange={(e) => setAbout(e.target.value)}
           multiline
           rows={4}
@@ -172,7 +174,7 @@ export function UserInfoForm() {
           type="submit"
           fullWidth
           variant="contained"
-          sx={{mt: 3, mb: 2}}
+          sx={{ mt: 3, mb: 2 }}
         >
           Submit
         </Button>

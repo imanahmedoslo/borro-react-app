@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 /*
 async function getGeocode(address: string) {
 	const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyBRA8VU6f0Ciqy3aa5-JCQlS4TEqliQECs`);
@@ -24,7 +24,7 @@ const MapContainer = () => {
 }
 
 */
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
 
 interface ILocation {
@@ -33,24 +33,29 @@ interface ILocation {
 }
 
 type AddressProps = {
-  userAddress: string,
-  postAddress: string,
-}
-
+  userAddress: string;
+  postAddress: string;
+};
 
 export async function getGeocode(address: string): Promise<ILocation> {
-  const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyBRA8VU6f0Ciqy3aa5-JCQlS4TEqliQECs`);
+  const response = await axios.get(
+    `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyBRA8VU6f0Ciqy3aa5-JCQlS4TEqliQECs`,
+  );
 
-  if (response.data && response.data.results &&
-    response.data.results[0] && response.data.results[0].geometry &&
-    response.data.results[0].geometry.location) {
+  if (
+    response.data &&
+    response.data.results &&
+    response.data.results[0] &&
+    response.data.results[0].geometry &&
+    response.data.results[0].geometry.location
+  ) {
     const geoLocation: ILocation = {
       lng: response.data.results[0].geometry.location.lng,
-      lat: response.data.results[0].geometry.location.lat
-    }
+      lat: response.data.results[0].geometry.location.lat,
+    };
     return geoLocation;
   } else {
-    throw new Error('Unable to find location');
+    throw new Error("Unable to find location");
   }
 }
 
@@ -62,7 +67,10 @@ export function LocationDistance(props: AddressProps) {
       const getDistance = (loc1: ILocation, loc2: ILocation): number => {
         const latLng1 = new window.google.maps.LatLng(loc1.lat, loc1.lng);
         const latLng2 = new window.google.maps.LatLng(loc2.lat, loc2.lng);
-        return window.google.maps.geometry.spherical.computeDistanceBetween(latLng1, latLng2);
+        return window.google.maps.geometry.spherical.computeDistanceBetween(
+          latLng1,
+          latLng2,
+        );
       };
 
       async function fetchLocationsAndComputeDistance() {
@@ -77,9 +85,11 @@ export function LocationDistance(props: AddressProps) {
 
   return (
     <div>
-      {distance && distance > 0 ?
-        <Typography>Avstand fra deg: {distance}km</Typography> :
-        <Typography>laster...</Typography>}
+      {distance && distance > 0 ? (
+        <Typography>Avstand fra deg: {distance}km</Typography>
+      ) : (
+        <Typography>laster...</Typography>
+      )}
     </div>
   );
 }
