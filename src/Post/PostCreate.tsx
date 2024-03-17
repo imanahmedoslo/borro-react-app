@@ -125,12 +125,13 @@ export default function PostCreate() {
     };
     PostPosts(Post)
       .then((response) => {
+        console.log("hererproblemet");
+        console.log(file)
         if (file) {
           uploadFile(response.id)
             .then((uploadResponse) => {
               if (uploadResponse && uploadResponse < 300) {
                 navigate(`/posts/${sessionInfo?.id}`);
-                console.log("hererproblemet")
               }
             })
             .catch((error) => {
