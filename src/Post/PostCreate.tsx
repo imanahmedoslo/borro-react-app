@@ -37,7 +37,9 @@ async function GetCategories() {
     console.error("annonse ble ikke laget");
     return [];
   } else {
+    console.log(responseJson+"categories");
     return responseJson;
+   
   }
 }
 
@@ -47,7 +49,7 @@ export default function PostCreate() {
   const [categories, setCategories] = useState<categoryProps[]>([]);
   useEffect(() => {
     GetCategories().then((categories) => setCategories(categories));
-    console.log(categories+"categories");
+    
   }, []);
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
