@@ -37,7 +37,7 @@ async function GetCategories() {
     console.error("annonse ble ikke laget");
     return [];
   } else {
-    console.log(responseJson+"categories");
+    console.log(responseJson);
     return responseJson;
    
   }
@@ -102,12 +102,12 @@ export default function PostCreate() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (
-      !title ||
-      !description ||
-      !address ||
-      !zipCode ||
-      !city ||
-      !categoryId
+      title===null ||
+      description===null ||
+      address===null ||
+      zipCode===null ||
+      city===null ||
+      categoryId===null
     ) {
       console.log(title, description, address, zipCode, city, categoryId);
       alert("Please fill in all required fields.");
