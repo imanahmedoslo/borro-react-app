@@ -229,7 +229,7 @@ export default function PostCreate() {
             onChange={(e) => setCategoryId(parseInt(e.currentTarget.value))}
           >
             {categories.map((category) => (
-              <option value={category.id} key={category.id}>
+              <option value={1} key={category.id}>
                 {category.type}
               </option>
             ))}
