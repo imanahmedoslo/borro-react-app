@@ -96,6 +96,7 @@ export default function PostCreate() {
       },
     );
     const responseJson: postProps = await response.json();
+    console.log(responseJson);
     return responseJson;
   }
 
@@ -125,8 +126,6 @@ export default function PostCreate() {
     };
     PostPosts(Post)
       .then((response) => {
-        console.log("hererproblemet");
-        console.log(file)
         if (file) {
           uploadFile(response.id)
             .then((uploadResponse) => {
