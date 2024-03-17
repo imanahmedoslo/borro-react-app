@@ -91,7 +91,6 @@ export default function PostCreate() {
         headers: {
           Accept: 'application/json',
           "Content-Type": "application/json",
-          Authorization: `Bearer ${sessionInfo?.accessToken}`,
         },
         body: JSON.stringify(postInfo),
       },
@@ -131,6 +130,7 @@ export default function PostCreate() {
             .then((uploadResponse) => {
               if (uploadResponse && uploadResponse < 300) {
                 navigate(`/posts/${sessionInfo?.id}`);
+                console.log("hererproblemet")
               }
             })
             .catch((error) => {
