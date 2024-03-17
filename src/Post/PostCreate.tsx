@@ -130,7 +130,8 @@ export default function PostCreate() {
         if (file) {
           uploadFile(response.id)
             .then((uploadResponse) => {
-              if (uploadResponse && uploadResponse < 300) {
+              if (uploadResponse ) {
+                console.log(uploadResponse)
                 navigate(`/posts/${sessionInfo?.id}`);
               }
             })
