@@ -83,22 +83,34 @@ export default function PostCreate() {
     }
   };
 
-  async function PostPosts(postInfo: CreatePostProps): Promise<postProps> {
-    const response = await fetch(
-      `https://borroapp.azurewebsites.net/api/Post`,
-      {
+  async function PostPosts(postInfo: CreatePostProps): Promise<postProps | null> {
+    try {
+      const response = await fetch(`https://borroapp.azurewebsites.net/api/Post`, {
         method: "POST",
         headers: {
           Accept: 'application/json',
           "Content-Type": "application/json",
         },
         body: JSON.stringify(postInfo),
-      },
-    );
-    const responseJson: postProps = await response.json();
-    console.log(responseJson);
-    return responseJson;
+      });
+  
+      if (!response.ok) {
+        // Throws an error with the status text, which can be handled by the caller
+        throw new Error(`HTTP error! status: ${response.status} ${response.statusText}`);
+      }
+  
+      const text = await response.text();
+      // Check if the response body (as text) is not empty before parsing
+      const responseJson: postProps = text ? JSON.parse(text) : null;
+      
+      console.log(responseJson);
+      return responseJson;
+    } catch (error) {
+      console.error("Error in creating post:", error);
+      return null; // Return null or appropriate error handling
+    }
   }
+  
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
