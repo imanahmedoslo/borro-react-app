@@ -93,6 +93,7 @@ export default function PostCreate() {
           Authorization: `Bearer ${sessionInfo?.accessToken}`,
         },
         body: JSON.stringify(postInfo),
+        mode: 'no-cors',
       },
     );
     const responseJson: postProps = await response.json();
