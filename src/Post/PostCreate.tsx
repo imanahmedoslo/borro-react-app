@@ -47,6 +47,7 @@ export default function PostCreate() {
   const [categories, setCategories] = useState<categoryProps[]>([]);
   useEffect(() => {
     GetCategories().then((categories) => setCategories(categories));
+    console.log(categories+"categories");
   }, []);
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
