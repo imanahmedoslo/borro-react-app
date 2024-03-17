@@ -124,6 +124,7 @@ export default function PostCreate() {
       title: title,
       userId: sessionInfo?.id!,
     };
+    console.log(Post);
     PostPosts(Post)
       .then((response) => {
         if (file) {
