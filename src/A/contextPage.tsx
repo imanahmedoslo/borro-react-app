@@ -28,7 +28,7 @@ export type ProfileType = {
 };
 
 export async function LoginFunctionality(userInfo: CreateUserType) {
-  //   const response = await fetch(`https://borroapi.azurewebsites.net/api/Login
+  //   const response = await fetch(`https://borroapp.azurewebsites.net/api/Login
   // `, {method: 'POST', headers: {'Content-Type': 'application/json'}, body:
   // JSON.stringify(userInfo)}); if (!response.ok) { throw new Error(`HTTP
   // error! Status: ${response.status}`); } const responseJson = await
@@ -49,7 +49,7 @@ export async function LoginFunctionality(userInfo: CreateUserType) {
 
 export async function getUser(userId: number) {
   const response = await fetch(
-    `https://borroapi.azurewebsites.net/api/UserInfo/${userId}`,
+    `https://borroapp.azurewebsites.net/api/UserInfo/${userId}`,
     {
       method: "GET",
       headers: {
@@ -159,6 +159,6 @@ export function LoggedInIcon({ userId }: Props) {
 }
 
 export async function getPosts() {
-  const response = await fetch("https://borroapi.azurewebsites.net/api/Post");
+  const response = await fetch("https://borroapp.azurewebsites.net/api/Post");
   return await response.json();
 }

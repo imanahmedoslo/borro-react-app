@@ -37,7 +37,7 @@ export function UserInfoForm() {
 
   async function CreateUserInfo(userInfo: UserInfoType): Promise<number> {
     const response = await fetch(
-      "https://borroapi.azurewebsites.net/api/UserInfo",
+      "https://borroapp.azurewebsites.net/api/UserInfo",
       {
         method: "POST",
         headers: {

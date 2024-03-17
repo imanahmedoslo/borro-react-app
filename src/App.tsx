@@ -95,7 +95,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const handleLogin = async (userInfo: CreateUserType) => {
     const response = await fetch(
-      `https://borroapi.azurewebsites.net/api/Login
+      `https://borroapp.azurewebsites.net/api/Login
 `,
       {
         method: "POST",

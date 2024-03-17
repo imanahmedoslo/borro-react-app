@@ -57,7 +57,7 @@ export function EditUserProfile() {
 
     try {
       const res = await axios.post(
-        `https://borroapi.azurewebsites.net/api/FileUpload/`,
+        `https://borroapp.azurewebsites.net/api/FileUpload/`,
         formData,
       );
     } catch (ex) {
@@ -72,7 +72,7 @@ export function EditUserProfile() {
     }
     try {
       const userInfoResponse = await fetch(
-        `https://borroapi.azurewebsites.net/api/UserInfo/${userId}`,
+        `https://borroapp.azurewebsites.net/api/UserInfo/${userId}`,
         {
           method: "GET",
           headers: {
@@ -82,7 +82,7 @@ export function EditUserProfile() {
         },
       );
       const userCredentialsResponse = await fetch(
-        `https://borroapi.azurewebsites.net/api/User/${userId}`,
+        `https://borroapp.azurewebsites.net/api/User/${userId}`,
         {
           method: "GET",
           headers: {
@@ -120,7 +120,7 @@ export function EditUserProfile() {
     try {
       const status = await uploadFile();
       const response = await fetch(
-        `https://borroapi.azurewebsites.net/api/UserInfo/${userInfo.id}`,
+        `https://borroapp.azurewebsites.net/api/UserInfo/${userInfo.id}`,
         {
           method: "PUT",
           headers: {

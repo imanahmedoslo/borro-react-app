@@ -26,7 +26,7 @@ type CreatePostProps = {
 
 async function GetCategories() {
   const response = await fetch(
-    `https://borroapi.azurewebsites.net/api/Category`,
+    `https://borroapp.azurewebsites.net/api/Category`,
     {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -69,7 +69,7 @@ export default function PostCreate() {
 
     try {
       const res = await axios.post(
-        `https://borroapi.azurewebsites.net/api/FileUpload/`,
+        `https://borroapp.azurewebsites.net/api/FileUpload/`,
         formData,
       );
       return res.status;
@@ -82,7 +82,7 @@ export default function PostCreate() {
 
   async function PostPosts(postInfo: CreatePostProps): Promise<postProps> {
     const response = await fetch(
-      `https://borroapi.azurewebsites.net/api/Post`,
+      `https://borroapp.azurewebsites.net/api/Post`,
       {
         method: "POST",
         headers: {

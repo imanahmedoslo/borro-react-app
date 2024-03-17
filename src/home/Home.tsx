@@ -32,7 +32,7 @@ export function Home() {
   const { sessionInfo } = useAuth();
 
   async function getPosts(): Promise<postProps[]> {
-    const response = await fetch("https://borroapi.azurewebsites.net/api/Post");
+    const response = await fetch("https://borroapp.azurewebsites.net/api/Post");
     return await response.json();
   }
 
