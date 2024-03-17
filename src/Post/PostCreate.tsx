@@ -139,6 +139,10 @@ export default function PostCreate() {
     console.log(Post);
     PostPosts(Post)
       .then((response) => {
+        if(response===null){
+          console.log("Error in creating post");
+          return;
+        }
         if (file) {
           uploadFile(response.id)
             .then((uploadResponse) => {
