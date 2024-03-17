@@ -88,8 +88,11 @@ export default function PostCreate() {
       const response = await fetch(`https://borroapp.azurewebsites.net/api/Post`, {
         method: "POST",
         headers: {
-          Accept: 'application/json',
+          Cookie:"ARRAffinity=a6e48b9e9d2653435be7b61998d8624b44115214104213d6c8b8c526cc56dc70; ARRAffinitySameSite=a6e48b9e9d2653435be7b61998d8624b44115214104213d6c8b8c526cc56dc70",
+          Accept:"*/*",
+          "Accept-Encoding":"gzip, deflate, br",
           "Content-Type": "application/json",
+          "Connection":"keep-alive",
         },
         body: JSON.stringify(postInfo),
       });
