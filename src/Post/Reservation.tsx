@@ -14,7 +14,7 @@ import { MobileDatePicker } from "@mui/x-date-pickers";
 import { Dayjs } from "dayjs";
 import { useNavigate } from "react-router-dom";
 import format from "date-fns/format";
-import { Reservation } from "./ReservationConfirmation.tsx";
+import { Reservation as ReservationType } from "./ReservationConfirmation.tsx";
 
 type ReservationProps = {
   postId: number;
@@ -71,7 +71,7 @@ export default function Reservation({ postId, price }: ReservationProps) {
       );
       if (response.ok) {
         const dates = await response.json();
-        const disabled = dates.map((d: Reservation) => ({
+        const disabled = dates.map((d: ReservationType) => ({
           fromDate: new Date(d.dateFrom),
           toDate: new Date(d.dateTo),
         }));
