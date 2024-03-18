@@ -74,7 +74,7 @@ export function LoggedInIcon({ userId }: Props) {
   useEffect(() => {
     getUser(userId).then((res) => setProfile(res));
   }, []);
-  console.log(profile);
+  //console.log(profile);
 
   if (profile) {
     return (

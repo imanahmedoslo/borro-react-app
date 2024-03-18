@@ -37,7 +37,8 @@ async function GetCategories() {
     console.error("annonse ble ikke laget");
     return [];
   } else {
-    console.log(responseJson);
+    console.log("all the categories");
+    console.log(responseJson)
     return responseJson;
    
   }
@@ -62,7 +63,7 @@ export default function PostCreate() {
   const uploadFile = async (id: number) => {
     if (!file) {
       // Handle the case when no file is selected
-      console.log("No file selected for upload.");
+      //console.log("No file selected for upload.");
       return null; // Or handle this scenario appropriately
     }
     const formData = new FormData();
@@ -77,36 +78,37 @@ export default function PostCreate() {
       );
       return res.status;
     } catch (ex) {
-      console.log(ex);
+      //console.log(ex);
       alert("File upload failed");
       return 500;
     }
   };
+  const choosecategory = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setCategoryId(parseInt(e.target.value));
+    console.log(e?.target.value);
+  }
+  
 
   async function PostPosts(postInfo: CreatePostProps): Promise<postProps | null> {
     try {
       const response = await fetch(`https://borroapp.azurewebsites.net/api/Post`, {
         method: "POST",
         headers: {
-          Cookie:"ARRAffinity=a6e48b9e9d2653435be7b61998d8624b44115214104213d6c8b8c526cc56dc70; ARRAffinitySameSite=a6e48b9e9d2653435be7b61998d8624b44115214104213d6c8b8c526cc56dc70",
-          Accept:"*/*",
-          "Accept-Encoding":"gzip, deflate, br",
           "Content-Type": "application/json",
-          "Connection":"keep-alive",
         },
         body: JSON.stringify(postInfo),
       });
   
       if (!response.ok) {
+        console.log("i am here line 98, response var !ok")
         // Throws an error with the status text, which can be handled by the caller
         throw new Error(`HTTP error! status: ${response.status} ${response.statusText}`);
       }
   
-      const text = await response.text();
+    
       // Check if the response body (as text) is not empty before parsing
-      const responseJson: postProps = text ? JSON.parse(text) : null;
+      const responseJson: postProps = await response.json();
       
-      console.log(responseJson);
       return responseJson;
     } catch (error) {
       console.error("Error in creating post:", error);
@@ -139,32 +141,31 @@ export default function PostCreate() {
       title: title,
       userId: sessionInfo?.id!,
     };
-    console.log(Post);
     PostPosts(Post)
       .then((response) => {
         if(response===null){
-          console.log("Error in creating post");
+          console.log("post posts kjørte men response var null");
           return;
         }
         if (file) {
           uploadFile(response.id)
             .then((uploadResponse) => {
               if (uploadResponse ) {
-                console.log(uploadResponse)
                 navigate(`/posts/${sessionInfo?.id}`);
               }
             })
             .catch((error) => {
-              console.log("Error in file upload", error);
+              console.log("Error in file upload nest siste error");
             });
         } else {
           navigate(`/error`);
         }
       })
       .catch((error) => {
-        console.log("Error in creating post", error);
+        console.log("Error in creating post siste error i post posts");
       });
   };
+ 
 
   const options = categories.map((category) => ({
     value: category.type,
@@ -248,10 +249,10 @@ export default function PostCreate() {
           <label className={PostStyle.inputLabel}>Kategori:</label>
           <select
             className={PostStyle.inputText}
-            onChange={(e) => setCategoryId(parseInt(e.currentTarget.value))}
+            onChange={(e) => choosecategory(e)}
           >
             {categories.map((category) => (
-              <option value={1} key={category.id}>
+              <option value={category.id} key={category.id}>
                 {category.type}
               </option>
             ))}
