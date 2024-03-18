@@ -24,7 +24,7 @@ const MapContainer = () => {
 }
 
 */
-import React, { useEffect, useState } from "react";
+//import React, { useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
 
 interface ILocation {
@@ -37,8 +37,8 @@ type AddressProps = {
   postAddress: string;
 };
 
-export async function getGeocode(address: string): Promise<ILocation> {
-  const response = await axios.get(
+/*export async function getGeocode(address: string): Promise<ILocation> {
+ /* const response = await axios.get(
     `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=AIzaSyBRA8VU6f0Ciqy3aa5-JCQlS4TEqliQECs`,
   );
 
@@ -81,15 +81,18 @@ export function LocationDistance(props: AddressProps) {
 
       fetchLocationsAndComputeDistance();
     }
-  }, [props.userAddress, props.postAddress]);
-
+  }, [props.userAddress, props.postAddress]);*/
+  export async function getGeocode(){
   return (
-    <div>
+    /*<div>
       {distance && distance > 0 ? (
         <Typography>Avstand fra deg: {distance}km</Typography>
       ) : (
         <Typography>laster...</Typography>
       )}
+    </div>*/
+    <div>
+      <Typography>laster...</Typography>
     </div>
   );
 }

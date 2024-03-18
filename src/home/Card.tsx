@@ -6,7 +6,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Box, CardActionArea, Divider } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { LocationDistance } from "../GoogleAPI/Maps.tsx";
+//import { LocationDistance } from "../GoogleAPI/Maps.tsx";
 //import {getUser} from "../A/contextPage.tsx";
 import { useAuth } from "../App.tsx";
 
@@ -131,12 +131,12 @@ export default function ActionAreaCard(cardProps: cardProps) {
               ? `${cardProps.location.substring(0, addressLimit)}...`
               : cardProps.location ?? "No Address"}
           </Typography>
-          {cardProps.location ? (
+          {/*cardProps.location ? (
             <LocationDistance
               userAddress={userAddress}
               postAddress={cardProps.location}
             />
-          ) : null}
+          ) : null*/}
         </CardContent>
       </CardActionArea>
     </Card>

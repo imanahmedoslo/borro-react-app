@@ -15,7 +15,7 @@ import PostCreate from "./Post/PostCreate.tsx";
 import { ViewPost } from "./Post/ViewPost.tsx";
 import { UserInfoForm } from "./Register/UserInfoForm.tsx";
 import { TokenAndId } from "./A/contextPage.tsx";
-import { LoadScript } from "@react-google-maps/api";
+//import { LoadScript } from "@react-google-maps/api";
 import { UserProfile } from "./user/UserProfile.tsx";
 import { EditUserProfile } from "./user/EditUserProfile.tsx";
 import { ChangePassword } from "./user/ChangePassword.tsx";
@@ -175,11 +175,11 @@ function App() {
         minHeight: "100vh",
       }}
     >
-      <LoadScript
+      {/*<LoadScript
         googleMapsApiKey="AIzaSyBRA8VU6f0Ciqy3aa5-JCQlS4TEqliQECs"
         libraries={libraries}
         onLoad={() => setMapsLoaded(true)}
-      />
+    />*/}
 
       <SearchContext.Provider value={{ searchText, setSearchText }}>
         <BrowserRouter>

@@ -8,7 +8,7 @@ import { useAuth } from "../App";
 import PostStyle from "./PostStyle.module.css";
 import axios from "axios";
 
-type categoryProps = {
+export type categoryProps = {
   id: number;
   type: string;
 };
@@ -24,7 +24,7 @@ type CreatePostProps = {
   userId: number;
 };
 
-async function GetCategories() {
+export async function GetCategories() {
   const response = await fetch(
     `https://borroapp.azurewebsites.net/api/Category`,
     {

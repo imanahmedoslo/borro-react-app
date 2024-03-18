@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import React, { SyntheticEvent, useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import {
   Button,
   Checkbox,
@@ -11,41 +11,74 @@ import {
   Slider,
 } from "@mui/material";
 import { getPosts } from "../A/contextPage.tsx";
+import { postProps } from "./Home.tsx";
 import { useAuth } from "../App.tsx";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import {GetCategories} from "../Post/PostCreate.tsx"
+import { categoryProps } from "../Post/PostCreate.tsx";
+import { set } from "date-fns";
+import { ca } from "date-fns/locale";
+import { all } from "axios";
+
 
 type FilterProps = {
-  sliderValue: number;
-  setSliderValue: (value: number) => void;
+  setPosts: (posts: postProps[]) => void;
 };
 
-export function Filter({ sliderValue, setSliderValue }: FilterProps) {
+export function Filter({setPosts }: FilterProps) {
   const { sessionInfo } = useAuth();
   const [vis, setVis] = useState(false);
-  const [userAddress, setUserAddress] = useState<string>("");
-  const [postAddress, setPostAddress] = useState<string>("");
-  const [postDistance, setPostDistance] = useState<number>(0);
+  const [categories,setCategories] = useState<categoryProps[]>([])
+  const [value, setValue] = useState<number[]>([50]);
 
-  useEffect(() => {
-    async function fetchUserAddress() {
-      // const userData = await getUser();
-      setUserAddress(sessionInfo?.address ?? "");
-    }
+  const handleChange = (event: Event, newValue: number | number[]) => {
+    const value = newValue as number[];
+    setValue(value);
+  };
 
-    async function fetchPostAddress() {
-      const postData = await getPosts();
-      setPostAddress(postData.address);
-    }
-
-    fetchUserAddress();
-  }, [sessionInfo]);
+  function handleChangeCommited(
+    event: Event | SyntheticEvent<Element, Event>,
+    newValue: number | number[],
+  ): void {
+    const value = newValue as number[];
+    setValue(value);
+  }
 
   const onClick = () => {
     setVis(!vis);
   };
+  useEffect(()=>{
+    async function fetchCategories(){
+     const categoryList= await GetCategories();
+   setCategories(categoryList);
+   }
+   fetchCategories();
+   console.log(categories)
+   
+   },[])
+const updatepostsByCategory=(id:number)=>{
+  async function getPostsByCategory(){
+    const Allposts:postProps[] = await getPosts();
+    const category = id;
+    
+      const categoryPosts = Allposts.filter((post)=>post.categoryId === category)
+      if(categoryPosts.length===0){
+        return Allposts;
+      }
+      else {
+        return categoryPosts};
+    
+  }
+  getPostsByCategory().then((posts) => (posts?setPosts(posts):null));
 
+}
+const resetPosts=()=>{
+  getPosts().then((Allposts) => (
+  setPosts(Allposts)
+  ));
+}
   return (
-    <Box
+    <Box onBlur={() => setVis(false)}
       sx={{
         objectFit: "contain",
         width: "310px",
@@ -113,40 +146,7 @@ export function Filter({ sliderValue, setSliderValue }: FilterProps) {
             transition: "display 1s ease",
           }}
         >
-          <DistanceSlider
-            sliderValue={sliderValue}
-            setSliderValue={setSliderValue}
-          />
-          <Box mt={1} mb={2}>
-            <Divider />
-          </Box>
-          <Typography>Kategori</Typography>
-          <CategoryFilter />
-        </Box>
-      </Grow>
-    </Box>
-  );
-}
-
-function DistanceSlider({ sliderValue, setSliderValue }: FilterProps) {
-  const [value, setValue] = useState<number[]>([50]);
-
-  const handleChange = (event: Event, newValue: number | number[]) => {
-    const value = newValue as number[];
-    setValue(value);
-  };
-
-  function handleChangeCommited(
-    event: Event | SyntheticEvent<Element, Event>,
-    newValue: number | number[],
-  ): void {
-    const value = newValue as number[];
-    setValue(value);
-    setSliderValue(value[0]);
-  }
-
-  return (
-    <Box sx={{}}>
+          <Box sx={{}}>
       <Typography id="range-slider" gutterBottom>
         Distance {value} km
       </Typography>
@@ -158,24 +158,41 @@ function DistanceSlider({ sliderValue, setSliderValue }: FilterProps) {
         aria-labelledby="range-slider"
       />
     </Box>
-  );
-}
-
-export function CategoryFilter() {
-  return (
-    <Box ml={3}>
-      <FormGroup>
-        <FormControlLabel control={<Checkbox />} label="Bygg" />
-        <FormControlLabel control={<Checkbox />} label="Hage" />
-        <FormControlLabel control={<Checkbox />} label="Flytting" />
-        <FormControlLabel control={<Checkbox />} label="Fritid" />
-        <FormControlLabel control={<Checkbox />} label="Hus" />
-        <FormControlLabel control={<Checkbox />} label="Elektronikk" />
-        <FormControlLabel control={<Checkbox />} label="Bil" />
-        <FormControlLabel control={<Checkbox />} label="Verktøy" />
-        <FormControlLabel control={<Checkbox />} label="Lokaler" />
-        <FormControlLabel control={<Checkbox />} label="Kjøkken" />
-      </FormGroup>
+          <Box mt={1} mb={2}>
+            <Divider />
+          </Box>
+          <Typography>Kategori</Typography>
+          <Box ml={3}>
+            <FormGroup>
+              {categories.map((category) => {
+                if (category.type !== "Velg...") {
+                  return (
+                    <FormControlLabel
+                      control={<Checkbox />}
+                      checked={false}
+                      key={category.id}
+                      id={category.id.toString()}
+                      label={category.type}
+                      onClick={(e) => updatepostsByCategory(category.id)}
+                    />
+                  );
+                } else {
+                  return <p key={"velg"}>Velg...</p>;
+                }
+              })}
+            </FormGroup>
+            <Button
+              variant="contained"
+              sx={{ mt: 4, mb: 2 }}
+              style={{ backgroundColor: "#293040" }}
+              onClick={resetPosts}
+            >
+              Vis alle
+            </Button>
+          </Box>
+        </Box>
+      </Grow>
     </Box>
   );
 }
+

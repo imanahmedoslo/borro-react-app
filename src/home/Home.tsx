@@ -1,9 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import ActionAreaCard from "./Card.tsx";
-//import {getUser} from "../A/contextPage.tsx";
 import { SearchContext, useAuth } from "../App.tsx";
 import { Filter } from "./Filter.tsx";
-import { calculateDistance } from "../GoogleAPI/CalculateDistance.tsx";
 import { Box, Typography } from "@mui/material";
 
 export type postProps = {
@@ -19,9 +17,7 @@ export type postProps = {
   userId: number;
 };
 
-type postState = {
-  posts: postProps[];
-};
+
 
 export function Home() {
   const [filteredPosts, setFilteredPosts] = useState<postProps[]>([]);
@@ -30,70 +26,41 @@ export function Home() {
   const [userAddress, setUserAddress] = useState("");
   const { searchText } = useContext(SearchContext);
   const { sessionInfo } = useAuth();
+  async function filterPosts() {
+    var searchFilteredPosts: postProps[] = [];
 
-  async function getPosts(): Promise<postProps[]> {
-    const response = await fetch("https://borroapp.azurewebsites.net/api/Post");
-    return await response.json();
+    if (searchText.trim()) {
+    searchFilteredPosts= posts.filter((post) =>
+        post.title.toLowerCase().includes(searchText.toLowerCase()),
+      );
+      setFilteredPosts(searchFilteredPosts);
+    }
+    
+     
+   
+      
+else {
+    setFilteredPosts(posts);}
   }
-
   useEffect(() => {
+    async function getPosts(): Promise<postProps[]> {
+      const response = await fetch("https://borroapp.azurewebsites.net/api/Post");
+      return await response.json();
+    }
     getPosts().then((posts: postProps[]) => setPosts(posts));
   }, []);
 
   useEffect(() => {
-    async function fetchUserAddress() {
-      //const userData = await getUser();
+    const fetchUserAddress=()=> {
       setUserAddress(sessionInfo?.address ?? "");
     }
-
-    fetchUserAddress();
+     fetchUserAddress();
   }, [sessionInfo]);
 
   useEffect(() => {
-    async function filterPosts() {
-      let searchFilteredPosts = posts;
-
-      if (searchText.trim()) {
-        searchFilteredPosts = searchFilteredPosts.filter((post) =>
-          post.title.toLowerCase().includes(searchText.toLowerCase()),
-        );
-      }
-
-      let finalFilteredPosts = [];
-
-      // Only proceed if userAddress is non-empty
-      if (userAddress.trim()) {
-        for (let post of searchFilteredPosts) {
-          // Try-catch block around distance calculation
-          try {
-            const distance = await calculateDistance(
-              userAddress,
-              post.location,
-            );
-            //console.log({distance, sliderValue}); // additional log for
-            // debugging
-
-            if (distance <= sliderValue) {
-              finalFilteredPosts.push(post);
-              //console.log(post); // additional log for debugging
-            }
-          } catch (err) {
-            console.error(
-              `Failed to calculate distance for post with id ${post.id}, error: ${err}`,
-            );
-          }
-        }
-      } else {
-        console.warn("User address is empty, can not filter by distance.");
-        finalFilteredPosts = searchFilteredPosts; // No filtering by distance
-        // if no userAddress provided
-      }
-
-      setFilteredPosts(finalFilteredPosts);
-    }
-
+    
     filterPosts();
-  }, [posts, searchText, sliderValue, userAddress]);
+  }, [posts, searchText, userAddress]);
 
   return (
     <>
@@ -103,7 +70,7 @@ export function Home() {
         }}
       >
         <Box>
-          <Filter sliderValue={sliderValue} setSliderValue={setSliderValue} />
+          <Filter setPosts={setFilteredPosts}/>
         </Box>
 
         <Box
@@ -131,6 +98,7 @@ export function Home() {
           >
             Annonser
           </Typography>
+          {filteredPosts.length === 0 && <div style={{alignSelf:"center"}}>Ingen Annonser matcher søket</div>}
           {filteredPosts.map((post) => (
             <ActionAreaCard
               key={post.id}
