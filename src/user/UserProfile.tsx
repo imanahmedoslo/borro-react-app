@@ -43,7 +43,7 @@ export function UserProfile() {
 
   const fetchUser = async () => {
     try {
-      console.log(`Fetching user info for ID: ${id}`);
+      //console.log(`Fetching user info for ID: ${id}`);
       const response = await fetch(
         `https://borroapp.azurewebsites.net/api/User/${id}`,
         {
@@ -60,7 +60,7 @@ export function UserProfile() {
       }
       const userData = await response.json();
       setUser(userData);
-      console.log("userData: ", userData);
+     // console.log("userData: ", userData);
     } catch (error) {
       console.error("Fetching user failed", error);
       navigate("/error");
@@ -75,7 +75,7 @@ export function UserProfile() {
 
   const onPictureUploaded = () => {
     fetchUser();
-    console.log("on picture uplaoded implemented");
+   // console.log("picture uplaoded implemented");
   };
 
   if (!user) {

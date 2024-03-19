@@ -24,7 +24,7 @@ export function ChangePassword() {
 
   const { id } = useParams<{ id: string }>();
   const userId = id ? parseInt(id, 10) : 0;
-  console.log("Retrieved user ID from URL:", id);
+ // console.log("Retrieved user ID from URL:", id);
 
   const handlePassword = (
     newPassword: string,

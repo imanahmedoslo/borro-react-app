@@ -18,7 +18,7 @@ export function ReservationConfirmation() {
   const [reservation, setReservation] = useState<Reservation | null>(null);
 
   const [error, setError] = useState("");
-  console.log("reservationId: ", reservationId);
+  //console.log("reservationId: ", reservationId);
 
   useEffect(() => {
     fetchReservation();
@@ -40,7 +40,7 @@ export function ReservationConfirmation() {
       if (response.ok) {
         const data = await response.json();
         setReservation(data);
-        console.log(reservationId);
+        //console.log(reservationId);
       } else {
         setError(`Failed to fetch reservation: ${response.status}`);
       }

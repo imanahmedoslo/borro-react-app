@@ -112,7 +112,7 @@ export function EditUserProfile() {
   };
   useEffect(() => {
     fetchUserData();
-    console.log(userInfo);
+   // console.log(userInfo);
   }, [userId, navigate]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

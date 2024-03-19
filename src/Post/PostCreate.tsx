@@ -37,8 +37,8 @@ export async function GetCategories() {
     console.error("annonse ble ikke laget");
     return [];
   } else {
-    console.log("all the categories");
-    console.log(responseJson)
+    //console.log("all the categories");
+    //console.log(responseJson)
     return responseJson;
    
   }
@@ -85,7 +85,7 @@ export default function PostCreate() {
   };
   const choosecategory = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setCategoryId(parseInt(e.target.value));
-    console.log(e?.target.value);
+    //console.log(e?.target.value);
   }
   
 
@@ -100,7 +100,7 @@ export default function PostCreate() {
       });
   
       if (!response.ok) {
-        console.log("i am here line 98, response var !ok")
+        //console.log("i am here line 98, response var !ok")
         // Throws an error with the status text, which can be handled by the caller
         throw new Error(`HTTP error! status: ${response.status} ${response.statusText}`);
       }
@@ -127,7 +127,7 @@ export default function PostCreate() {
       city===null ||
       categoryId===null
     ) {
-      console.log(title, description, address, zipCode, city, categoryId);
+      //console.log(title, description, address, zipCode, city, categoryId);
       alert("Please fill in all required fields.");
       return;
     }
@@ -144,7 +144,7 @@ export default function PostCreate() {
     PostPosts(Post)
       .then((response) => {
         if(response===null){
-          console.log("post posts kjørte men response var null");
+          //console.log("post posts kjørte men response var null");
           return;
         }
         if (file) {
@@ -155,14 +155,14 @@ export default function PostCreate() {
               }
             })
             .catch((error) => {
-              console.log("Error in file upload nest siste error");
+              console.log("Error in file upload");
             });
         } else {
           navigate(`/error`);
         }
       })
       .catch((error) => {
-        console.log("Error in creating post siste error i post posts");
+        console.log("Error in creating post");
       });
   };
  

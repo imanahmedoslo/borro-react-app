@@ -53,7 +53,7 @@ export function Filter({setPosts }: FilterProps) {
    setCategories(categoryList);
    }
    fetchCategories();
-   console.log(categories)
+   //console.log(categories)
    
    },[])
 const updatepostsByCategory=(id:number)=>{

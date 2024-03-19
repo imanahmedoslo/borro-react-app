@@ -48,7 +48,7 @@ async function FetchPost(id: number) {
     const resObject = await res.json();
     return resObject;
   } catch (error) {
-    console.log(error);
+   // console.log(error);
     return Error("Could not find find this post.");
   }
 }

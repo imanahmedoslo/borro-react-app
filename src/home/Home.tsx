@@ -22,51 +22,45 @@ export type postProps = {
 export function Home() {
   const [filteredPosts, setFilteredPosts] = useState<postProps[]>([]);
   const [posts, setPosts] = useState<postProps[]>([]);
-  const [isLoading, setIsLoading] = useState(true); 
-  const [userAddress, setUserAddress] = useState("");
+  const[loaded,setLoading]=useState(false);
   const { searchText } = useContext(SearchContext);
-  const { sessionInfo } = useAuth();
-  async function filterPosts() {
-    var searchFilteredPosts: postProps[] = [];
-
-    if (searchText.trim()) {
-    searchFilteredPosts= posts.filter((post) =>
-        post.title.toLowerCase().includes(searchText.toLowerCase()),
-      );
-      setFilteredPosts(searchFilteredPosts);
-    }
-    
-     
-   
-      
-else {
-    setFilteredPosts(posts);}
-  }
   useEffect(() => {
     async function getPosts(): Promise<postProps[]> {
-      setIsLoading(true);
       const response = await fetch("https://borroapp.azurewebsites.net/api/Post");
       return await response.json();
     }
+    console.log(posts);
+      console.log(loaded)
     getPosts().then((posts: postProps[]) => {
-      setPosts(posts)
-      setIsLoading(false);
+      setPosts(posts);
+      setLoading(true);
+      console.log(posts);
+      console.log(loaded)
     });
-  }, []);
+  }, [loaded]);
+
 
   useEffect(() => {
-    const fetchUserAddress=()=> {
-      setUserAddress(sessionInfo?.address ?? "");
+    async function filterPosts() {
+      var searchFilteredPosts: postProps[] = [];
+  
+      if (searchText.trim()) {
+      searchFilteredPosts= posts.filter((post) =>
+          post.title.toLowerCase().includes(searchText.toLowerCase()),
+        );
+        setFilteredPosts(searchFilteredPosts);
+      }
+      
+       
+     
+        
+  else {
+      setFilteredPosts(posts);}
     }
-     fetchUserAddress();
-  }, [sessionInfo]);
-
-  useEffect(() => {
-    
     filterPosts();
-  }, [posts, searchText, userAddress]);
-  if (isLoading) {
-    return <div>Loading posts...</div>;
+  }, [posts,searchText,]);
+  if(!loaded){
+    return <div>Loading...</div>
   }
 
   return (

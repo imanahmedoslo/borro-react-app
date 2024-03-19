@@ -121,7 +121,7 @@ export default function Register() {
       );
       //this space here
     } else {
-      console.log("if test not accesed");
+      //console.log("if test not accesed");
     }
   };
 
