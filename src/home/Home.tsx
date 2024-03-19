@@ -22,7 +22,7 @@ export type postProps = {
 export function Home() {
   const [filteredPosts, setFilteredPosts] = useState<postProps[]>([]);
   const [posts, setPosts] = useState<postProps[]>([]);
-  const [sliderValue, setSliderValue] = useState(50);
+  const [isLoading, setIsLoading] = useState(true); 
   const [userAddress, setUserAddress] = useState("");
   const { searchText } = useContext(SearchContext);
   const { sessionInfo } = useAuth();
@@ -44,10 +44,14 @@ else {
   }
   useEffect(() => {
     async function getPosts(): Promise<postProps[]> {
+      setIsLoading(true);
       const response = await fetch("https://borroapp.azurewebsites.net/api/Post");
       return await response.json();
     }
-    getPosts().then((posts: postProps[]) => setPosts(posts));
+    getPosts().then((posts: postProps[]) => {
+      setPosts(posts)
+      setIsLoading(false);
+    });
   }, []);
 
   useEffect(() => {
@@ -61,6 +65,9 @@ else {
     
     filterPosts();
   }, [posts, searchText, userAddress]);
+  if (isLoading) {
+    return <div>Loading posts...</div>;
+  }
 
   return (
     <>
